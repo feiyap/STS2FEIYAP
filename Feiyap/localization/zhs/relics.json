@@ -1,0 +1,72 @@
+{
+
+  "FEIYAP_RELIC_YU_QU.title": "予取",
+
+  "FEIYAP_RELIC_YU_QU.description": "游戏开始时，你可以从「迷惘」、「苦修」、「流浪」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。",
+
+  "FEIYAP_RELIC_YU_QU.flavor": "取舍之间，命运已然转动。",
+
+  "FEIYAP_RELIC_YU_QU.selectionPrompt": "选择要加入牌库的转职任务牌（可选任意数量）。",
+
+  "FEIYAP_RELIC_YU_QU_YU_DUO.title": "予取予夺",
+
+  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "游戏开始时，你可以从「迷惘」、「苦修」、「流浪」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。拥有该遗物时，从转职任务牌中获取的遗物将升级。",
+
+  "FEIYAP_RELIC_YU_QU_YU_DUO.flavor": "予取予夺，皆在一念。",
+
+  "FEIYAP_RELIC_INVESTIGATOR.title": "调查员",
+
+  "FEIYAP_RELIC_INVESTIGATOR.description": "获得先古卡「渴血症」。战斗开始时，获得 [blue]{RegenPower}[/blue] 层 [gold]再生[/gold]。",
+
+  "FEIYAP_RELIC_INVESTIGATOR.flavor": "「我们一定会再见面的，因为你是……」——调查员·绯夜氏。",
+
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "绯生一文字",
+
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "获得先古卡「渴血症」。战斗开始时，获得 [blue]{RegenPower}[/blue] 层 [gold]再生[/gold]。",
+
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "「我们一定会再见面的，因为你是……」——调查员·绯夜氏。",
+
+  "FEIYAP_RELIC_SWORD_SAINT.title": "剑圣",
+
+  "FEIYAP_RELIC_SWORD_SAINT.description": "获得先古卡「绯樱狱华落」。\n[gold]居合[/gold]造成的伤害提升 [blue]50%[/blue]。",
+
+  "FEIYAP_RELIC_SWORD_SAINT.flavor": "「战场啊，令人怀念的故乡……」——剑圣·绯夜氏。",
+
+  "FEIYAP_RELIC_WU_MING_REN.title": "无铭刃",
+
+  "FEIYAP_RELIC_WU_MING_REN.description": "获得先古卡「绯樱狱华落」。\n[gold]居合[/gold]造成的伤害提升 [blue]100%[/blue]。",
+
+  "FEIYAP_RELIC_WU_MING_REN.flavor": "「战场啊，真是令人怀念的故乡……」——剑圣·绯夜氏。",
+
+  "FEIYAP_RELIC_STAR_SLAYER.title": "斩星官",
+
+  "FEIYAP_RELIC_STAR_SLAYER.description": "获得先古卡「无声星陨」。战斗开始时，给予所有敌人 [blue]{FeiyapVoidHolePower}[/blue] 层 [gold]黑洞[/gold]。",
+
+  "FEIYAP_RELIC_STAR_SLAYER.flavor": "「就连光都无法逃脱我的掌控，更何况是你呢？」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_TIAN_XING_JIAN.title": "天星剑",
+
+  "FEIYAP_RELIC_TIAN_XING_JIAN.description": "获得先古卡「无声星陨」。战斗开始时，给予所有敌人 [blue]{FeiyapVoidHolePower}[/blue] 层 [gold]黑洞[/gold]。",
+
+  "FEIYAP_RELIC_TIAN_XING_JIAN.flavor": "「就连光都无法逃脱我的掌控，更何况是你呢？」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_MERRY_WITCH.title": "嬉笑魔女",
+
+  "FEIYAP_RELIC_MERRY_WITCH.description": "获得先古卡「XXI-世界」。交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，造成的伤害值/获得的[gold]格挡[/gold]值提升 [blue]25%[/blue]。",
+
+  "FEIYAP_RELIC_MERRY_WITCH.flavor": "「这个世界会比上一个更有趣些吗？」——嬉笑魔女·绯夜氏。",
+
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.title": "狂笑魔女",
+
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "获得先古卡「XXI-世界」。交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，造成的伤害值/获得的[gold]格挡[/gold]值、[gold]居合[/gold]值提升 [blue]50%[/blue]。",
+
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.flavor": "「跳吧！唱吧！竭尽所能地取悦我吧！直至生命的尽头！」——狂笑魔女·绯夜氏。",
+
+  "FEIYAP_RELIC_LAPLACE_DEMON.title": "拉普拉斯妖",
+
+  "FEIYAP_RELIC_LAPLACE_DEMON.description": "获得先古卡「于万千碎裂的世界破片」。获得时，立即获得「古老牙齿」、「欧罗巴斯之触」。",
+
+  "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "「我见过所有的未来。而你不在那儿。」——绯夜氏。"
+
+}
+

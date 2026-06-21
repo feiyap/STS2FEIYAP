@@ -1,0 +1,14 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# 本机路径配置与构建产物
+local.props
+dist/
+
+# Godot / IDE 缓存
+.cache/
+.godot/
+.idea/

@@ -1,0 +1,18 @@
+{
+  "id": "Feiyap",
+  "name": "Feiyap",
+  "pck_name": "Feiyap",
+  "author": "Feiyap",
+  "description": "飞鸦角色 Mod：居合、赞心、虚空洞与任务牌等自定义机制。需要 STS2-RitsuLib 0.4.24+。",
+  "version": "0.1.0",
+  "has_pck": true,
+  "has_dll": true,
+  "affects_gameplay": true,
+  "min_game_version": "0.106.0",
+  "dependencies": [
+    {
+      "id": "STS2-RitsuLib",
+      "version": "0.4.24"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+
+  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.title": "Void Hole",
+
+  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.description": "Whenever this creature gains a debuff, gain 1 additional stack of [gold]Void Hole[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.title": "Iaido",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount. All [gold]Iaido[/gold] is removed when you play an [gold]Attack[/gold] or at turn start. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
+
+  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.title": "Internal Burn",
+
+  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.description": "Lose 1 HP whenever this creature attacks. At the end of its turn, lose 1 stack.",
+
+  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.title": "Zanxin",
+
+  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.description": "Your next [gold]Block[/gold] or [gold]Iaido[/gold] gain is increased by 1.",
+
+  "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.title": "Mist Slash",
+
+  "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.description": "Your next [gold]Attack[/gold] with more than 1 hit gains {Amount} additional hits.",
+
+  "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.title": "Quick Absorption",
+
+  "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.description": "Whenever you gain [gold]Iaido[/gold] this turn, gain {Amount} additional [gold]Iaido[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.title": "Heaven May",
+
+  "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.description": "Your [gold]Iaido[/gold] damages ALL enemies this turn.",
+
+  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.title": "Continuous Cast",
+
+  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, draw 1 card.",
+
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "Conversion Cast",
+
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {Amount} [gold]Zanxin[/gold]."
+
+}
+

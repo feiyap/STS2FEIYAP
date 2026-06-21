@@ -1,0 +1,40 @@
+{
+
+  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.title": "黑洞",
+
+  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.description": "获得负面效果时，额外获得 1 层[gold]黑洞[/gold]。",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.title": "居合",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.description": "受到攻击时，优先消耗伤害值的[gold]居合[/gold]，抵消伤害并反击敌人，造成等量的伤害。打出[gold]攻击牌[/gold]或回合开始时都会移除所有[gold]居合[/gold]。[gold]敏捷[/gold]能增幅[gold]居合[/gold]数值。",
+
+  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.title": "体内灼烧",
+
+  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.description": "每次攻击时失去 1 点生命。回合结束时减少 1 层。",
+
+  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.title": "残心",
+
+  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.description": "你下一次获得的[gold]格挡[/gold]或[gold]居合[/gold]增加 1 点。",
+
+  "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.title": "迷雾斩",
+
+  "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.description": "你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Amount} 个额外攻击段数。",
+
+  "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.title": "速纳术",
+
+  "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.description": "本回合获得[gold]居合[/gold]时额外获得 {Amount} 点。",
+
+  "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.title": "天五月",
+
+  "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.description": "本回合内，[gold]居合[/gold]对所有敌人造成伤害。",
+
+  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.title": "连续施法",
+
+  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，抽 1 张牌。",
+
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "转换施法",
+
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，获得 {Amount} 点[gold]残心[/gold]。"
+
+}
+

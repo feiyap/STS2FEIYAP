@@ -1,0 +1,21 @@
+{
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.aromaPrinciple": "[sine][blue]死亡……是所有人应得的结局……[/blue][/sine]",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.banter.alive.endTurnPing": "待时而动。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.banter.dead.endTurnPing": "心存希望……",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.cardsModifierDescription": "绯夜氏的卡牌现在会出现在奖励和商店中。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.cardsModifierTitle": "绯夜氏卡牌",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.description": "修行武艺的武士。那双金瞳，能看到无数平行世界的自己。\n为了寻找自己的终点，进入尖塔开始历练。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.eventDeathPrevention": "……继续……",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.goldMonologue": "这些钱可以用来买一口上好的棺材。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.possessiveAdjective": "她的",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounObject": "她",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounPossessive": "她的",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounSubject": "她",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.title": "绯夜氏",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.titleObject": "绯夜氏",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.unlockText": "用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.selectMessage": "选择绯夜氏。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.victoryMessage": "跨越无数种世界线后，绯夜氏终于抵达了她渴望的终点。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.defeatMessage": "……不对，这样不行。",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.flavor": "绯夜氏的旅程尚未写下终章。"
+}

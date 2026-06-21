@@ -1,0 +1,24 @@
+{
+
+  "FEIYAP_KEYWORD_VOID_HOLE.title": "Void Hole",
+
+  "FEIYAP_KEYWORD_VOID_HOLE.description": "Whenever this creature gains a debuff, gain 1 additional stack of [gold]Void Hole[/gold].",
+
+  "FEIYAP_KEYWORD_IAIDO.title": "Iaido",
+
+  "FEIYAP_KEYWORD_IAIDO.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount. All [gold]Iaido[/gold] is removed when you play an [gold]Attack[/gold] or at turn start. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
+
+  "FEIYAP_KEYWORD_INTERNAL_BURN.title": "Internal Burn",
+
+  "FEIYAP_KEYWORD_INTERNAL_BURN.description": "Lose 1 HP whenever this creature attacks. At the end of its turn, lose 1 stack.",
+
+  "FEIYAP_KEYWORD_CONSTELLATION.title": "Constellation",
+
+  "FEIYAP_KEYWORD_CONSTELLATION.description": "When played, gain 1 Star.",
+
+  "FEIYAP_KEYWORD_ZANXIN.title": "Zanxin",
+
+  "FEIYAP_KEYWORD_ZANXIN.description": "Your next [gold]Block[/gold] or [gold]Iaido[/gold] gain is increased by 1."
+
+}
+

@@ -1,0 +1,24 @@
+{
+
+  "FEIYAP_KEYWORD_VOID_HOLE.title": "黑洞",
+
+  "FEIYAP_KEYWORD_VOID_HOLE.description": "获得负面效果时，额外获得 1 层。",
+
+  "FEIYAP_KEYWORD_IAIDO.title": "居合",
+
+  "FEIYAP_KEYWORD_IAIDO.description": "受到攻击时，优先消耗伤害值的[gold]居合[/gold]，抵消伤害并反击敌人，造成等量的伤害。打出[gold]攻击牌[/gold]或回合开始时都会移除所有[gold]居合[/gold]。[gold]敏捷[/gold]能增幅[gold]居合[/gold]数值。",
+
+  "FEIYAP_KEYWORD_INTERNAL_BURN.title": "体内灼烧",
+
+  "FEIYAP_KEYWORD_INTERNAL_BURN.description": "每次攻击时失去 1 点生命。回合结束时减少 1 层。",
+
+  "FEIYAP_KEYWORD_CONSTELLATION.title": "星座",
+
+  "FEIYAP_KEYWORD_CONSTELLATION.description": "打出后，获得 1 点星星（星辉）。",
+
+  "FEIYAP_KEYWORD_ZANXIN.title": "残心",
+
+  "FEIYAP_KEYWORD_ZANXIN.description": "你下一次获得的[gold]格挡[/gold]或[gold]居合[/gold]增加 1 点。"
+
+}
+

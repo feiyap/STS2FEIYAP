@@ -1,0 +1,21 @@
+{
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.aromaPrinciple": "[sine][blue]Death... is the ending everyone deserves...[/blue][/sine]",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.banter.alive.endTurnPing": "Wait for the right moment.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.banter.dead.endTurnPing": "Hold onto hope...",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.cardsModifierDescription": "Feiyap cards can now appear in rewards and shops.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.cardsModifierTitle": "Feiyap Cards",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.description": "A warrior trained in martial arts. With golden eyes, she can see countless versions of herself across parallel worlds.\nShe enters the Spire to find her destined end.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.eventDeathPrevention": "...Continue...",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.goldMonologue": "This gold could buy a fine coffin.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.possessiveAdjective": "her",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounObject": "her",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounPossessive": "hers",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.pronounSubject": "she",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.title": "Feiyap",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.titleObject": "Feiyap",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.unlockText": "Complete a run as [pink]{Prerequisite}[/pink] to unlock this character.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.selectMessage": "Select Feiyap.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.victoryMessage": "After crossing countless worldlines, Feiyap finally reached the end she long sought.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.defeatMessage": "...No, this won't work.",
+  "FEIYAP_CHARACTER_FEIYAP_CHARACTER.flavor": "Feiyap's journey has not yet written its final chapter."
+}
