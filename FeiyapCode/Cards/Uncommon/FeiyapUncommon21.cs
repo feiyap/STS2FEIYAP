@@ -15,10 +15,8 @@ namespace Feiyap.Cards.Uncommon;
 /// 天五月：保留；本回合内居合对所有敌人造成伤害。每次获得居合，这张牌的耗能减少 1。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon21 : ModCardTemplate
+public sealed class FeiyapUncommon21 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

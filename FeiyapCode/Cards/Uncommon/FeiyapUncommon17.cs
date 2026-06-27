@@ -13,10 +13,8 @@ namespace Feiyap.Cards.Uncommon;
 /// 三碗半：获得 3 / 4 点耗能；这张牌在本场战斗的耗能加 1。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon17 : ModCardTemplate
+public sealed class FeiyapUncommon17 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [

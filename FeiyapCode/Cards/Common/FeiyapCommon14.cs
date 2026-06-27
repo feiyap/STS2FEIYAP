@@ -18,10 +18,8 @@ namespace Feiyap.Cards.Common;
 /// 踏影步：丢弃 1 张牌，获得 8 / 11 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon14 : ModCardTemplate
+public sealed class FeiyapCommon14 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

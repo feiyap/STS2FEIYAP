@@ -16,7 +16,7 @@ namespace Feiyap.Powers;
 /// 残心：下一次获得的格挡或居合增加等量数值。
 /// </summary>
 [RegisterPower]
-public sealed class FeiyapZanxinPower : ModPowerTemplate
+public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditive
 {
     private int _pendingBlockBonus;
 
@@ -25,6 +25,33 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.ZanxinId];
+
+    public decimal GetIaidoGainAdditiveBonus(in FeiyapIaidoGainContext context)
+    {
+        if (context.Creature != Owner || Amount <= 0)
+        {
+            return 0m;
+        }
+
+        return Amount;
+    }
+
+    public async ValueTask OnIaidoGainApplied(FeiyapIaidoGainContext context, decimal appliedBonus)
+    {
+        if (appliedBonus <= 0m)
+        {
+            return;
+        }
+
+        Flash();
+        await PowerCmd.Apply(
+            context.ChoiceContext,
+            this,
+            Owner,
+            -appliedBonus,
+            Owner,
+            context.CardSource);
+    }
 
     public override decimal ModifyBlockAdditive(
         Creature target,

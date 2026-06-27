@@ -14,12 +14,10 @@ namespace Feiyap.Cards.Uncommon;
 /// 叶隐：保留；握在手中时，触发过完美居合后才可使用。抽 3 张牌，获得 3 点耗能。消耗。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon20 : ModCardTemplate
+public sealed class FeiyapUncommon20 : FeiyapCardTemplate
 {
     private bool _witnessedPerfectIaido;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

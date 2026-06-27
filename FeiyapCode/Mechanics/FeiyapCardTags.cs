@@ -18,11 +18,15 @@ public static class FeiyapCardTags
     /// <summary>星座标签。</summary>
     public static CardTag Constellation { get; private set; }
 
+    /// <summary>塔罗标签。</summary>
+    public static CardTag Tarot { get; private set; }
+
     public static void Register(ModCardTagRegistry registry)
     {
         Iaido = registry.RegisterOwned("IAIDO").CardTagValue;
         InternalBurn = registry.RegisterOwned("INTERNAL_BURN").CardTagValue;
         Constellation = registry.RegisterOwned("CONSTELLATION").CardTagValue;
+        Tarot = registry.RegisterOwned("TAROT").CardTagValue;
     }
 
     public static bool HasIaido(CardModel? card) =>
@@ -33,4 +37,7 @@ public static class FeiyapCardTags
 
     public static bool HasConstellation(CardModel? card) =>
         card != null && card.Tags.Contains(Constellation);
+
+    public static bool HasTarot(CardModel? card) =>
+        card != null && card.Tags.Contains(Tarot);
 }

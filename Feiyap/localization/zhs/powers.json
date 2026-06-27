@@ -34,7 +34,27 @@
 
   "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "转换施法",
 
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，获得 {Amount} 点[gold]残心[/gold]。"
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，获得 {Amount} 点[gold]残心[/gold]。",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.title": "斋时雨",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.description": "本回合内，[gold]居合[/gold]造成的伤害翻倍。",
+
+  "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.title": "雨曾为紫",
+
+  "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.description": "打出[gold]攻击牌[/gold]不再移除[gold]活力[/gold]。",
+
+  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.title": "热寂",
+
+  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.description": "回合开始时，失去 1 点生命。回合结束时，[gold]热寂[/gold]层数翻倍。",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.title": "狱华落",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "本回合内，[gold]居合[/gold]造成的伤害变为 {Amount} 倍。",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.title": "世界",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "本回合内，[gold]塔罗牌[/gold]耗能变为 0。"
 
 }
 

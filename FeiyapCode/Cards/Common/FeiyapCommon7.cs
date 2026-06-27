@@ -15,10 +15,8 @@ namespace Feiyap.Cards.Common;
 /// 织女一：星座，造成 6 / 9 点伤害；若本回合已打出过星座牌，额外造成 6 / 9 点伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon7 : ModCardTemplate
+public sealed class FeiyapCommon7 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

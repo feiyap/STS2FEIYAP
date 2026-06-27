@@ -14,13 +14,11 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 河鼓二：星座，造成 10 / 14 点伤害，给予 4 层体内灼烧。
+/// 河鼓二：星座，造成 4 / 7 点伤害，给予 3 / 4 层体内灼烧。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon8 : ModCardTemplate
+public sealed class FeiyapCommon8 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -36,12 +34,12 @@ public sealed class FeiyapCommon8 : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10, ValueProp.Move),
-        new PowerVar<FeiyapInternalBurnPower>(4m)
+        new DamageVar(4, ValueProp.Move),
+        new PowerVar<FeiyapInternalBurnPower>(3m)
     ];
 
     public FeiyapCommon8()
-        : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+        : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
@@ -67,6 +65,7 @@ public sealed class FeiyapCommon8 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["FeiyapInternalBurnPower"].UpgradeValueBy(1m);
     }
 }

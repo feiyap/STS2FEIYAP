@@ -19,7 +19,7 @@ public sealed class MiWang : FeiyapQuestCardBase
 {
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.MiWang;
 
-    protected override int QuestGoal => 300;
+    protected override int QuestGoal => 600;
 
     protected override Task GrantReward(PlayerChoiceContext choiceContext) =>
         FeiyapQuestRewards.GrantQuestRelic<Investigator, FeiShengYiWenZi>(choiceContext, Owner);

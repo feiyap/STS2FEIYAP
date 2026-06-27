@@ -71,6 +71,7 @@
         <Folder Include="Feiyap\images\cards\"/>
         <Folder Include="Feiyap\images\characters\"/>
         <Folder Include="Feiyap\images\relics\"/>
+        <Folder Include="Feiyap\images\ui\"/>
         <Folder Include="Feiyap\scenes\characters\"/>
     </ItemGroup>
 

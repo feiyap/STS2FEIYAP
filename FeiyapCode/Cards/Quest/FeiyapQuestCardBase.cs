@@ -15,7 +15,7 @@ namespace Feiyap.Cards.Quest;
 /// <summary>
 /// 绯夜氏转职任务牌基类。
 /// </summary>
-public abstract class FeiyapQuestCardBase : ModCardTemplate
+public abstract class FeiyapQuestCardBase : FeiyapCardTemplate
 {
     private int _progress;
 
@@ -55,8 +55,7 @@ public abstract class FeiyapQuestCardBase : ModCardTemplate
         new IntVar("Goal", QuestGoal)
     ];
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/FeiyapQuest.png");
+    public override CardAssetProfile AssetProfile => FeiyapCardAssets.For("FeiyapQuest");
 
     protected FeiyapQuestCardBase()
         : base(0, CardType.Quest, CardRarity.Quest, TargetType.Self, showInCardLibrary: false)

@@ -18,10 +18,8 @@ namespace Feiyap.Cards.Common;
 /// 胧影：获得 4 / 6 点居合，本回合获得 2 / 3 点敏捷。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon13 : ModCardTemplate
+public sealed class FeiyapCommon13 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

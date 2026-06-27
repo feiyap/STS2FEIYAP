@@ -14,11 +14,23 @@
 
   "FEIYAP_KEYWORD_CONSTELLATION.title": "Constellation",
 
-  "FEIYAP_KEYWORD_CONSTELLATION.description": "When played, gain 1 Star.",
+  "FEIYAP_KEYWORD_CONSTELLATION.description": "When played, gain 1{singleStarIcon}.",
 
   "FEIYAP_KEYWORD_ZANXIN.title": "Zanxin",
 
-  "FEIYAP_KEYWORD_ZANXIN.description": "Your next [gold]Block[/gold] or [gold]Iaido[/gold] gain is increased by 1."
+  "FEIYAP_KEYWORD_ZANXIN.description": "Your next [gold]Block[/gold] or [gold]Iaido[/gold] gain is increased by 1.",
+
+  "FEIYAP_KEYWORD_HEAT_DEATH.title": "Heat Death",
+
+  "FEIYAP_KEYWORD_HEAT_DEATH.description": "At the start of your turn, lose 1 HP. At the end of your turn, double your [gold]Heat Death[/gold].",
+
+  "FEIYAP_KEYWORD_TAROT_UPRIGHT.title": "Tarot - Upright",
+
+  "FEIYAP_KEYWORD_TAROT_UPRIGHT.description": "The last card played was a [gold]Skill[/gold].",
+
+  "FEIYAP_KEYWORD_TAROT_REVERSED.title": "Tarot - Reversed",
+
+  "FEIYAP_KEYWORD_TAROT_REVERSED.description": "The last card played was an [gold]Attack[/gold]."
 
 }
 

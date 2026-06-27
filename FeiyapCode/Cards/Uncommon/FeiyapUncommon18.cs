@@ -17,10 +17,8 @@ namespace Feiyap.Cards.Uncommon;
 /// 明镜止水：消耗所有状态牌、诅咒牌和任务牌；每消耗 1 张，获得 1 / 2 点活力。消耗。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon18 : ModCardTemplate
+public sealed class FeiyapUncommon18 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

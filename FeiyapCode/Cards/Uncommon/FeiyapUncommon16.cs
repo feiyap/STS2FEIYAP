@@ -14,10 +14,8 @@ namespace Feiyap.Cards.Uncommon;
 /// 迷雾斩：你的下一个攻击段数大于 1 的攻击牌获得 1 / 2 个额外攻击段数。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon16 : ModCardTemplate
+public sealed class FeiyapUncommon16 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

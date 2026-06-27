@@ -16,12 +16,10 @@ namespace Feiyap.Cards.Common;
 /// 回雪：获得 4 / 5 点格挡，获得 4 / 5 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon16 : ModCardTemplate
+public sealed class FeiyapCommon16 : FeiyapCardTemplate
 {
     public override bool GainsBlock => true;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

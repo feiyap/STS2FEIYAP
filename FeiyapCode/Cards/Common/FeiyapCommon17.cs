@@ -14,12 +14,10 @@ namespace Feiyap.Cards.Common;
 /// 星天桥：将手牌中的一张牌放到抽牌堆底部，从抽牌堆中选择 1 张相同类型的牌放入手牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon17 : ModCardTemplate
+public sealed class FeiyapCommon17 : FeiyapCardTemplate
 {
     public override int CanonicalStarCost => 2;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public FeiyapCommon17()
         : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)

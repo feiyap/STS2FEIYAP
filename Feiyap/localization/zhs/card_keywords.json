@@ -14,11 +14,23 @@
 
   "FEIYAP_KEYWORD_CONSTELLATION.title": "星座",
 
-  "FEIYAP_KEYWORD_CONSTELLATION.description": "打出后，获得 1 点星星（星辉）。",
+  "FEIYAP_KEYWORD_CONSTELLATION.description": "打出后，获得 1{singleStarIcon}。",
 
   "FEIYAP_KEYWORD_ZANXIN.title": "残心",
 
-  "FEIYAP_KEYWORD_ZANXIN.description": "你下一次获得的[gold]格挡[/gold]或[gold]居合[/gold]增加 1 点。"
+  "FEIYAP_KEYWORD_ZANXIN.description": "你下一次获得的[gold]格挡[/gold]或[gold]居合[/gold]增加 1 点。",
+
+  "FEIYAP_KEYWORD_HEAT_DEATH.title": "热寂",
+
+  "FEIYAP_KEYWORD_HEAT_DEATH.description": "回合开始时，失去 1 点生命。回合结束时，[gold]热寂[/gold]层数翻倍。",
+
+  "FEIYAP_KEYWORD_TAROT_UPRIGHT.title": "塔罗-正位",
+
+  "FEIYAP_KEYWORD_TAROT_UPRIGHT.description": "上一张打出的卡牌是[gold]技能牌[/gold]。",
+
+  "FEIYAP_KEYWORD_TAROT_REVERSED.title": "塔罗-逆位",
+
+  "FEIYAP_KEYWORD_TAROT_REVERSED.description": "上一张打出的卡牌是[gold]攻击牌[/gold]。"
 
 }
 

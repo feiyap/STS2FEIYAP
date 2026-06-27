@@ -34,7 +34,27 @@
 
   "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "Conversion Cast",
 
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {Amount} [gold]Zanxin[/gold]."
+  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {Amount} [gold]Zanxin[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.title": "Zhai Shi Yu",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.description": "[gold]Iaido[/gold] deals double damage this turn.",
+
+  "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.title": "Yu Ceng Wei Zi",
+
+  "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.description": "Playing [gold]Attacks[/gold] no longer removes [gold]Vigor[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.title": "Heat Death",
+
+  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.description": "At the start of your turn, lose 1 HP. At the end of your turn, double your [gold]Heat Death[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.title": "Hua Luo Surge",
+
+  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "This turn, [gold]Iaido[/gold] damage is multiplied by {Amount}.",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.title": "World",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "This turn, [gold]Tarot[/gold] cards cost 0."
 
 }
 

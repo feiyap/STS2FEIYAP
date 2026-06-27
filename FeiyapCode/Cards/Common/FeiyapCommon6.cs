@@ -16,10 +16,8 @@ namespace Feiyap.Cards.Common;
 /// 天津四：星座，造成 9 / 12 点伤害，抽 1 张随机星座牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon6 : ModCardTemplate
+public sealed class FeiyapCommon6 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

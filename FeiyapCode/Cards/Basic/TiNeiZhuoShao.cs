@@ -20,7 +20,7 @@ namespace Feiyap.Cards.Basic;
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 [RegisterCharacterStarterCard(typeof(FeiyapCharacter), 1)]
-public sealed class TiNeiZhuoShao : ModCardTemplate
+public sealed class TiNeiZhuoShao : FeiyapCardTemplate
 {
     private const int BaseEnergyCost = 1;
     private const CardType CardKind = CardType.Attack;
@@ -28,8 +28,6 @@ public sealed class TiNeiZhuoShao : ModCardTemplate
     private const TargetType CardTarget = TargetType.AnyEnemy;
     private const bool ShowInCardLibrary = true;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -45,7 +43,7 @@ public sealed class TiNeiZhuoShao : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6, ValueProp.Move),
-        new PowerVar<FeiyapInternalBurnPower>(2m)
+        new PowerVar<FeiyapInternalBurnPower>(3m)
     ];
 
     public TiNeiZhuoShao() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)

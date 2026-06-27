@@ -16,12 +16,10 @@ namespace Feiyap.Cards.Common;
 /// 心传：获得 11 / 13 点格挡，获得 5 / 7 点残心。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon12 : ModCardTemplate
+public sealed class FeiyapCommon12 : FeiyapCardTemplate
 {
     public override bool GainsBlock => true;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

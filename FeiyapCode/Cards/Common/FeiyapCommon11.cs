@@ -15,12 +15,10 @@ namespace Feiyap.Cards.Common;
 /// 止水：获得 9 / 11 点格挡，获得 1 / 2 点活力。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon11 : ModCardTemplate
+public sealed class FeiyapCommon11 : FeiyapCardTemplate
 {
     public override bool GainsBlock => true;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [

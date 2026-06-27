@@ -19,10 +19,8 @@ namespace Feiyap.Cards.Uncommon;
 /// 天市右垣七：造成 5 / 8 点伤害，给予 3 层体内灼烧，从抽牌堆选 1 张牌加入手牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon10 : ModCardTemplate
+public sealed class FeiyapUncommon10 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

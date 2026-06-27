@@ -15,10 +15,10 @@ namespace Feiyap.Cards.Ancients;
 /// 先古卡：于万千碎裂的世界破片。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class WorldShards : ModCardTemplate
+public sealed class WorldShards : FeiyapCardTemplate
 {
     public WorldShards()
-        : base(2, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: false)
+        : base(2, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
     {
     }
 

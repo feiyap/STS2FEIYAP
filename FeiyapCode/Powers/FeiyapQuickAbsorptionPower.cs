@@ -16,13 +16,23 @@ namespace Feiyap.Powers;
 /// 速纳术：本回合获得居合时额外获得等量数值。
 /// </summary>
 [RegisterPower]
-public sealed class FeiyapQuickAbsorptionPower : ModPowerTemplate
+public sealed class FeiyapQuickAbsorptionPower : ModPowerTemplate, IFeiyapIaidoGainAdditive
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
+
+    public decimal GetIaidoGainAdditiveBonus(in FeiyapIaidoGainContext context)
+    {
+        if (context.Creature != Owner || Amount <= 0)
+        {
+            return 0m;
+        }
+
+        return Amount;
+    }
 
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext choiceContext,

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using Feiyap.Powers;
@@ -6,21 +8,18 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace Feiyap.Cards.Uncommon;
+namespace Feiyap.Cards.Ancients;
 
 /// <summary>
-/// 速纳术：本回合获得居合时额外获得 2 / 3 点。
+/// 先古卡：斋时雨（原版先古遗物「古老牙齿」由居合术超越获得）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon19 : ModCardTemplate
+public sealed class ZhaiShiYu : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
-
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
         FeiyapKeywords.Iaido
@@ -28,27 +27,35 @@ public sealed class FeiyapUncommon19 : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapQuickAbsorptionPower>(2m)
+        new PowerVar<FeiyapIaidoPower>(12m)
     ];
 
-    public FeiyapUncommon19()
-        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public ZhaiShiYu()
+        : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await FeiyapIaidoCmd.Gain(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["FeiyapIaidoPower"].BaseValue,
+            ValueProp.Move,
+            this,
+            cardPlay);
+
         await PowerCmd.Apply(
             choiceContext,
-            ModelDb.Power<FeiyapQuickAbsorptionPower>().ToMutable(),
+            ModelDb.Power<FeiyapIaidoRainPower>().ToMutable(),
             Owner.Creature,
-            DynamicVars["FeiyapQuickAbsorptionPower"].BaseValue,
+            1m,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapQuickAbsorptionPower"].UpgradeValueBy(1m);
+        DynamicVars["FeiyapIaidoPower"].UpgradeValueBy(9m);
     }
 }

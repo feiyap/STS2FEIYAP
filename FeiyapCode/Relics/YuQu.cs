@@ -165,19 +165,11 @@ public abstract class YuQuBase : ModRelicTemplate
         }
 
         var tracker = FeiyapCombatTracker.Get(Owner);
-        tracker.RecordCardPlayed(cardPlay.Card.Type);
+        FeiyapQuestProgress.RecordCardPlayed(Owner, cardPlay.Card.Type);
 
         if (FeiyapCardTags.HasConstellation(cardPlay.Card))
         {
             tracker.ConstellationPlayedThisTurn = true;
-        }
-
-        foreach (var quest in Owner.Deck.Cards.OfType<FaWei>())
-        {
-            if (!quest.IsComplete && tracker.AlternateBonusActive)
-            {
-                quest.AddProgress(1);
-            }
         }
 
         return Task.CompletedTask;

@@ -15,11 +15,21 @@ using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Relics;
 
-public abstract class MerryWitchBase : ModRelicTemplate
+public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultiplier
 {
     protected abstract decimal AlternateBonusMultiplier { get; }
 
     public override RelicRarity Rarity => RelicRarity.Rare;
+
+    public decimal ModifyIaidoGainMultiplicative(in FeiyapIaidoGainContext context, decimal amount)
+    {
+        if (context.Creature.Player == Owner && FeiyapCombatTracker.Get(Owner).AlternateBonusActive)
+        {
+            return amount * AlternateBonusMultiplier;
+        }
+
+        return amount;
+    }
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target,

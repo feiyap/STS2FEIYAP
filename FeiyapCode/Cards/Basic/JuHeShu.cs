@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using Feiyap.Powers;
@@ -18,7 +19,8 @@ namespace Feiyap.Cards.Basic;
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 [RegisterCharacterStarterCard(typeof(FeiyapCharacter), 1)]
-public sealed class JuHeShu : ModCardTemplate
+[RegisterArchaicToothTranscendence(typeof(ZhaiShiYu))]
+public sealed class JuHeShu : FeiyapCardTemplate
 {
     private const int BaseEnergyCost = 1;
     private const CardType CardKind = CardType.Skill;
@@ -26,8 +28,6 @@ public sealed class JuHeShu : ModCardTemplate
     private const TargetType CardTarget = TargetType.Self;
     private const bool ShowInCardLibrary = true;
 
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

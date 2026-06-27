@@ -13,14 +13,12 @@ namespace Feiyap.Cards.Common;
 /// 朔风切：造成 3 / 4 点伤害 4 次。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon5 : ModCardTemplate
+public sealed class FeiyapCommon5 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3, ValueProp.Move),
+        new DamageVar(4, ValueProp.Move),
         new RepeatVar(4)
     ];
 

@@ -12,7 +12,7 @@ namespace Feiyap.Cards.Basic;
 // 防御牌和打击一样注册到角色卡池，并作为 4 张初始卡加入角色卡组。
 [RegisterCard(typeof(FeiyapCardPool))]
 [RegisterCharacterStarterCard(typeof(FeiyapCharacter), 4)]
-public sealed class FeiyapDefend : ModCardTemplate
+public sealed class FeiyapDefend : FeiyapCardTemplate
 {
     // 基础耗能。
     private const int BaseEnergyCost = 1;
@@ -32,9 +32,6 @@ public sealed class FeiyapDefend : ModCardTemplate
     public override bool GainsBlock => true;
 
     // 卡图资源。
-    // 如果你按这行代码写，文件名就对应 Feiyap/images/cards/FeiyapDefend.png。
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
 

@@ -14,10 +14,8 @@ namespace Feiyap.Cards.Common;
 /// 燕返：造成 3 / 6 点伤害，获得 1 点耗能。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon2 : ModCardTemplate
+public sealed class FeiyapCommon2 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [

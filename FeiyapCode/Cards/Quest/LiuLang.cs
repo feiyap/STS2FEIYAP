@@ -19,7 +19,7 @@ public sealed class LiuLang : FeiyapQuestCardBase
 {
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.LiuLang;
 
-    protected override int QuestGoal => 240;
+    protected override int QuestGoal => 480;
 
     protected override Task GrantReward(PlayerChoiceContext choiceContext) =>
         FeiyapQuestRewards.GrantQuestRelic<StarSlayer, TianXingJian>(choiceContext, Owner);

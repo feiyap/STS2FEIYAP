@@ -16,10 +16,8 @@ namespace Feiyap.Cards.Common;
 /// 残月：造成 9 / 12 点伤害，获得 2 点残心。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon4 : ModCardTemplate
+public sealed class FeiyapCommon4 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

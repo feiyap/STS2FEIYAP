@@ -13,10 +13,8 @@ namespace Feiyap.Cards.Common;
 /// 晚樱：保留，造成 8 / 11 点伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon1 : ModCardTemplate
+public sealed class FeiyapCommon1 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -25,7 +23,7 @@ public sealed class FeiyapCommon1 : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8, ValueProp.Move)
+        new DamageVar(11, ValueProp.Move)
     ];
 
     public FeiyapCommon1()

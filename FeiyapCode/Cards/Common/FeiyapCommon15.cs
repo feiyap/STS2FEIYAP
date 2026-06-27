@@ -17,10 +17,8 @@ namespace Feiyap.Cards.Common;
 /// 纳刀：不存在居合时才能发动，获得 4 / 7 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon15 : ModCardTemplate
+public sealed class FeiyapCommon15 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [

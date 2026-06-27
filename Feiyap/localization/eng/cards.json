@@ -2,35 +2,41 @@
 
   "FEIYAP_CARD_MI_WANG.title": "Mi Wang",
 
-  "FEIYAP_CARD_MI_WANG.description": "[gold]Eternal[/gold].\nCannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Attacks[/gold].\nWhen played, remove this card and gain the Investigator relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
+  "FEIYAP_CARD_MI_WANG.description": "Cannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Attacks[/gold].\nWhen played, remove this card and gain the Investigator relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
 
   "FEIYAP_CARD_KU_XIU.title": "Ku Xiu",
 
-  "FEIYAP_CARD_KU_XIU.description": "[gold]Eternal[/gold].\nCannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Iaido[/gold].\nWhen played, remove this card and gain the Sword Saint relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
+  "FEIYAP_CARD_KU_XIU.description": "Cannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Iaido[/gold].\nWhen played, remove this card and gain the Sword Saint relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
 
   "FEIYAP_CARD_LIU_LANG.title": "Liu Lang",
 
-  "FEIYAP_CARD_LIU_LANG.description": "[gold]Eternal[/gold].\nCannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Internal Burn[/gold].\nWhen played, remove this card and gain the Star Slayer relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
+  "FEIYAP_CARD_LIU_LANG.description": "Cannot be played until the quest is complete.\nComplete after dealing [blue]{Goal}[/blue] damage with [gold]Internal Burn[/gold].\nWhen played, remove this card and gain the Star Slayer relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
 
   "FEIYAP_CARD_FA_WEI.title": "Fa Wei",
 
-  "FEIYAP_CARD_FA_WEI.description": "[gold]Eternal[/gold].\nCannot be played until the quest is complete.\nComplete after alternating [gold]Attacks[/gold] and [gold]Skills[/gold] [blue]{Goal}[/blue] times.\nWhen played, remove this card and gain the Merry Witch relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
+  "FEIYAP_CARD_FA_WEI.description": "Cannot be played until the quest is complete.\nComplete after alternating [gold]Attacks[/gold] and [gold]Skills[/gold] [blue]{Goal}[/blue] times.\nWhen played, remove this card and gain the Merry Witch relic.\n(Progress: [blue]{Progress}[/blue]/[blue]{Goal}[/blue])",
 
   "FEIYAP_CARD_KE_XUE_ZHENG.title": "Ke Xue Zheng",
 
-  "FEIYAP_CARD_KE_XUE_ZHENG.description": "Deal {Damage:diff()} damage.",
+  "FEIYAP_CARD_KE_XUE_ZHENG.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nWhile in your hand, each time you take damage, gain 1 additional attack hit.\n{IfUpgraded:show:While in your hand, if your HP is below 1, restore to 1, then play and exhaust this card.|}",
 
   "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.title": "Fei Ying Yu Hua Luo",
 
-  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "Deal {Damage:diff()} damage.",
+  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "Gain {FeiyapIaidoPower:diff()} [gold]Iaido[/gold].\nThis turn, [gold]Iaido[/gold] deals {IaidoSurgePercent:diff()}% more damage.",
 
   "FEIYAP_CARD_WU_SHENG_XING_YUN.title": "Wu Sheng Xing Yun",
 
-  "FEIYAP_CARD_WU_SHENG_XING_YUN.description": "Deal {Damage:diff()} damage.",
+  "FEIYAP_CARD_WU_SHENG_XING_YUN.description": "Apply {FeiyapHeatDeathPower:diff()} [gold]Heat Death[/gold].\nAdd 1 {IfUpgraded:show:upgraded }[gold]Starfall Meteor[/gold] to your hand.",
+
+  "FEIYAP_CARD_XING_TIAN_YUN_ZHUI.title": "Starfall Meteor",
+
+  "FEIYAP_CARD_XING_TIAN_YUN_ZHUI.description": "Deal {Damage:diff()} damage.\nDeal {EffectBonus:diff()} additional damage for each stack of effects on the target.",
 
   "FEIYAP_CARD_WORLD_XXI.title": "XXI - World",
 
-  "FEIYAP_CARD_WORLD_XXI.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "FEIYAP_CARD_WORLD_XXI.description": "[gold]Tarot - Upright[/gold]: Show all [gold]Tarot[/gold] cards except XXI - World. Choose 1 to create in your hand with 0 cost this turn.\n[gold]Tarot - Reversed[/gold]: Costs 2 more. Show all [gold]Tarot[/gold] cards except XXI - World. Choose 3 to create in your hand with 0 cost this turn.",
+
+  "FEIYAP_CARD_WORLD_XXI.selectionPrompt": "Choose Tarot cards to create in your hand.",
 
   "FEIYAP_CARD_WORLD_SHARDS.title": "World Shards",
 
@@ -62,9 +68,9 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON1.title": "Wan Ying",
 
-  "FEIYAP_CARD_FEIYAP_COMMON1.description": "[gold]Retain[/gold].\nDeal {Damage:diff()} damage.",
+  "FEIYAP_CARD_FEIYAP_COMMON1.description": "Deal {Damage:diff()} damage.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON1.smartDescription": "[gold]Retain[/gold].\nDeal {Damage:diff()} damage.",
+  "FEIYAP_CARD_FEIYAP_COMMON1.smartDescription": "Deal {Damage:diff()} damage.",
 
   "FEIYAP_CARD_FEIYAP_COMMON2.title": "Yan Fan",
 
@@ -108,17 +114,17 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON8.smartDescription": "[gold]Constellation[/gold].\nDeal {Damage:diff()} damage.\nApply {FeiyapInternalBurnPower:diff()} [gold]Internal Burn[/gold].",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.title": "Fei Shan",
+  "FEIYAP_CARD_FEIYAP_COMMON9.title": "XIX - The Sun",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.description": "Deal {Damage:diff()} damage.\nIf the last card played was a [gold]Skill[/gold], this costs 0.",
+  "FEIYAP_CARD_FEIYAP_COMMON9.description": "Deal {Damage:diff()} damage.\n[gold]Tarot - Upright[/gold]: Deal {BonusDamage:diff()} additional damage.\n[gold]Tarot - Reversed[/gold]: Costs 0.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.smartDescription": "Deal {Damage:diff()} damage.\nIf the last card played was a [gold]Skill[/gold], this costs 0.",
+  "FEIYAP_CARD_FEIYAP_COMMON9.smartDescription": "Deal {Damage:diff()} damage.\n[gold]Tarot - Upright[/gold]: Deal {BonusDamage:diff()} additional damage.\n[gold]Tarot - Reversed[/gold]: Costs 0.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON10.title": "Liu Di",
+  "FEIYAP_CARD_FEIYAP_COMMON10.title": "Su Na Shu",
 
-  "FEIYAP_CARD_FEIYAP_COMMON10.description": "Deal {Damage:diff()} damage.\nDraw 1 random [gold]Attack[/gold] and 1 random [gold]Skill[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON10.description": "This turn, whenever you gain [gold]Iaido[/gold] from cards, gain {FeiyapQuickAbsorptionPower:diff()} additional.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON10.smartDescription": "Deal {Damage:diff()} damage.\nDraw 1 random [gold]Attack[/gold] and 1 random [gold]Skill[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON10.smartDescription": "This turn, whenever you gain [gold]Iaido[/gold] from cards, gain {FeiyapQuickAbsorptionPower:diff()} additional.",
 
   "FEIYAP_CARD_FEIYAP_COMMON11.title": "Zhi Shui",
 
@@ -164,21 +170,21 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON18.title": "Xing Mu",
 
-  "FEIYAP_CARD_FEIYAP_COMMON18.description": "Gain {Block:diff()} [gold]Block[/gold].\nApply {FeiyapInternalBurnPower:diff()} [gold]Internal Burn[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON18.description": "Gain {Block:diff()} [gold]Block[/gold].\nDraw {Cards:diff()} cards.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON18.smartDescription": "Gain {Block:diff()} [gold]Block[/gold].\nApply {FeiyapInternalBurnPower:diff()} [gold]Internal Burn[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON18.smartDescription": "Gain {Block:diff()} [gold]Block[/gold].\nDraw {Cards:diff()} cards.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON19.title": "Lian Xu Shi Fa",
+  "FEIYAP_CARD_FEIYAP_COMMON19.title": "X - Wheel of Fortune",
 
-  "FEIYAP_CARD_FEIYAP_COMMON19.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, draw 1 card.",
+  "FEIYAP_CARD_FEIYAP_COMMON19.description": "[gold]Tarot - Upright[/gold]: Gain {VigorPower:diff()} [gold]Vigor[/gold]. Gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].\n[gold]Tarot - Reversed[/gold]: Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold]. Apply {WeakPower:diff()} [gold]Weak[/gold].",
 
-  "FEIYAP_CARD_FEIYAP_COMMON19.smartDescription": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, draw 1 card.",
+  "FEIYAP_CARD_FEIYAP_COMMON19.smartDescription": "[gold]Tarot - Upright[/gold]: Gain {VigorPower:diff()} [gold]Vigor[/gold]. Gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].\n[gold]Tarot - Reversed[/gold]: Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold]. Apply {WeakPower:diff()} [gold]Weak[/gold].",
 
-  "FEIYAP_CARD_FEIYAP_COMMON20.title": "Zhuan Huan Shi Fa",
+  "FEIYAP_CARD_FEIYAP_COMMON20.title": "XVII - The Star",
 
-  "FEIYAP_CARD_FEIYAP_COMMON20.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON20.description": "[gold]Tarot - Upright[/gold]: Draw {Cards:diff()} random [gold]Attack[/gold] cards.\n[gold]Tarot - Reversed[/gold]: Draw {Cards:diff()} random [gold]Skill[/gold] cards.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON20.smartDescription": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].",
+  "FEIYAP_CARD_FEIYAP_COMMON20.smartDescription": "[gold]Tarot - Upright[/gold]: Draw {Cards:diff()} random [gold]Attack[/gold] cards.\n[gold]Tarot - Reversed[/gold]: Draw {Cards:diff()} random [gold]Skill[/gold] cards.",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON10.title": "Ten Stars Eta Herculis",
 
@@ -200,9 +206,9 @@
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON18.title": "Clear Mirror, Still Water",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON18.description": "[gold]Exhaust[/gold] all Status, Curse, and Quest cards in your possession.\nGain {VigorPower:diff()} [gold]Vigor[/gold] for each card [gold]Exhausted[/gold].\n[gold]Exhaust[/gold].",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON18.description": "[gold]Exhaust[/gold] all Status, Curse, and Quest cards in your possession.\nGain {VigorPower:diff()} [gold]Vigor[/gold] for each card [gold]Exhausted[/gold].",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON18.smartDescription": "[gold]Exhaust[/gold] all Status, Curse, and Quest cards in your possession.\nGain {VigorPower:diff()} [gold]Vigor[/gold] for each card [gold]Exhausted[/gold].\n[gold]Exhaust[/gold].",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON18.smartDescription": "[gold]Exhaust[/gold] all Status, Curse, and Quest cards in your possession.\nGain {VigorPower:diff()} [gold]Vigor[/gold] for each card [gold]Exhausted[/gold].",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON19.title": "Quick Absorption",
 
@@ -212,15 +218,27 @@
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON20.title": "Leaf Hide",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON20.description": "[gold]Retain[/gold].\nWhile in your Hand, can only be played after triggering [gold]Perfect Iaido[/gold].\nDraw {Cards:diff()} cards. Gain {Energy:energyIcons()}.\n[gold]Exhaust[/gold].",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON20.description": "While in your Hand, can only be played after triggering [gold]Perfect Iaido[/gold].\nDraw {Cards:diff()} cards. Gain {Energy:energyIcons()}.",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON20.smartDescription": "[gold]Retain[/gold].\nWhile in your Hand, can only be played after triggering [gold]Perfect Iaido[/gold].\nDraw {Cards:diff()} cards. Gain {Energy:energyIcons()}.\n[gold]Exhaust[/gold].",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON20.smartDescription": "While in your Hand, can only be played after triggering [gold]Perfect Iaido[/gold].\nDraw {Cards:diff()} cards. Gain {Energy:energyIcons()}.",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON21.title": "Heaven May",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON21.description": "[gold]Retain[/gold].\nYour [gold]Iaido[/gold] damages ALL enemies this turn.\nWhenever you gain [gold]Iaido[/gold], reduce this card's cost by 1.",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON21.description": "Your [gold]Iaido[/gold] damages ALL enemies this turn.\nWhenever you gain [gold]Iaido[/gold], reduce this card's cost by 1.",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON21.smartDescription": "[gold]Retain[/gold].\nYour [gold]Iaido[/gold] damages ALL enemies this turn.\nWhenever you gain [gold]Iaido[/gold], reduce this card's cost by 1."
+  "FEIYAP_CARD_FEIYAP_UNCOMMON21.smartDescription": "Your [gold]Iaido[/gold] damages ALL enemies this turn.\nWhenever you gain [gold]Iaido[/gold], reduce this card's cost by 1.",
+
+  "FEIYAP_CARD_ZHAI_SHI_YU.title": "Zhai Shi Yu",
+
+  "FEIYAP_CARD_ZHAI_SHI_YU.description": "Gain {FeiyapIaidoPower:diff()} [gold]Iaido[/gold].\n[gold]Iaido[/gold] deals double damage this turn.",
+
+  "FEIYAP_CARD_ZHAI_SHI_YU.smartDescription": "Gain {FeiyapIaidoPower:diff()} [gold]Iaido[/gold].\n[gold]Iaido[/gold] deals double damage this turn.",
+
+  "FEIYAP_CARD_YU_CENG_WEI_ZI.title": "Yu Ceng Wei Zi",
+
+  "FEIYAP_CARD_YU_CENG_WEI_ZI.description": "Playing [gold]Attacks[/gold] no longer removes [gold]Vigor[/gold].",
+
+  "FEIYAP_CARD_YU_CENG_WEI_ZI.smartDescription": "Playing [gold]Attacks[/gold] no longer removes [gold]Vigor[/gold]."
 
 }
 

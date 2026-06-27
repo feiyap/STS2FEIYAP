@@ -15,10 +15,8 @@ namespace Feiyap.Cards.Common;
 /// 松风：造成 4 / 6 点伤害 2 次，获得 1 点活力。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapCommon3 : ModCardTemplate
+public sealed class FeiyapCommon3 : FeiyapCardTemplate
 {
-    public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png");
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
