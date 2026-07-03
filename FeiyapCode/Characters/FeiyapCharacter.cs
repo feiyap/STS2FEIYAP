@@ -18,7 +18,7 @@ public sealed class FeiyapCharacter : ModCharacterTemplate<FeiyapCardPool, Feiya
     private const string EnergyCounterScenePath = $"{SceneRoot}/Feiyap_energy_counter.tscn";
     private const string MerchantScenePath = $"{SceneRoot}/Feiyap_merchant.tscn";
     private const string RestSiteScenePath = $"{SceneRoot}/Feiyap_rest_site.tscn";
-    private const string CharacterSelectBgScenePath = $"{SceneRoot}/Feiyap_character_select_bg.tscn";
+    private const string CharacterSelectBgScenePath = $"{SceneRoot}/feiyap_background.tscn";
 
     // 角色名称颜色。
     public override Color NameColor => ThemeColor;

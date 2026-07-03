@@ -36,7 +36,7 @@ public sealed class JuHeShu : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapIaidoPower>(4m)
+        new PowerVar<FeiyapIaidoPower>(5m)
     ];
 
     public JuHeShu() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)

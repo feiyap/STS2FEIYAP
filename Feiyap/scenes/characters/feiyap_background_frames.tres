@@ -1,0 +1,460 @@
+[gd_resource type="SpriteFrames" load_steps=76 format=3]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_000.webp" id="2_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_001.webp" id="3_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_002.webp" id="4_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_003.webp" id="5_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_004.webp" id="6_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_005.webp" id="7_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_006.webp" id="8_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_007.webp" id="9_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_008.webp" id="10_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_009.webp" id="11_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_010.webp" id="12_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_011.webp" id="13_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_012.webp" id="14_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_013.webp" id="15_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_014.webp" id="16_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_015.webp" id="17_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_016.webp" id="18_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_017.webp" id="19_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_018.webp" id="20_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_019.webp" id="21_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_020.webp" id="22_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_021.webp" id="23_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_022.webp" id="24_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_023.webp" id="25_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_024.webp" id="26_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_025.webp" id="27_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_026.webp" id="28_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_027.webp" id="29_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_028.webp" id="30_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_029.webp" id="31_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_030.webp" id="32_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_031.webp" id="33_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_032.webp" id="34_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_033.webp" id="35_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_034.webp" id="36_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_035.webp" id="37_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_036.webp" id="38_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_037.webp" id="39_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_038.webp" id="40_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_039.webp" id="41_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_040.webp" id="42_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_041.webp" id="43_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_042.webp" id="44_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_043.webp" id="45_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_044.webp" id="46_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_045.webp" id="47_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_046.webp" id="48_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_047.webp" id="49_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_048.webp" id="50_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_049.webp" id="51_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_050.webp" id="52_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_051.webp" id="53_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_052.webp" id="54_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_053.webp" id="55_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_054.webp" id="56_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_055.webp" id="57_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_056.webp" id="58_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_057.webp" id="59_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_058.webp" id="60_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_059.webp" id="61_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_060.webp" id="62_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_061.webp" id="63_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_062.webp" id="64_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_063.webp" id="65_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_064.webp" id="66_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_065.webp" id="67_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_066.webp" id="68_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_067.webp" id="69_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_068.webp" id="70_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_069.webp" id="71_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_070.webp" id="72_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_071.webp" id="73_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_072.webp" id="74_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_073.webp" id="75_tex"]
+
+[ext_resource type="Texture2D" path="res://Feiyap/scenes/characters/feiyap_background_anim_frames/frame_074.webp" id="76_tex"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("2_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("3_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("4_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("5_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("6_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("7_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("8_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("9_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("10_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("11_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("12_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("13_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("14_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("15_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("16_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("17_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("18_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("19_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("20_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("21_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("22_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("23_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("24_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("25_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("26_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("27_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("28_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("29_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("30_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("31_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("32_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("33_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("34_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("35_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("36_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("37_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("38_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("39_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("40_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("41_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("42_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("43_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("44_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("45_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("46_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("47_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("48_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("49_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("50_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("51_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("52_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("53_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("54_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("55_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("56_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("57_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("58_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("59_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("60_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("61_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("62_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("63_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("64_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("65_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("66_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("67_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("68_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("69_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("70_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("71_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("72_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("73_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("74_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("75_tex")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("76_tex")
+},
+],
+"loop": true,
+"name": &"idle_loop",
+"speed": 24.0
+}]

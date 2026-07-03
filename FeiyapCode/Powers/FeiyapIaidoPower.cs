@@ -100,36 +100,42 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         if (heavenMay != null)
         {
             var enemies = Owner.CombatState?.GetOpponentsOf(Owner).Where(e => e.IsAlive).ToList() ?? [];
-            foreach (var enemy in enemies)
+            await FeiyapSlashCmd.PlayIaidoCounterSlashAll(enemies, async () =>
+            {
+                foreach (var enemy in enemies)
+                {
+                    await CreatureCmd.Damage(
+                        choiceContext,
+                        enemy,
+                        counterDamage,
+                        ValueProp.Unpowered | ValueProp.SkipHurtAnim,
+                        Owner,
+                        null);
+                }
+
+                if (Owner.Player != null && enemies.Count > 0)
+                {
+                    FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, counterDamage * enemies.Count);
+                }
+            });
+        }
+        else
+        {
+            await FeiyapSlashCmd.PlayIaidoCounterSlash(dealer, async () =>
             {
                 await CreatureCmd.Damage(
                     choiceContext,
-                    enemy,
+                    dealer,
                     counterDamage,
                     ValueProp.Unpowered | ValueProp.SkipHurtAnim,
                     Owner,
                     null);
-            }
 
-            if (Owner.Player != null && enemies.Count > 0)
-            {
-                FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, counterDamage * enemies.Count);
-            }
-        }
-        else
-        {
-            await CreatureCmd.Damage(
-                choiceContext,
-                dealer,
-                counterDamage,
-                ValueProp.Unpowered | ValueProp.SkipHurtAnim,
-                Owner,
-                null);
-
-            if (Owner.Player != null)
-            {
-                FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, counterDamage);
-            }
+                if (Owner.Player != null)
+                {
+                    FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, counterDamage);
+                }
+            });
         }
     }
 

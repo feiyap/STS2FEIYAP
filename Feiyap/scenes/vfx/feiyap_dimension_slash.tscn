@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://Feiyap/Shaders/feiyap_dimension_slash.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://Feiyap/Vfx/NFeiyapDimensionSlashVfx.cs" id="2_script"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_slash"]
+shader = ExtResource("1_shader")
+shader_parameter/glow_color = Color(0.95, 0.1, 0.1, 1)
+shader_parameter/slash_progress = 0.0
+shader_parameter/slash_count = 0
+shader_parameter/slash_points_a = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/slash_points_b = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/slash_weights = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/slash_line_progress = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/core_width = 0.0004
+shader_parameter/edge_width = 0.00015
+shader_parameter/core_brightness = 0.05
+shader_parameter/glow_width = 0.006
+shader_parameter/glow_intensity = 0.4
+shader_parameter/cut_strength = 0.028
+shader_parameter/cut_inner = 0.003
+shader_parameter/cut_outer_ratio = 0.2
+shader_parameter/cut_far_ratio = 0.4
+shader_parameter/shadow_diffuse = 0.1
+shader_parameter/shadow_edge = 0.7
+shader_parameter/edge_radius = 0.008
+
+[node name="FeiyapDimensionSlash" type="ColorRect"]
+material = SubResource("ShaderMaterial_slash")
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("2_script")
