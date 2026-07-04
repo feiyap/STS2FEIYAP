@@ -51,6 +51,7 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             -appliedBonus,
             Owner,
             context.CardSource);
+        await FeiyapHermitPower.TryRefundZanxin(context.ChoiceContext, Owner, appliedBonus);
     }
 
     public override decimal ModifyBlockAdditive(
@@ -62,11 +63,11 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
     {
         if (target != Owner || block <= 0m || Amount <= 0 || !props.HasFlag(ValueProp.Move))
         {
-            return block;
+            return 0m;
         }
 
         _pendingBlockBonus = Amount;
-        return block + Amount;
+        return Amount;
     }
 
     public override async Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
@@ -80,5 +81,6 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
         _pendingBlockBonus = 0;
         Flash();
         await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), this, Owner, -consume, Owner, null);
+        await FeiyapHermitPower.TryRefundZanxin(new ThrowingPlayerChoiceContext(), Owner, consume);
     }
 }

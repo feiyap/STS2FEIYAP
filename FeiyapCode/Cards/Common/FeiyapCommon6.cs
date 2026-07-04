@@ -1,38 +1,24 @@
-using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 天津四：星座，造成 9 / 12 点伤害，抽 1 张随机星座牌。
+/// 牙突：造成 7 / 11 点伤害，给予 1 层易伤。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon6 : FeiyapCardTemplate
 {
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        FeiyapKeywords.Constellation
-    ];
-
-    protected override HashSet<CardTag> CanonicalTags => new()
-    {
-        FeiyapCardTags.Constellation
-    };
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(9, ValueProp.Move),
-        new CardsVar(1)
+        new DamageVar(7, ValueProp.Move)
     ];
 
     public FeiyapCommon6()
@@ -49,28 +35,16 @@ public sealed class FeiyapCommon6 : FeiyapCardTemplate
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await FeiyapConstellationCmd.OnPlayed(choiceContext, Owner);
-
-        var allCards = Owner.PlayerCombatState?.AllCards;
-        if (allCards == null)
-        {
-            return;
-        }
-
-        var candidates = allCards
-            .Where(c => FeiyapCardTags.HasConstellation(c) && c != this)
-            .Where(c => c.Pile?.Type is PileType.Draw or PileType.Discard)
-            .ToList();
-
-        var drawn = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
-        if (drawn != null)
-        {
-            await CardPileCmd.Add(drawn, PileType.Hand);
-        }
+        await PowerCmd.Apply<VulnerablePower>(
+            choiceContext,
+            cardPlay.Target,
+            1m,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }

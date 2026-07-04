@@ -2,7 +2,7 @@
 
   "FEIYAP_RELIC_YU_QU.title": "Yu Qu",
 
-  "FEIYAP_RELIC_YU_QU.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, Liu Lang, and Fa Wei to your Deck.",
+  "FEIYAP_RELIC_YU_QU.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.",
 
   "FEIYAP_RELIC_YU_QU.flavor": "Between taking and leaving, fate already turns.",
 
@@ -10,49 +10,37 @@
 
   "FEIYAP_RELIC_YU_QU_YU_DUO.title": "Yu Qu Yu Duo",
 
-  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, Liu Lang, and Fa Wei to your Deck. Relics gained from quest cards are upgraded.",
+  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck. Relics gained from quest cards are upgraded.",
 
   "FEIYAP_RELIC_YU_QU_YU_DUO.flavor": "To take and to seize, all in one thought.",
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "Investigator",
 
-  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [blue]{RegenPower}[/blue] [gold]Regen[/gold].",
+  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [green]{RegenPower}[/green] [gold]Regen[/gold].",
 
   "FEIYAP_RELIC_INVESTIGATOR.flavor": "\"We will meet again, because you are...\" — Investigator, Feiyap Clan.",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "Fei Sheng Yi Wen Zi",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [blue]{RegenPower}[/blue] [gold]Regen[/gold].",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [green]{RegenPower}[/green] [gold]Regen[/gold].",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "\"We will meet again, because you are...\" — Investigator, Feiyap Clan.",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "\"The wound is shallow — lie still.\" — Investigator, Feiyap Clan.",
 
   "FEIYAP_RELIC_SWORD_SAINT.title": "Sword Saint",
 
-  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Iaido[/gold] deals [blue]50%[/blue] more damage.",
+  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]10[/blue] times damage.",
 
   "FEIYAP_RELIC_SWORD_SAINT.flavor": "\"The battlefield, a homeland I miss...\" — Sword Saint, Feiyap Clan.",
 
   "FEIYAP_RELIC_WU_MING_REN.title": "Wu Ming Ren",
 
-  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Iaido[/gold] deals [blue]100%[/blue] more damage.",
+  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]20[/blue] times damage.",
 
-  "FEIYAP_RELIC_WU_MING_REN.flavor": "\"The battlefield, truly a homeland I miss...\" — Sword Saint, Feiyap Clan.",
-
-  "FEIYAP_RELIC_STAR_SLAYER.title": "Star Slayer",
-
-  "FEIYAP_RELIC_STAR_SLAYER.description": "Gain the Ancient card Wu Sheng Xing Yun. At the start of each combat, apply [blue]{FeiyapVoidHolePower}[/blue] [gold]Void Hole[/gold] to ALL enemies.",
-
-  "FEIYAP_RELIC_STAR_SLAYER.flavor": "\"Even light cannot escape my grasp — what hope do you have?\" — Star Slayer, Feiyap Clan.",
-
-  "FEIYAP_RELIC_TIAN_XING_JIAN.title": "Tian Xing Jian",
-
-  "FEIYAP_RELIC_TIAN_XING_JIAN.description": "Gain the Ancient card Wu Sheng Xing Yun. At the start of each combat, apply [blue]{FeiyapVoidHolePower}[/blue] [gold]Void Hole[/gold] to ALL enemies.",
-
-  "FEIYAP_RELIC_TIAN_XING_JIAN.flavor": "\"Even light cannot escape my grasp — what hope do you have?\" — Star Slayer, Feiyap Clan.",
+  "FEIYAP_RELIC_WU_MING_REN.flavor": "\"Listen with your ears, strike with your heart.\" — Sword Saint, Feiyap Clan.",
 
   "FEIYAP_RELIC_MERRY_WITCH.title": "Merry Witch",
 
-  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage and [gold]Block[/gold] gained are increased by [blue]25%[/blue].",
+  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]25%[/blue].",
 
   "FEIYAP_RELIC_MERRY_WITCH.flavor": "\"Will this world be more interesting than the last?\" — Merry Witch, Feiyap Clan.",
 

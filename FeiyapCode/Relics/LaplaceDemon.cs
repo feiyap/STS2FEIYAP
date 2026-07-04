@@ -17,7 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Relics;
 
 /// <summary>
-/// 拉普拉斯妖：单局内完成全部 4 个转职任务后的隐藏奖励遗物。
+/// 拉普拉斯妖：完成全部 3 个转职任务后的隐藏奖励遗物。
 /// </summary>
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class LaplaceDemon : ModRelicTemplate

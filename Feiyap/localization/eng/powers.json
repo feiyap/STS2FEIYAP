@@ -1,16 +1,8 @@
 {
 
-  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.title": "Void Hole",
-
-  "FEIYAP_POWER_FEIYAP_VOID_HOLE_POWER.description": "Whenever this creature gains a debuff, gain 1 additional stack of [gold]Void Hole[/gold].",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_POWER.title": "Iaido",
 
-  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount. All [gold]Iaido[/gold] is removed when you play an [gold]Attack[/gold] or at turn start. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
-
-  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.title": "Internal Burn",
-
-  "FEIYAP_POWER_FEIYAP_INTERNAL_BURN_POWER.description": "Lose 1 HP whenever this creature attacks. At the end of its turn, lose 1 stack.",
+  "FEIYAP_POWER_FEIYAP_IAIDO_POWER.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount as attack damage. Remove all [gold]Iaido[/gold] at turn start. When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 2. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
 
   "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.title": "Zanxin",
 
@@ -44,17 +36,89 @@
 
   "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.description": "Playing [gold]Attacks[/gold] no longer removes [gold]Vigor[/gold].",
 
-  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.title": "Heat Death",
-
-  "FEIYAP_POWER_FEIYAP_HEAT_DEATH_POWER.description": "At the start of your turn, lose 1 HP. At the end of your turn, double your [gold]Heat Death[/gold].",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.title": "Hua Luo Surge",
 
-  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "This turn, [gold]Iaido[/gold] damage is multiplied by {Amount}.",
+  "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "This turn, all [gold]Iaido[/gold] counts as [gold]Perfect Iaido[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.title": "World",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.description": "All [gold]Tarot[/gold] cards can freely choose to trigger their upright or reversed effect.",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.title": "World",
+
+  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "All [gold]Tarot[/gold] cards trigger both their upright and reversed effects.",
 
   "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.title": "World",
 
-  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "This turn, [gold]Tarot[/gold] cards cost 0."
+  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "This turn, [gold]Tarot[/gold] cards cost 0{energyPrefix:energyIcons(1)}.",
+
+  "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.title": "Reverse Kesagiri",
+
+  "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.description": "Double [gold]Block[/gold] and [gold]Iaido[/gold] gained from your next card.",
+
+  "FEIYAP_POWER_FEIYAP_BLOOD_SPLASH_VIGOR_POWER.title": "Five Steps of Blood",
+
+  "FEIYAP_POWER_FEIYAP_BLOOD_SPLASH_VIGOR_POWER.description": "[gold]Vigor[/gold] has {Amount}x effect on Five Steps of Blood.",
+
+  "FEIYAP_POWER_FEIYAP_SNOW_APPROACHING_POWER.title": "Snow Approaches",
+
+  "FEIYAP_POWER_FEIYAP_SNOW_APPROACHING_POWER.description": "Take 20 damage at the end of the turn in {Amount} turns.",
+
+  "FEIYAP_POWER_FEIYAP_SWORD_SAINT_HEART_POWER.title": "Sword Saint Heart",
+
+  "FEIYAP_POWER_FEIYAP_SWORD_SAINT_HEART_POWER.description": "Whenever you trigger [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold]. Whenever you trigger [gold]Perfect Iaido[/gold], gain 5 [gold]Vigor[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_SWORD_HEART_REMAINS_POWER.title": "Sword Heart Remains",
+
+  "FEIYAP_POWER_FEIYAP_SWORD_HEART_REMAINS_POWER.description": "At the start of your turn, if you lost no HP last turn, gain {Amount} [gold]Dexterity[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HYAKUHANHEI_POWER.title": "Hyakuhanhei",
+
+  "FEIYAP_POWER_FEIYAP_HYAKUHANHEI_POWER.description": "When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 1 instead. When you play a [gold]Skill[/gold], gain 1 [gold]Iaido[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.title": "Hyakukyōshu",
+
+  "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.description": "When you play an [gold]Attack[/gold], gain {Amount} [gold]Dexterity[/gold] this turn. When you play a [gold]Skill[/gold], gain {Amount} [gold]Strength[/gold] this turn.",
+
+  "FEIYAP_POWER_FEIYAP_FOOL_POWER.title": "The Fool",
+
+  "FEIYAP_POWER_FEIYAP_FOOL_POWER.description": "At the start of your turn, trigger The Fool's [gold]Tarot[/gold] effect.",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.title": "The Lovers",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.description": "The next damage event triggers The Lovers' effect.",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.title": "The Hermit",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.description": "The next time you consume [gold]Vigor[/gold] or [gold]Zanxin[/gold], gain equal resources back.",
+
+  "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.title": "Tenka Five Swords",
+
+  "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.description": "[gold]Strength[/gold] and [gold]Vigor[/gold] have {Amount}x effect on Tenka Five Swords.",
+
+  "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.title": "Kachuu Fugetsu",
+
+  "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.description": "When played and at the start of your turn, gain {Amount} [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], and [gold]Zanxin[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "Kassai Jizai",
+
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain [gold]Iaido[/gold], gain {Amount} [gold]Vigor[/gold] per [gold]Iaido[/gold] gained.",
+
+  "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "Silver Bowl Snow",
+
+  "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.description": "All [gold]Block[/gold] you gain is converted into [gold]Iaido[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.title": "The Chariot",
+
+  "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.description": "At the end of your turn, play {Amount} random cards from your Discard Pile.",
+
+  "FEIYAP_POWER_FEIYAP_STRENGTH_DOWN_POWER.title": "Strength",
+
+  "FEIYAP_POWER_FEIYAP_STRENGTH_DOWN_POWER.description": "Lose {Amount} [gold]Strength[/gold] this turn.",
+
+  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.title": "Wabi-Sabi",
+
+  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "Gain {Amount} [gold]Artifact[/gold] this turn."
 
 }
 

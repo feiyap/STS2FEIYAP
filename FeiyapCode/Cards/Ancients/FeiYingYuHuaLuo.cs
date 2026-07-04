@@ -30,14 +30,12 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<FeiyapIaidoPower>(),
-        HoverTipFactory.FromPower<FeiyapIaidoSurgePower>()
+        HoverTipFactory.FromPower<FeiyapIaidoPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapIaidoPower>(999m),
-        new DynamicVar("IaidoSurgePercent", 500m)
+        new IaidoVar(999m, ValueProp.Move)
     ];
 
     public FeiYingYuHuaLuo()
@@ -50,23 +48,25 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars["FeiyapIaidoPower"].BaseValue,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
             ValueProp.Move,
             this,
             cardPlay);
 
-        var surgeMultiplier = DynamicVars["IaidoSurgePercent"].BaseValue / 100m + 1m;
-        await PowerCmd.Apply(
-            choiceContext,
-            ModelDb.Power<FeiyapIaidoSurgePower>().ToMutable(),
-            Owner.Creature,
-            surgeMultiplier,
-            Owner.Creature,
-            this);
+        if (IsUpgraded)
+        {
+            await PowerCmd.Apply(
+                choiceContext,
+                ModelDb.Power<FeiyapIaidoSurgePower>().ToMutable(),
+                Owner.Creature,
+                1m,
+                Owner.Creature,
+                this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["IaidoSurgePercent"].UpgradeValueBy(500m);
+        // 强化后本回合所有居合视为完美居合。
     }
 }

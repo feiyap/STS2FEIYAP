@@ -5,11 +5,9 @@ using Feiyap.Cards.Quest;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -21,7 +19,6 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-
 namespace Feiyap.Relics;
 
 /// <summary>
@@ -30,6 +27,7 @@ namespace Feiyap.Relics;
 public abstract class YuQuBase : ModRelicTemplate
 {
     private int _completedQuestFlags;
+    private bool _hasMadeInitialQuestSelection;
     private bool _startingQuestCardSelectionInProgress;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
@@ -49,6 +47,18 @@ public abstract class YuQuBase : ModRelicTemplate
 
     public bool HasCompletedAllQuests =>
         (CompletedQuestFlags & FeiyapQuestKindExtensions.AllQuestMask) == FeiyapQuestKindExtensions.AllQuestMask;
+
+    /// <summary>本局是否已完成「游戏开始时」的任务牌选择（含选择 0 张的情况）。</summary>
+    [SavedProperty]
+    public bool HasMadeInitialQuestSelection
+    {
+        get => _hasMadeInitialQuestSelection;
+        set
+        {
+            AssertMutable();
+            _hasMadeInitialQuestSelection = value;
+        }
+    }
 
     internal void MarkQuestCompleted(FeiyapQuestKind kind)
     {
@@ -80,6 +90,12 @@ public abstract class YuQuBase : ModRelicTemplate
     private bool HasStartingQuestCard() =>
         Owner.Deck.Cards.Any(c => c is FeiyapQuestCardBase);
 
+    /// <summary>是否仍需弹出「游戏开始时」的任务牌选择界面。</summary>
+    private bool NeedsInitialQuestSelection() =>
+        !HasMadeInitialQuestSelection
+        && CompletedQuestFlags == 0
+        && !HasStartingQuestCard();
+
     private async Task TrySelectStartingQuestCardAfterFadeAsync()
     {
         var transition = NGame.Instance?.Transition;
@@ -93,7 +109,7 @@ public abstract class YuQuBase : ModRelicTemplate
 
     private async Task TrySelectStartingQuestCardAsync()
     {
-        if (HasStartingQuestCard() || _startingQuestCardSelectionInProgress)
+        if (!NeedsInitialQuestSelection() || _startingQuestCardSelectionInProgress)
         {
             return;
         }
@@ -111,24 +127,23 @@ public abstract class YuQuBase : ModRelicTemplate
 
     private async Task SelectStartingQuestCardCoreAsync()
     {
-        if (HasStartingQuestCard())
+        if (!NeedsInitialQuestSelection())
         {
             return;
         }
 
+        var choices = BuildAvailableQuestChoices();
+        if (choices.Count == 0)
+        {
+            HasMadeInitialQuestSelection = true;
+            return;
+        }
+
         var prompt = new LocString("relics", "FEIYAP_RELIC_YU_QU.selectionPrompt");
-        var prefs = new CardSelectorPrefs(prompt, 0, 4)
+        var prefs = new CardSelectorPrefs(prompt, 0, choices.Count)
         {
             Cancelable = false,
             RequireManualConfirmation = true
-        };
-
-        var choices = new List<CardModel>
-        {
-            Owner.RunState.CreateCard<MiWang>(Owner),
-            Owner.RunState.CreateCard<KuXiu>(Owner),
-            Owner.RunState.CreateCard<LiuLang>(Owner),
-            Owner.RunState.CreateCard<FaWei>(Owner)
         };
 
         var selected = await CardSelectCmd.FromSimpleGrid(
@@ -140,46 +155,31 @@ public abstract class YuQuBase : ModRelicTemplate
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(selected, PileType.Deck));
         }
+
+        HasMadeInitialQuestSelection = true;
     }
 
-    public override Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState)
+    private List<CardModel> BuildAvailableQuestChoices()
     {
-        if (participants.Contains(Owner.Creature) && side == Owner.Creature.Side)
+        var choices = new List<CardModel>();
+        if ((CompletedQuestFlags & (int)FeiyapQuestKind.MiWang) == 0)
         {
-            FeiyapCombatTracker.Get(Owner).ConstellationPlayedThisTurn = false;
-            FeiyapPerfectIaidoCmd.OnPlayerTurnStart(Owner);
+            choices.Add(Owner.RunState.CreateCard<MiWang>(Owner));
         }
 
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner != Owner)
+        if ((CompletedQuestFlags & (int)FeiyapQuestKind.KuXiu) == 0)
         {
-            return Task.CompletedTask;
+            choices.Add(Owner.RunState.CreateCard<KuXiu>(Owner));
         }
 
-        var tracker = FeiyapCombatTracker.Get(Owner);
-        FeiyapQuestProgress.RecordCardPlayed(Owner, cardPlay.Card.Type);
-
-        if (FeiyapCardTags.HasConstellation(cardPlay.Card))
+        if ((CompletedQuestFlags & (int)FeiyapQuestKind.FaWei) == 0)
         {
-            tracker.ConstellationPlayedThisTurn = true;
+            choices.Add(Owner.RunState.CreateCard<FaWei>(Owner));
         }
 
-        return Task.CompletedTask;
+        return choices;
     }
 
-    public override Task AfterCombatEnd(CombatRoom _)
-    {
-        FeiyapCombatTracker.ClearCombatState(Owner);
-        return Task.CompletedTask;
-    }
 }
 
 /// <summary>

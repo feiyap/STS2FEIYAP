@@ -29,7 +29,7 @@ public sealed class FeiyapCommon16 : FeiyapCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(4m, ValueProp.Move),
-        new PowerVar<FeiyapIaidoPower>(4m)
+        new IaidoVar(4m, ValueProp.Move)
     ];
 
     public FeiyapCommon16()
@@ -43,7 +43,7 @@ public sealed class FeiyapCommon16 : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars["FeiyapIaidoPower"].BaseValue,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
             ValueProp.Move,
             this,
             cardPlay);
@@ -52,6 +52,6 @@ public sealed class FeiyapCommon16 : FeiyapCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(1m);
-        DynamicVars["FeiyapIaidoPower"].UpgradeValueBy(1m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(1m);
     }
 }

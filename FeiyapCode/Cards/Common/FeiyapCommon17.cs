@@ -4,23 +4,19 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 星天桥：将手牌中的一张牌放到抽牌堆底部，从抽牌堆中选择 1 张相同类型的牌放入手牌。
+/// 缩地：将手牌中的一张牌放到抽牌堆底部，从抽牌堆中选择 1 张相同类型的牌放入手牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon17 : FeiyapCardTemplate
 {
-    public override int CanonicalStarCost => 2;
-
-
     public FeiyapCommon17()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
@@ -63,6 +59,6 @@ public sealed class FeiyapCommon17 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        UpgradeStarCostBy(-1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

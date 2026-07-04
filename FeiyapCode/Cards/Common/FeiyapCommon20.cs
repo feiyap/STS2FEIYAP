@@ -22,8 +22,6 @@ public sealed class FeiyapCommon20 : FeiyapTarotCardBase
         new CardsVar(2)
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsTarotEffectTriggered(Owner);
-
     public FeiyapCommon20()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
@@ -34,38 +32,37 @@ public sealed class FeiyapCommon20 : FeiyapTarotCardBase
     {
         EnsureOrientationInitialized();
 
-        CardType? cardType = null;
-        if (IsUprightTriggered(Owner))
-        {
-            cardType = CardType.Attack;
-        }
-        else if (IsReversedTriggered(Owner))
-        {
-            cardType = CardType.Skill;
-        }
-
-        if (cardType == null)
-        {
-            return;
-        }
-
-        for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
-        {
-            await AddRandomTypedCardFromDrawPile(cardType.Value);
-        }
+        await RunTarotBranches(
+            choiceContext,
+            async () =>
+            {
+                for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
+                {
+                    await AddRandomTypedCardToHand(CardType.Attack);
+                }
+            },
+            async () =>
+            {
+                for (var i = 0; i < DynamicVars.Cards.IntValue; i++)
+                {
+                    await AddRandomTypedCardToHand(CardType.Skill);
+                }
+            });
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 
-    private async Task AddRandomTypedCardFromDrawPile(CardType type)
+    private async Task AddRandomTypedCardToHand(CardType type)
     {
-        var drawPile = PileType.Draw.GetPile(Owner);
-        var card = Owner.RunState.Rng.CombatCardSelection.NextItem(
-            drawPile.Cards.Where(c => c.Type == type));
+        var candidates = Owner.PlayerCombatState?.AllCards
+            .Where(c => c.Type == type)
+            .Where(c => c.Pile?.Type is PileType.Draw or PileType.Discard)
+            .ToList();
 
+        var card = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates ?? []);
         if (card != null)
         {
             await CardPileCmd.Add(card, PileType.Hand);

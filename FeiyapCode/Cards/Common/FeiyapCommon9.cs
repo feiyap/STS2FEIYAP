@@ -3,59 +3,33 @@ using Feiyap.Cards.Tarot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using VoidCard = MegaCrit.Sts2.Core.Models.Cards.Void;
 
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// XIX-太阳：塔罗攻击牌，正位额外伤害，逆位耗能变为 0。
+/// XVI-塔：造成 14 / 18 点伤害；正位消耗，逆位将 1 张虚空加入弃牌堆。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon9 : FeiyapTarotCardBase
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromCard<VoidCard>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(13, ValueProp.Move),
-        new DamageVar("BonusDamage", 7, ValueProp.Move)
+        new DamageVar(14, ValueProp.Move)
     ];
 
-    protected override bool ShouldGlowGoldInternal => IsTarotEffectTriggered(Owner);
-
     public FeiyapCommon9()
-        : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+        : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
         RegisterTarotFactory(player => player.RunState.CreateCard<FeiyapCommon9>(player));
-    }
-
-    public override bool TryModifyEnergyCostInCombatLate(
-        CardModel card,
-        decimal originalCost,
-        out decimal modifiedCost)
-    {
-        modifiedCost = originalCost;
-        if (card != this || Owner?.Creature == null)
-        {
-            return false;
-        }
-
-        if (!IsReversed)
-        {
-            return false;
-        }
-
-        if (IsReversedTriggered(Owner))
-        {
-            modifiedCost = 0m;
-            return true;
-        }
-
-        modifiedCost = originalCost + 2m;
-        return true;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -63,21 +37,32 @@ public sealed class FeiyapCommon9 : FeiyapTarotCardBase
         EnsureOrientationInitialized();
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var damage = DynamicVars.Damage.BaseValue;
-        if (IsUprightTriggered(Owner))
-        {
-            damage += DynamicVars["BonusDamage"].BaseValue;
-        }
-
-        await DamageCmd.Attack(damage)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
+
+        await RunTarotBranches(
+            choiceContext,
+            async () =>
+            {
+                await CardCmd.Exhaust(choiceContext, this);
+            },
+            async () =>
+            {
+                if (CombatState == null)
+                {
+                    return;
+                }
+
+                var voidCard = CombatState.CreateCard<VoidCard>(Owner);
+                CardCmd.PreviewCardPileAdd(
+                    await CardPileCmd.AddGeneratedCardToCombat(voidCard, PileType.Discard, Owner));
+            });
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(5m);
-        DynamicVars["BonusDamage"].UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }

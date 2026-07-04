@@ -12,6 +12,11 @@ public sealed class FeiyapGameplayPatches : IModPatches
     {
         patcher.RegisterPatch<FeiyapDustyTomeSetupPatch>();
         patcher.RegisterPatch<FeiyapPreserveVigorPatch>();
+        patcher.RegisterPatch<FeiyapHermitVigorPatch>();
         patcher.RegisterPatch<FeiyapKeywordDescriptionPatch>();
+        patcher.RegisterPatch<FeiyapCombatTrackingAfterCardPlayedPatch>();
+        patcher.RegisterPatch<FeiyapCombatTrackingAfterDamageGivenPatch>();
+        patcher.RegisterPatch<FeiyapCombatTrackingBeforeSideTurnStartPatch>();
+        patcher.RegisterPatch<FeiyapCombatTrackingAfterCombatEndPatch>();
     }
 }

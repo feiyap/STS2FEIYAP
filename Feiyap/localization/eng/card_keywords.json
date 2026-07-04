@@ -1,16 +1,8 @@
 {
 
-  "FEIYAP_KEYWORD_VOID_HOLE.title": "Void Hole",
-
-  "FEIYAP_KEYWORD_VOID_HOLE.description": "Whenever this creature gains a debuff, gain 1 additional stack of [gold]Void Hole[/gold].",
-
   "FEIYAP_KEYWORD_IAIDO.title": "Iaido",
 
-  "FEIYAP_KEYWORD_IAIDO.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount. All [gold]Iaido[/gold] is removed when you play an [gold]Attack[/gold] or at turn start. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
-
-  "FEIYAP_KEYWORD_INTERNAL_BURN.title": "Internal Burn",
-
-  "FEIYAP_KEYWORD_INTERNAL_BURN.description": "Lose 1 HP whenever this creature attacks. At the end of its turn, lose 1 stack.",
+  "FEIYAP_KEYWORD_IAIDO.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount as attack damage. Remove all [gold]Iaido[/gold] at turn start. When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 2. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
 
   "FEIYAP_KEYWORD_CONSTELLATION.title": "Constellation",
 
@@ -20,17 +12,16 @@
 
   "FEIYAP_KEYWORD_ZANXIN.description": "Your next [gold]Block[/gold] or [gold]Iaido[/gold] gain is increased by 1.",
 
-  "FEIYAP_KEYWORD_HEAT_DEATH.title": "Heat Death",
-
-  "FEIYAP_KEYWORD_HEAT_DEATH.description": "At the start of your turn, lose 1 HP. At the end of your turn, double your [gold]Heat Death[/gold].",
-
   "FEIYAP_KEYWORD_TAROT_UPRIGHT.title": "Tarot - Upright",
 
   "FEIYAP_KEYWORD_TAROT_UPRIGHT.description": "The last card played was a [gold]Skill[/gold].",
 
   "FEIYAP_KEYWORD_TAROT_REVERSED.title": "Tarot - Reversed",
 
-  "FEIYAP_KEYWORD_TAROT_REVERSED.description": "The last card played was an [gold]Attack[/gold]."
+  "FEIYAP_KEYWORD_TAROT_REVERSED.description": "The last card played was an [gold]Attack[/gold].",
+
+  "FEIYAP_KEYWORD_PERFECT_IAIDO.title": "Perfect Iaido",
+
+  "FEIYAP_KEYWORD_PERFECT_IAIDO.description": "When you trigger [gold]Iaido[/gold], if your [gold]Iaido[/gold] equals the incoming attack damage, it counts as [gold]Perfect Iaido[/gold]."
 
 }
-

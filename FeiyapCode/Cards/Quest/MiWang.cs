@@ -19,7 +19,7 @@ public sealed class MiWang : FeiyapQuestCardBase
 {
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.MiWang;
 
-    protected override int QuestGoal => 600;
+    protected override int QuestGoal => 300;
 
     protected override Task GrantReward(PlayerChoiceContext choiceContext) =>
         FeiyapQuestRewards.GrantQuestRelic<Investigator, FeiShengYiWenZi>(choiceContext, Owner);
@@ -32,12 +32,13 @@ public sealed class MiWang : FeiyapQuestCardBase
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (IsComplete || dealer?.Player != Owner || cardSource?.Type != CardType.Attack)
+        // 战斗内会同时订阅牌库本体与战斗克隆，只让牌库本体计进度。
+        if (IsCombatClone || dealer?.Player != Owner || cardSource?.Type != CardType.Attack)
         {
             return Task.CompletedTask;
         }
 
-        if (result.UnblockedDamage > 0)
+        if (!IsComplete && result.UnblockedDamage > 0)
         {
             AddProgress((int)result.UnblockedDamage);
         }

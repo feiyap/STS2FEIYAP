@@ -1,8 +1,10 @@
+using System.Linq;
 using Feiyap.Characters;
+using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -11,21 +13,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 燕返：造成 3 / 6 点伤害，获得 1 点耗能。
+/// 燕返：造成 3 / 5 点伤害，获得等量于所造成伤害的居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon2 : FeiyapCardTemplate
 {
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-    [
-        EnergyHoverTip
-    ];
+    protected override HashSet<CardTag> CanonicalTags => new() { FeiyapCardTags.SkipIaidoConsume };
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3, ValueProp.Move),
-        new EnergyVar(1)
+        new DamageVar(3, ValueProp.Move)
     ];
 
     public FeiyapCommon2()
@@ -37,16 +34,29 @@ public sealed class FeiyapCommon2 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        var damageDealt = attack.Results
+            .SelectMany(results => results)
+            .Sum(result => result.UnblockedDamage);
+
+        if (damageDealt > 0m)
+        {
+            await FeiyapIaidoCmd.Gain(
+                choiceContext,
+                Owner.Creature,
+                damageDealt,
+                ValueProp.Move,
+                this,
+                cardPlay);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

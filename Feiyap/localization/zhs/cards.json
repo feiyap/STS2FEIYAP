@@ -8,33 +8,21 @@
 
   "FEIYAP_CARD_KU_XIU.description": "任务完成前，不可被打出。\n累计使用[gold]居合[/gold]造成伤害达到 [blue]{Goal}[/blue] 点后，完成该任务。\n打出时，移除此卡，获得遗物「剑圣」。\n（当前进度：[blue]{Progress}[/blue]/[blue]{Goal}[/blue]）",
 
-  "FEIYAP_CARD_LIU_LANG.title": "流浪",
-
-  "FEIYAP_CARD_LIU_LANG.description": "任务完成前，不可被打出。\n累计使用[gold]体内灼烧[/gold]造成伤害达到 [blue]{Goal}[/blue] 点后，完成该任务。\n打出时，移除此卡，获得遗物「斩星官」。\n（当前进度：[blue]{Progress}[/blue]/[blue]{Goal}[/blue]）",
-
   "FEIYAP_CARD_FA_WEI.title": "乏味",
 
   "FEIYAP_CARD_FA_WEI.description": "任务完成前，不可被打出。\n累计交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold] [blue]{Goal}[/blue] 次后，完成该任务。\n打出时，移除此卡，获得遗物「嬉笑魔女」。\n（当前进度：[blue]{Progress}[/blue]/[blue]{Goal}[/blue]）",
 
   "FEIYAP_CARD_KE_XUE_ZHENG.title": "渴血症",
 
-  "FEIYAP_CARD_KE_XUE_ZHENG.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n握在手中时，每受到 1 次伤害，额外增加 1 次攻击段数。{IfUpgraded:show:\n握在手中时，若生命低于 1，则回复至 1，立即释放并消耗该卡牌。|}",
+  "FEIYAP_CARD_KE_XUE_ZHENG.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n握在手中时，每受到 1 次伤害，额外增加 1 次攻击段数。{IfUpgraded:show:\n握在手中时，若生命低于 1，则回复至 1，立即释放并[gold]消耗[/gold]该卡牌。|}",
 
   "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.title": "绯樱狱华落",
 
-  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。\n本回合内，[gold]居合[/gold]造成的伤害提升 {IaidoSurgePercent:diff()}%。",
-
-  "FEIYAP_CARD_WU_SHENG_XING_YUN.title": "无声星陨",
-
-  "FEIYAP_CARD_WU_SHENG_XING_YUN.description": "给予 {FeiyapHeatDeathPower:diff()} 层[gold]热寂[/gold]。\n将 1 张{IfUpgraded:show:升级后的|}[gold]星天陨辍[/gold]加入你的手牌。",
-
-  "FEIYAP_CARD_XING_TIAN_YUN_ZHUI.title": "星天陨辍",
-
-  "FEIYAP_CARD_XING_TIAN_YUN_ZHUI.description": "造成 {Damage:diff()} 点伤害。\n目标每持有 1 层效果，额外造成 {EffectBonus:diff()} 点伤害。",
+  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。{IfUpgraded:show:\n本回合内，所有[gold]居合[/gold]都视为[gold]完美居合[/gold]。|}",
 
   "FEIYAP_CARD_WORLD_XXI.title": "XXI-世界",
 
-  "FEIYAP_CARD_WORLD_XXI.description": "[gold]塔罗-正位[/gold]：展示所有「XXI-世界」以外的[gold]塔罗牌[/gold]。选择 1 张在手中生成，并且本回合耗能变为 0。\n[gold]塔罗-逆位[/gold]：耗能增加 2。展示所有「XXI-世界」以外的[gold]塔罗牌[/gold]。选择 3 张在手中生成，并且本回合耗能变为 0。",
+  "FEIYAP_CARD_WORLD_XXI.description": "[gold]塔罗-正位[/gold]：所有[gold]塔罗牌[/gold]可自由选择触发正位或逆位效果。\n[gold]塔罗-逆位[/gold]：所有[gold]塔罗牌[/gold]同时触发正位和逆位效果。",
 
   "FEIYAP_CARD_WORLD_XXI.selectionPrompt": "选择要在手中生成的塔罗牌。",
 
@@ -56,15 +44,15 @@
 
   "FEIYAP_CARD_JU_HE_SHU.title": "居合术",
 
-  "FEIYAP_CARD_JU_HE_SHU.description": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_JU_HE_SHU.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_JU_HE_SHU.smartDescription": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_JU_HE_SHU.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_TI_NEI_ZHUO_SHAO.title": "体内灼烧",
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.title": "剑鞘打击",
 
-  "FEIYAP_CARD_TI_NEI_ZHUO_SHAO.description": "造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。",
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.description": "造成 {Damage:diff()} 点伤害。\n增加等量于自身[gold]居合[/gold]值的伤害。\n本次攻击不消耗[gold]居合[/gold]值。{IfUpgraded:show:\n给予 1 层[gold]虚弱[/gold]。|}",
 
-  "FEIYAP_CARD_TI_NEI_ZHUO_SHAO.smartDescription": "造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。",
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.smartDescription": "造成 {Damage:diff()} 点伤害。\n增加等量于自身[gold]居合[/gold]值的伤害。\n本次攻击不消耗[gold]居合[/gold]值。{IfUpgraded:show:\n给予 1 层[gold]虚弱[/gold]。|}",
 
   "FEIYAP_CARD_FEIYAP_COMMON1.title": "晚樱",
 
@@ -74,9 +62,9 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON2.title": "燕返",
 
-  "FEIYAP_CARD_FEIYAP_COMMON2.description": "造成 {Damage:diff()} 点伤害。\n获得 {Energy:energyIcons()}。",
+  "FEIYAP_CARD_FEIYAP_COMMON2.description": "造成 {Damage:diff()} 点伤害。\n获得等量于所造成伤害的[gold]居合[/gold]。\n本次攻击不消耗[gold]居合[/gold]值。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON2.smartDescription": "造成 {Damage:diff()} 点伤害。\n获得 {Energy:energyIcons()}。",
+  "FEIYAP_CARD_FEIYAP_COMMON2.smartDescription": "造成 {Damage:diff()} 点伤害。\n获得等量于所造成伤害的[gold]居合[/gold]。\n本次攻击不消耗[gold]居合[/gold]值。",
 
   "FEIYAP_CARD_FEIYAP_COMMON3.title": "松风",
 
@@ -96,29 +84,29 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON5.smartDescription": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON6.title": "天津四",
+  "FEIYAP_CARD_FEIYAP_COMMON6.title": "牙突",
 
-  "FEIYAP_CARD_FEIYAP_COMMON6.description": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n抽 {Cards:diff()} 张随机[gold]星座[/gold]牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON6.description": "造成 {Damage:diff()} 点伤害。\n给予 1 层[gold]易伤[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON6.smartDescription": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n抽 {Cards:diff()} 张随机[gold]星座[/gold]牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON6.smartDescription": "造成 {Damage:diff()} 点伤害。\n给予 1 层[gold]易伤[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON7.title": "织女一",
+  "FEIYAP_CARD_FEIYAP_COMMON7.title": "IV-皇帝",
 
-  "FEIYAP_CARD_FEIYAP_COMMON7.description": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n若本回合已打出过[gold]星座[/gold]牌，额外造成 {Damage:diff()} 点伤害。",
+  "FEIYAP_CARD_FEIYAP_COMMON7.description": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：抽 1 张随机[gold]塔罗牌[/gold]。\n[gold]塔罗-逆位[/gold]：抽 1 张随机非[gold]塔罗牌[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON7.smartDescription": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n若本回合已打出过[gold]星座[/gold]牌，额外造成 {Damage:diff()} 点伤害。",
+  "FEIYAP_CARD_FEIYAP_COMMON7.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：抽 1 张随机[gold]塔罗牌[/gold]。\n[gold]塔罗-逆位[/gold]：抽 1 张随机非[gold]塔罗牌[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON8.title": "河鼓二",
+  "FEIYAP_CARD_FEIYAP_COMMON8.title": "VIII-正义",
 
-  "FEIYAP_CARD_FEIYAP_COMMON8.description": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON8.description": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：额外造成 {BonusDamage:diff()} 点伤害。\n[gold]塔罗-逆位[/gold]：耗能变为0{energyPrefix:energyIcons(1)}。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON8.smartDescription": "[gold]星座[/gold]。\n造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON8.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：额外造成 {BonusDamage:diff()} 点伤害。\n[gold]塔罗-逆位[/gold]：耗能变为0{energyPrefix:energyIcons(1)}。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.title": "XIX-太阳",
+  "FEIYAP_CARD_FEIYAP_COMMON9.title": "XVI-塔",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.description": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：额外造成 {BonusDamage:diff()} 点伤害。\n[gold]塔罗-逆位[/gold]：耗能变为 0。",
+  "FEIYAP_CARD_FEIYAP_COMMON9.description": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：[gold]消耗[/gold]。\n[gold]塔罗-逆位[/gold]：将 1 张[gold]虚空[/gold]加入[gold]弃牌堆[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON9.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：额外造成 {BonusDamage:diff()} 点伤害。\n[gold]塔罗-逆位[/gold]：耗能变为 0。",
+  "FEIYAP_CARD_FEIYAP_COMMON9.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：[gold]消耗[/gold]。\n[gold]塔罗-逆位[/gold]：将 1 张[gold]虚空[/gold]加入[gold]弃牌堆[/gold]。",
 
   "FEIYAP_CARD_FEIYAP_COMMON10.title": "速纳术",
 
@@ -140,45 +128,45 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON13.title": "胧影",
 
-  "FEIYAP_CARD_FEIYAP_COMMON13.description": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。\n本回合获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON13.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON13.smartDescription": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。\n本回合获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON13.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON14.title": "踏影步",
+  "FEIYAP_CARD_FEIYAP_COMMON14.title": "步月",
 
-  "FEIYAP_CARD_FEIYAP_COMMON14.description": "[gold]丢弃[/gold] 1 张牌。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON14.description": "[gold]丢弃[/gold] 1 张牌。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON14.smartDescription": "[gold]丢弃[/gold] 1 张牌。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON14.smartDescription": "[gold]丢弃[/gold] 1 张牌。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
   "FEIYAP_CARD_FEIYAP_COMMON15.title": "纳刀",
 
-  "FEIYAP_CARD_FEIYAP_COMMON15.description": "不存在[gold]居合[/gold]时才能发动。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON15.description": "未拥有[gold]居合[/gold]时才能打出。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON15.smartDescription": "不存在[gold]居合[/gold]时才能发动。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON15.smartDescription": "未拥有[gold]居合[/gold]时才能打出。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
   "FEIYAP_CARD_FEIYAP_COMMON16.title": "回雪",
 
-  "FEIYAP_CARD_FEIYAP_COMMON16.description": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON16.description": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON16.smartDescription": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON16.smartDescription": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n获得 {Iaido:diff()} 点[gold]居合[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON17.title": "星天桥",
+  "FEIYAP_CARD_FEIYAP_COMMON17.title": "缩地",
 
-  "FEIYAP_CARD_FEIYAP_COMMON17.description": "将手牌中的一张牌放到抽牌堆底部。\n从抽牌堆中选择 1 张相同类型的牌放入你的手牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON17.description": "将[gold]手牌[/gold]中的一张牌放到[gold]抽牌堆[/gold]底部。\n从[gold]抽牌堆[/gold]中选择 1 张相同类型的牌放入你的[gold]手牌[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON17.smartDescription": "将手牌中的一张牌放到抽牌堆底部。\n从抽牌堆中选择 1 张相同类型的牌放入你的手牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON17.smartDescription": "将[gold]手牌[/gold]中的一张牌放到[gold]抽牌堆[/gold]底部。\n从[gold]抽牌堆[/gold]中选择 1 张相同类型的牌放入你的[gold]手牌[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON18.title": "星幕",
+  "FEIYAP_CARD_FEIYAP_COMMON18.title": "洞明",
 
-  "FEIYAP_CARD_FEIYAP_COMMON18.description": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n抽 {Cards:diff()} 张牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON18.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n抽 {Cards:diff()} 张牌。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON18.smartDescription": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n抽 {Cards:diff()} 张牌。",
+  "FEIYAP_CARD_FEIYAP_COMMON18.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n抽 {Cards:diff()} 张牌。",
 
   "FEIYAP_CARD_FEIYAP_COMMON19.title": "X-命运之轮",
 
-  "FEIYAP_CARD_FEIYAP_COMMON19.description": "[gold]塔罗-正位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n[gold]塔罗-逆位[/gold]：施加 {VulnerablePower:diff()} 层[gold]易伤[/gold]。施加 {WeakPower:diff()} 层[gold]虚弱[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON19.description": "[gold]塔罗-正位[/gold]：获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。给予所有敌人 {WeakPower:diff()} 层[gold]虚弱[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。给予所有敌人 {VulnerablePower:diff()} 层[gold]易伤[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_COMMON19.smartDescription": "[gold]塔罗-正位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n[gold]塔罗-逆位[/gold]：施加 {VulnerablePower:diff()} 层[gold]易伤[/gold]。施加 {WeakPower:diff()} 层[gold]虚弱[/gold]。",
+  "FEIYAP_CARD_FEIYAP_COMMON19.smartDescription": "[gold]塔罗-正位[/gold]：获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。给予所有敌人 {WeakPower:diff()} 层[gold]虚弱[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。给予所有敌人 {VulnerablePower:diff()} 层[gold]易伤[/gold]。",
 
   "FEIYAP_CARD_FEIYAP_COMMON20.title": "XVII-星星",
 
@@ -186,59 +174,287 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON20.smartDescription": "[gold]塔罗-正位[/gold]：抽 {Cards:diff()} 张随机[gold]攻击牌[/gold]。\n[gold]塔罗-逆位[/gold]：抽 {Cards:diff()} 张随机[gold]技能牌[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON10.title": "天市右垣七",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON1.title": "空切",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON10.description": "造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。\n从抽牌堆选 1 张牌加入手牌。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON1.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON10.smartDescription": "造成 {Damage:diff()} 点伤害。\n给予 {FeiyapInternalBurnPower:diff()} 层[gold]体内灼烧[/gold]。\n从抽牌堆选 1 张牌加入手牌。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON1.smartDescription": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON16.title": "迷雾斩",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON2.title": "逆鳞斩",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON16.description": "你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON2.description": "造成 {Damage:diff()} 点伤害 2 次。\n该敌人身上每有一种[gold]负面效果[/gold]就额外造成 1 次伤害。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON16.smartDescription": "你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON2.smartDescription": "造成 {Damage:diff()} 点伤害 2 次。\n该敌人身上每有一种[gold]负面效果[/gold]就额外造成 1 次伤害。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON17.title": "三碗半",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON3.title": "迷雾斩",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON17.description": "获得 {Energy:energyIcons()}。\n这张牌在本场战斗的耗能加 1。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON3.description": "造成 {Damage:diff()} 点伤害。\n你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON17.smartDescription": "获得 {Energy:energyIcons()}。\n这张牌在本场战斗的耗能加 1。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON3.smartDescription": "造成 {Damage:diff()} 点伤害。\n你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON18.title": "明镜止水",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON4.title": "逆袈裟",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON18.description": "[gold]消耗[/gold]自己的所有状态牌、诅咒牌和任务牌。\n每[gold]消耗[/gold] 1 张牌，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON4.description": "造成 {Damage:diff()} 点伤害。\n从下 1 张牌中获得的[gold]格挡[/gold]和[gold]居合[/gold]翻倍。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON18.smartDescription": "[gold]消耗[/gold]自己的所有状态牌、诅咒牌和任务牌。\n每[gold]消耗[/gold] 1 张牌，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON4.smartDescription": "造成 {Damage:diff()} 点伤害。\n从下 1 张牌中获得的[gold]格挡[/gold]和[gold]居合[/gold]翻倍。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON19.title": "速纳术",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON5.title": "血溅五步",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON19.description": "在本回合获得[gold]居合[/gold]时额外获得 {FeiyapQuickAbsorptionPower:diff()} 点。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON5.description": "造成 {Damage:diff()} 点伤害。\n[gold]活力[/gold]在血溅五步上发挥 {FeiyapBloodSplashVigorPower:diff()} 倍效果。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON19.smartDescription": "在本回合获得[gold]居合[/gold]时额外获得 {FeiyapQuickAbsorptionPower:diff()} 点。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON5.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]活力[/gold]在血溅五步上发挥 {FeiyapBloodSplashVigorPower:diff()} 倍效果。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON20.title": "叶隐",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON6.title": "分铜锁",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON20.description": "握在手中时，触发过[gold]完美居合[/gold]后才可使用。\n抽 {Cards:diff()} 张牌。获得 {Energy:energyIcons()}。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON6.description": "造成 {Damage:diff()} 点伤害。\n给予 {WeakPower:diff()} 层[gold]虚弱[/gold]。\n若目标持有[gold]虚弱[/gold]，改为给予[gold]易伤[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON20.smartDescription": "握在手中时，触发过[gold]完美居合[/gold]后才可使用。\n抽 {Cards:diff()} 张牌。获得 {Energy:energyIcons()}。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON6.smartDescription": "造成 {Damage:diff()} 点伤害。\n给予 {WeakPower:diff()} 层[gold]虚弱[/gold]。\n若目标持有[gold]虚弱[/gold]，改为给予[gold]易伤[/gold]。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON21.title": "天五月",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON7.title": "无明",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON21.description": "本回合内你的[gold]居合[/gold]对所有敌人造成伤害。\n每次获得[gold]居合[/gold]，这张牌的耗能减少 1。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON7.description": "仅能在有[gold]居合[/gold]的时候打出。\n消耗所有[gold]居合[/gold]。\n造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n额外造成消耗的[gold]居合[/gold]值的伤害。",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON21.smartDescription": "本回合内你的[gold]居合[/gold]对所有敌人造成伤害。\n每次获得[gold]居合[/gold]，这张牌的耗能减少 1。",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON7.smartDescription": "仅能在有[gold]居合[/gold]的时候打出。\n消耗所有[gold]居合[/gold]。\n造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n额外造成消耗的[gold]居合[/gold]值的伤害。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON11.title": "XI-力量",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON11.description": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n[gold]塔罗-逆位[/gold]：使目标本回合减少 {StrengthPower:diff()} 点[gold]力量[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON11.smartDescription": "造成 {Damage:diff()} 点伤害。\n[gold]塔罗-正位[/gold]：获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n[gold]塔罗-逆位[/gold]：使目标本回合减少 {StrengthPower:diff()} 点[gold]力量[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON12.title": "花吹雪",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON12.description": "你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON12.smartDescription": "你的下一个攻击段数大于 1 的[gold]攻击牌[/gold]获得 {Repeat:diff()} 个额外攻击段数。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON13.title": "三碗半",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON13.description": "获得{Energy:energyIcons()}。\n这张牌在本场战斗的耗能增加1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON13.smartDescription": "获得{Energy:energyIcons()}。\n这张牌在本场战斗的耗能增加1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON14.title": "明镜止水",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON14.description": "[gold]消耗[/gold]所有玩家的所有状态牌、诅咒牌和任务牌。\n每[gold]消耗[/gold] 1 张牌，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON14.smartDescription": "[gold]消耗[/gold]所有玩家的所有状态牌、诅咒牌和任务牌。\n每[gold]消耗[/gold] 1 张牌，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON15.title": "生死流转",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON15.description": "消耗所有[gold]居合[/gold]。\n获得等量的[gold]活力[/gold]。{IfUpgraded:show:（升级后不再[gold]消耗[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON15.smartDescription": "消耗所有[gold]居合[/gold]。\n获得等量的[gold]活力[/gold]。{IfUpgraded:show:（升级后不再[gold]消耗[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON16.title": "樱花醉",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON16.description": "获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON16.smartDescription": "获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON17.title": "截断众流",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON17.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON17.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON18.title": "叶隐",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON18.description": "仅能在触发[gold]完美居合[/gold]后打出。\n获得{Energy:energyIcons()}。抽 {Cards:diff()} 张牌。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON18.smartDescription": "仅能在触发[gold]完美居合[/gold]后打出。\n获得{Energy:energyIcons()}。抽 {Cards:diff()} 张牌。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON19.title": "天五月",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON19.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合内，你的[gold]居合[/gold]对所有敌人造成伤害。\n每次获得[gold]居合[/gold]，这张牌的耗能减少1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON19.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合内，你的[gold]居合[/gold]对所有敌人造成伤害。\n每次获得[gold]居合[/gold]，这张牌的耗能减少1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON20.title": "I-魔术师",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON20.description": "[gold]塔罗-正位[/gold]：抽 {Cards:diff()} 张牌。\n[gold]塔罗-逆位[/gold]：获得{Energy:energyIcons()}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON20.smartDescription": "[gold]塔罗-正位[/gold]：抽 {Cards:diff()} 张牌。\n[gold]塔罗-逆位[/gold]：获得{Energy:energyIcons()}。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON21.title": "侘寂",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON21.description": "本回合获得 99 层[gold]人工制品[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON21.smartDescription": "本回合获得 99 层[gold]人工制品[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON22.title": "瞬尘",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON22.description": "获得 {Iaido:diff()} 点[gold]居合[/gold] X 次。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON22.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold] X 次。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON23.title": "II-女祭司",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON23.description": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n[gold]塔罗-正位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n[gold]塔罗-逆位[/gold]：抽 {Cards:diff()} 张牌。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON23.smartDescription": "获得 {Block:diff()} 点[gold]格挡[/gold]。\n[gold]塔罗-正位[/gold]：获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n[gold]塔罗-逆位[/gold]：抽 {Cards:diff()} 张牌。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON24.title": "VI-恋人",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON24.description": "选择 1 个敌人。\n[gold]塔罗-正位[/gold]：你下一次受到伤害时，对目标造成相同伤害。\n[gold]塔罗-逆位[/gold]：目标下一次受到伤害时，对目标造成相同伤害。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON24.smartDescription": "选择 1 个敌人。\n[gold]塔罗-正位[/gold]：你下一次受到伤害时，对目标造成相同伤害。\n[gold]塔罗-逆位[/gold]：目标下一次受到伤害时，对目标造成相同伤害。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON25.title": "IX-隐者",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON25.description": "[gold]塔罗-正位[/gold]：你下一次消耗[gold]活力[/gold]时，获得等量的[gold]活力[/gold]。\n[gold]塔罗-逆位[/gold]：你下一次消耗[gold]残心[/gold]时，获得等量的[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON25.smartDescription": "[gold]塔罗-正位[/gold]：你下一次消耗[gold]活力[/gold]时，获得等量的[gold]活力[/gold]。\n[gold]塔罗-逆位[/gold]：你下一次消耗[gold]残心[/gold]时，获得等量的[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON26.title": "XII-倒吊人",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON26.description": "[gold]塔罗-正位[/gold]：从所有队友的[gold]手牌[/gold]中选最多 {Cards:diff()} 张放到自己手中。\n[gold]塔罗-逆位[/gold]：在所有队友的[gold]手牌[/gold]中生成 1 张「XII-倒吊人」。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON26.smartDescription": "[gold]塔罗-正位[/gold]：从所有队友的[gold]手牌[/gold]中选最多 {Cards:diff()} 张放到自己手中。\n[gold]塔罗-逆位[/gold]：在所有队友的[gold]手牌[/gold]中生成 1 张「XII-倒吊人」。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON29.title": "雪将至",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON29.description": "获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n3 回合后的回合结束时，受到 20 点伤害。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON29.smartDescription": "获得 {VigorPower:diff()} 点[gold]活力[/gold]。\n3 回合后的回合结束时，受到 20 点伤害。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON31.title": "剑圣心",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON31.description": "每次触发[gold]居合[/gold]时，获得 1 点[gold]活力[/gold]。\n每次触发[gold]完美居合[/gold]时，获得 5 点[gold]活力[/gold]。{IfUpgraded:show:（升级后[gold]固有[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON31.smartDescription": "每次触发[gold]居合[/gold]时，获得 1 点[gold]活力[/gold]。\n每次触发[gold]完美居合[/gold]时，获得 5 点[gold]活力[/gold]。{IfUpgraded:show:（升级后[gold]固有[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON32.title": "剑心犹在",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON32.description": "回合开始时，若上个回合没有失去过生命，获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON32.smartDescription": "回合开始时，若上个回合没有失去过生命，获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON33.title": "百般兵",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON33.description": "打出[gold]攻击牌[/gold]时，改为减少 1 点[gold]居合[/gold]。\n打出[gold]技能牌[/gold]时，额外获得 1 点[gold]居合[/gold]。{IfUpgraded:show:（升级后[gold]固有[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON33.smartDescription": "打出[gold]攻击牌[/gold]时，改为减少 1 点[gold]居合[/gold]。\n打出[gold]技能牌[/gold]时，额外获得 1 点[gold]居合[/gold]。{IfUpgraded:show:（升级后[gold]固有[/gold]。）|}",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON34.title": "百巧手",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON34.description": "打出[gold]攻击牌[/gold]时，本回合获得 {Amount:diff()} 点[gold]敏捷[/gold]。\n打出[gold]技能牌[/gold]时，本回合获得 {Amount:diff()} 点[gold]力量[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON34.smartDescription": "打出[gold]攻击牌[/gold]时，本回合获得 {Amount:diff()} 点[gold]敏捷[/gold]。\n打出[gold]技能牌[/gold]时，本回合获得 {Amount:diff()} 点[gold]力量[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON35.title": "0-愚者",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON35.description": "[gold]塔罗-正位[/gold]：回合开始时，所有敌人失去 1 点[gold]力量[/gold]。\n[gold]塔罗-逆位[/gold]：回合开始时，抽 1 张随机[gold]技能牌[/gold]，使其本回合内耗能减少1{energyPrefix:energyIcons(1)}、附带[gold]虚无[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON35.smartDescription": "[gold]塔罗-正位[/gold]：回合开始时，所有敌人失去 1 点[gold]力量[/gold]。\n[gold]塔罗-逆位[/gold]：回合开始时，抽 1 张随机[gold]技能牌[/gold]，使其本回合内耗能减少1{energyPrefix:energyIcons(1)}、附带[gold]虚无[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON36.title": "XV-恶魔",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON36.description": "[gold]塔罗-正位[/gold]：获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {StrengthPower:diff()} 点[gold]力量[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_UNCOMMON36.smartDescription": "[gold]塔罗-正位[/gold]：获得 {DexterityPower:diff()} 点[gold]敏捷[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {StrengthPower:diff()} 点[gold]力量[/gold]。",
 
   "FEIYAP_CARD_ZHAI_SHI_YU.title": "斋时雨",
 
-  "FEIYAP_CARD_ZHAI_SHI_YU.description": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。\n本回合内[gold]居合[/gold]造成的伤害翻倍。",
+  "FEIYAP_CARD_ZHAI_SHI_YU.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合内[gold]居合[/gold]造成的伤害翻倍。",
 
-  "FEIYAP_CARD_ZHAI_SHI_YU.smartDescription": "获得 {FeiyapIaidoPower:diff()} 点[gold]居合[/gold]。\n本回合内[gold]居合[/gold]造成的伤害翻倍。",
+  "FEIYAP_CARD_ZHAI_SHI_YU.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n本回合内[gold]居合[/gold]造成的伤害翻倍。",
 
   "FEIYAP_CARD_YU_CENG_WEI_ZI.title": "雨曾为紫",
 
   "FEIYAP_CARD_YU_CENG_WEI_ZI.description": "打出[gold]攻击牌[/gold]不再移除[gold]活力[/gold]。",
 
-  "FEIYAP_CARD_YU_CENG_WEI_ZI.smartDescription": "打出[gold]攻击牌[/gold]不再移除[gold]活力[/gold]。"
+  "FEIYAP_CARD_YU_CENG_WEI_ZI.smartDescription": "打出[gold]攻击牌[/gold]不再移除[gold]活力[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE1.title": "天下五剑",
+
+  "FEIYAP_CARD_FEIYAP_RARE1.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。{IfUpgraded:show:\n[gold]力量[/gold]和[gold]活力[/gold]在天下五剑上获得 {FeiyapTenkaFiveSwordsBoostPower:diff()} 倍效果。|}",
+
+  "FEIYAP_CARD_FEIYAP_RARE1.smartDescription": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。{IfUpgraded:show:\n[gold]力量[/gold]和[gold]活力[/gold]在天下五剑上获得 {FeiyapTenkaFiveSwordsBoostPower:diff()} 倍效果。|}",
+
+  "FEIYAP_CARD_FEIYAP_RARE2.title": "无想斩",
+
+  "FEIYAP_CARD_FEIYAP_RARE2.description": "造成 {Damage:diff()} 点伤害。\n通过[gold]居合[/gold]抵消伤害时，在这场战斗中伤害增加等量的值。\n（已抵消伤害：[blue]{BonusDamage}[/blue]）",
+
+  "FEIYAP_CARD_FEIYAP_RARE2.smartDescription": "造成 {Damage:diff()} 点伤害。\n通过[gold]居合[/gold]抵消伤害时，在这场战斗中伤害增加等量的值。\n（已抵消伤害：[blue]{BonusDamage}[/blue]）",
+
+  "FEIYAP_CARD_FEIYAP_RARE4.title": "枯山水",
+
+  "FEIYAP_CARD_FEIYAP_RARE4.description": "仅能在触发[gold]完美居合[/gold]后打出。\n造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+
+  "FEIYAP_CARD_FEIYAP_RARE4.smartDescription": "仅能在触发[gold]完美居合[/gold]后打出。\n造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。",
+
+  "FEIYAP_CARD_FEIYAP_RARE5.title": "霜雪雷电闪",
+
+  "FEIYAP_CARD_FEIYAP_RARE5.description": "秒杀非精英敌人。\n若目标为精英以上，则只有体力值不足 {ExecuteThreshold:diff()}% 时才会触发此效果。\n握在手中结束回合时，获得 {Iaido:diff()} 点[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE5.smartDescription": "秒杀非精英敌人。\n若目标为精英以上，则只有体力值不足 {ExecuteThreshold:diff()}% 时才会触发此效果。\n握在手中结束回合时，获得 {Iaido:diff()} 点[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE6.title": "XIX-太阳",
+
+  "FEIYAP_CARD_FEIYAP_RARE6.description": "对所有敌人造成 {Damage:diff()} 点伤害。\n握在手中时，打出[gold]攻击牌[/gold]后，对所有敌人造成 {TriggerDamage:diff()} 点伤害，然后变化为「XVIII-月亮」。",
+
+  "FEIYAP_CARD_FEIYAP_RARE6.smartDescription": "对所有敌人造成 {Damage:diff()} 点伤害。\n握在手中时，打出[gold]攻击牌[/gold]后，对所有敌人造成 {TriggerDamage:diff()} 点伤害，然后变化为「XVIII-月亮」。",
+
+  "FEIYAP_CARD_FEIYAP_RARE9.title": "流风遗韵",
+
+  "FEIYAP_CARD_FEIYAP_RARE9.description": "依据本回合造成的伤害量，获得等量的[gold]居合[/gold]。\n（已记录的伤害量：[blue]{RecordedDamage}[/blue]）",
+
+  "FEIYAP_CARD_FEIYAP_RARE9.smartDescription": "依据本回合造成的伤害量，获得等量的[gold]居合[/gold]。\n（已记录的伤害量：[blue]{RecordedDamage}[/blue]）",
+
+  "FEIYAP_CARD_FEIYAP_RARE10.title": "幾星霜",
+
+  "FEIYAP_CARD_FEIYAP_RARE10.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n每当你抽到这张牌，在这场战斗中获得[gold]居合[/gold]增加 {DrawBonus:diff()}。",
+
+  "FEIYAP_CARD_FEIYAP_RARE10.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n每当你抽到这张牌，在这场战斗中获得[gold]居合[/gold]增加 {DrawBonus:diff()}。",
+
+  "FEIYAP_CARD_FEIYAP_RARE11.title": "一期一会",
+
+  "FEIYAP_CARD_FEIYAP_RARE11.description": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n将你的[gold]居合[/gold]保留至下回合。",
+
+  "FEIYAP_CARD_FEIYAP_RARE11.smartDescription": "获得 {Iaido:diff()} 点[gold]居合[/gold]。\n将你的[gold]居合[/gold]保留至下回合。",
+
+  "FEIYAP_CARD_FEIYAP_RARE12.title": "XVIII-月亮",
+
+  "FEIYAP_CARD_FEIYAP_RARE12.description": "所有玩家获得 {Block:diff()} 点[gold]格挡[/gold]。\n握在手中时，打出[gold]技能牌[/gold]后，所有玩家获得 {TriggerBlock:diff()} 点[gold]格挡[/gold]，然后变化为「XIX-太阳」。",
+
+  "FEIYAP_CARD_FEIYAP_RARE12.smartDescription": "所有玩家获得 {Block:diff()} 点[gold]格挡[/gold]。\n握在手中时，打出[gold]技能牌[/gold]后，所有玩家获得 {TriggerBlock:diff()} 点[gold]格挡[/gold]，然后变化为「XIX-太阳」。",
+
+  "FEIYAP_CARD_FEIYAP_RARE13.title": "XIV-节制",
+
+  "FEIYAP_CARD_FEIYAP_RARE13.description": "[gold]击晕[/gold]该敌人。\n握在手中时，每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]，此牌耗能减少1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_RARE13.smartDescription": "[gold]击晕[/gold]该敌人。\n握在手中时，每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]，此牌耗能减少1{energyPrefix:energyIcons(1)}。",
+
+  "FEIYAP_CARD_FEIYAP_RARE16.title": "花鸟风月",
+
+  "FEIYAP_CARD_FEIYAP_RARE16.description": "打出时以及回合开始时：\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]格挡[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]居合[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]活力[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE16.smartDescription": "打出时以及回合开始时：\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]格挡[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]居合[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]活力[/gold]。\n获得 {FeiyapKachuuFuugetsuPower:diff()} 点[gold]残心[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE20.title": "活杀自在",
+
+  "FEIYAP_CARD_FEIYAP_RARE20.description": "你每获得 1 点[gold]居合[/gold]，获得 {FeiyapKassaiJizaiPower:diff()} 点[gold]活力[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE20.smartDescription": "你每获得 1 点[gold]居合[/gold]，获得 {FeiyapKassaiJizaiPower:diff()} 点[gold]活力[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE23.title": "银碗盛雪",
+
+  "FEIYAP_CARD_FEIYAP_RARE23.description": "你获得的所有[gold]格挡[/gold]转化为[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE23.smartDescription": "你获得的所有[gold]格挡[/gold]转化为[gold]居合[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE24.title": "V-教皇",
+
+  "FEIYAP_CARD_FEIYAP_RARE24.description": "[gold]塔罗-正位[/gold]：获得 {RegenPower:diff()} 层[gold]再生[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {PlatingPower:diff()} 层[gold]覆甲[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE24.smartDescription": "[gold]塔罗-正位[/gold]：获得 {RegenPower:diff()} 层[gold]再生[/gold]。\n[gold]塔罗-逆位[/gold]：获得 {PlatingPower:diff()} 层[gold]覆甲[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE25.title": "VII-战车",
+
+  "FEIYAP_CARD_FEIYAP_RARE25.description": "[gold]塔罗-正位[/gold]：回合结束时，从[gold]弃牌堆[/gold]打出 {FeiyapChariotPower:diff()} 张随机[gold]技能牌[/gold]。\n[gold]塔罗-逆位[/gold]：回合结束时，从[gold]弃牌堆[/gold]打出 {FeiyapChariotPower:diff()} 张随机[gold]攻击牌[/gold]。",
+
+  "FEIYAP_CARD_FEIYAP_RARE25.smartDescription": "[gold]塔罗-正位[/gold]：回合结束时，从[gold]弃牌堆[/gold]打出 {FeiyapChariotPower:diff()} 张随机[gold]技能牌[/gold]。\n[gold]塔罗-逆位[/gold]：回合结束时，从[gold]弃牌堆[/gold]打出 {FeiyapChariotPower:diff()} 张随机[gold]攻击牌[/gold]。"
 
 }
 

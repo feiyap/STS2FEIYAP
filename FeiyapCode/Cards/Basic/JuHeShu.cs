@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -36,7 +35,7 @@ public sealed class JuHeShu : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapIaidoPower>(5m)
+        new IaidoVar(5m, ValueProp.Move)
     ];
 
     public JuHeShu() : base(BaseEnergyCost, CardKind, CardRarityValue, CardTarget, ShowInCardLibrary)
@@ -48,7 +47,7 @@ public sealed class JuHeShu : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars["FeiyapIaidoPower"].BaseValue,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
             ValueProp.Move,
             this,
             cardPlay);
@@ -56,6 +55,6 @@ public sealed class JuHeShu : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapIaidoPower"].UpgradeValueBy(3m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(3m);
     }
 }

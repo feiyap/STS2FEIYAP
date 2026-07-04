@@ -16,11 +16,44 @@ public sealed class FeiyapCombatTracker
   /// <summary>交替使用攻击/技能后的加成是否激活。</summary>
     public bool AlternateBonusActive { get; set; }
 
-  /// <summary>下一次居合伤害是否视为完美居合。</summary>
+  /// <summary>本回合是否已触发完美居合。</summary>
     public bool PerfectIaidoActive { get; set; }
 
     /// <summary>本回合是否已打出过星座牌。</summary>
     public bool ConstellationPlayedThisTurn { get; set; }
+
+    /// <summary>上回合是否失去过生命。</summary>
+    public bool LostHpLastTurn { get; set; }
+
+    /// <summary>下回合开始时保留居合而不清空。</summary>
+    public bool RetainIaidoNextTurn { get; set; }
+
+    /// <summary>本回合造成的伤害总量。</summary>
+    public int TurnDamageDealt { get; set; }
+
+    /// <summary>本场战斗每次获得居合时的额外加算（如幾星霜）。</summary>
+    public decimal IaidoGainCombatBonus { get; set; }
+
+    private int _hpAtTurnStart;
+
+    public void OnTurnStart(Player player)
+    {
+        var currentHp = player.Creature.CurrentHp;
+        LostHpLastTurn = currentHp < _hpAtTurnStart;
+        _hpAtTurnStart = currentHp;
+        TurnDamageDealt = 0;
+    }
+
+    public void RecordDamageDealt(int amount)
+    {
+        if (amount > 0)
+        {
+            TurnDamageDealt += amount;
+        }
+    }
+
+    public void OnTurnEnd(Player player) =>
+        _hpAtTurnStart = player.Creature.CurrentHp;
 
     public static FeiyapCombatTracker Get(Player player)
     {
@@ -34,6 +67,9 @@ public sealed class FeiyapCombatTracker
         tracker.AlternateBonusActive = false;
         tracker.PerfectIaidoActive = false;
         tracker.ConstellationPlayedThisTurn = false;
+        tracker.RetainIaidoNextTurn = false;
+        tracker.TurnDamageDealt = 0;
+        tracker.IaidoGainCombatBonus = 0m;
     }
 
     public void RecordCardPlayed(CardType type)

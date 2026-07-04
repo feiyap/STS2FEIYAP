@@ -1,25 +1,35 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 迷雾斩：你的下一个攻击段数大于 1 的攻击牌获得 1 / 2 个额外攻击段数。
+/// 樱花醉：获得 4 / 6 点活力与残心。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon16 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Zanxin];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<VigorPower>()
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new RepeatVar(1)
+        new PowerVar<VigorPower>(4m),
+        new PowerVar<FeiyapZanxinPower>(4m)
     ];
 
     public FeiyapUncommon16()
@@ -29,17 +39,23 @@ public sealed class FeiyapUncommon16 : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply(
+        await PowerCmd.Apply<VigorPower>(
             choiceContext,
-            ModelDb.Power<FeiyapMistSlashPower>().ToMutable(),
             Owner.Creature,
-            DynamicVars.Repeat.BaseValue,
+            DynamicVars["VigorPower"].BaseValue,
             Owner.Creature,
+            this);
+
+        await FeiyapZanxinCmd.Gain(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["FeiyapZanxinPower"].BaseValue,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(1m);
+        DynamicVars["VigorPower"].UpgradeValueBy(2m);
+        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(2m);
     }
 }

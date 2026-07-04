@@ -15,7 +15,7 @@ public sealed class FaWei : FeiyapQuestCardBase
 {
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.FaWei;
 
-    protected override int QuestGoal => 100;
+    protected override int QuestGoal => 33;
 
     protected override Task GrantReward(PlayerChoiceContext choiceContext) =>
         FeiyapQuestRewards.GrantQuestRelic<MerryWitch, KuangXiaoMoNv>(choiceContext, Owner);

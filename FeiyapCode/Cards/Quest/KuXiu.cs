@@ -19,7 +19,7 @@ public sealed class KuXiu : FeiyapQuestCardBase
 {
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.KuXiu;
 
-    protected override int QuestGoal => 360;
+    protected override int QuestGoal => 100;
 
     protected override Task GrantReward(PlayerChoiceContext choiceContext) =>
         FeiyapQuestRewards.GrantQuestRelic<SwordSaint, WuMingRen>(choiceContext, Owner);
@@ -33,12 +33,13 @@ public sealed class KuXiu : FeiyapQuestCardBase
         CardModel? cardSource)
     {
         // 居合反击伤害由 FeiyapIaidoPower 计入；此处仅统计带居合标签的卡牌伤害。
-        if (IsComplete || dealer?.Player != Owner || !FeiyapCardTags.HasIaido(cardSource))
+        // 战斗内会同时订阅牌库本体与战斗克隆，只让牌库本体计进度。
+        if (IsCombatClone || dealer?.Player != Owner || !FeiyapCardTags.HasIaido(cardSource))
         {
             return Task.CompletedTask;
         }
 
-        if (result.UnblockedDamage > 0)
+        if (!IsComplete && result.UnblockedDamage > 0)
         {
             AddProgress((int)result.UnblockedDamage);
         }

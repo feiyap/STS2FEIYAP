@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,7 +13,9 @@ namespace Feiyap.Relics;
 
 public abstract class SwordSaintBase : ModRelicTemplate
 {
-    protected abstract decimal IaidoDamageMultiplier { get; }
+    internal abstract decimal PerfectIaidoDamageMultiplier { get; }
+
+    protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.PerfectIaidoId];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard(ModelDb.Card<FeiYingYuHuaLuo>())];
@@ -24,27 +24,12 @@ public abstract class SwordSaintBase : ModRelicTemplate
     {
         await FeiyapQuestRewards.GainAncientCard<FeiYingYuHuaLuo>(Owner);
     }
-
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource)
-    {
-        if (dealer?.Player != Owner || cardSource == null || !FeiyapCardTags.HasIaido(cardSource))
-        {
-            return amount;
-        }
-
-        return amount * IaidoDamageMultiplier;
-    }
 }
 
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class SwordSaint : SwordSaintBase
 {
-    protected override decimal IaidoDamageMultiplier => 1.5m;
+    internal override decimal PerfectIaidoDamageMultiplier => 10m;
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
@@ -54,7 +39,7 @@ public sealed class SwordSaint : SwordSaintBase
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class WuMingRen : SwordSaintBase
 {
-    protected override decimal IaidoDamageMultiplier => 2m;
+    internal override decimal PerfectIaidoDamageMultiplier => 20m;
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 

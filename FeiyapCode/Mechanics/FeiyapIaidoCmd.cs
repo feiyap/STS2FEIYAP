@@ -1,5 +1,7 @@
 using Feiyap.Patches;
+using Feiyap.Relics;
 using Feiyap.Powers;
+using System.Linq;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -18,6 +20,17 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public static class FeiyapIaidoCmd
 {
+    /// <summary>计算居合获得预览值（敏捷、残心、战斗加成等），不实际施加。</summary>
+    public static decimal PreviewGain(
+        Creature creature,
+        decimal amount,
+        ValueProp props,
+        CardModel? cardSource)
+    {
+        var (_, _, total) = ComputeGainAmount(creature, amount, props, cardSource);
+        return total;
+    }
+
     public static async Task<decimal> Gain(
         PlayerChoiceContext choiceContext,
         Creature creature,
@@ -31,11 +44,10 @@ public static class FeiyapIaidoCmd
             return 0m;
         }
 
-        var modified = amount;
-
-        if (IsDexterityAmplified(props, cardSource, creature))
+        var (scaledAmount, additives, modified) = ComputeGainAmount(creature, amount, props, cardSource);
+        if (modified <= 0m)
         {
-            modified += creature.GetPowerAmount<DexterityPower>();
+            return 0m;
         }
 
         var context = new FeiyapIaidoGainContext
@@ -43,27 +55,11 @@ public static class FeiyapIaidoCmd
             ChoiceContext = choiceContext,
             Creature = creature,
             BaseAmount = amount,
-            ScaledAmount = modified,
+            ScaledAmount = scaledAmount,
             Props = props,
             CardSource = cardSource,
             CardPlay = cardPlay
         };
-
-        modified = ApplyMultiplicativeModifiers(creature.Player, context, modified);
-
-        modified = Math.Max(0m, modified);
-        if (modified <= 0m)
-        {
-            return 0m;
-        }
-
-        context = context with { ScaledAmount = modified };
-
-        var additives = CollectAdditiveModifiers(creature, creature.Player, context);
-        foreach (var (_, bonus) in additives)
-        {
-            modified += bonus;
-        }
 
         SfxCmd.Play("event:/sfx/block_gain");
 
@@ -85,6 +81,11 @@ public static class FeiyapIaidoCmd
 
         if (creature.Player != null)
         {
+            await FeiyapKassaiJizaiPower.OnIaidoGained(choiceContext, creature, modified);
+        }
+
+        if (creature.Player != null)
+        {
             FeiyapPerfectIaidoCmd.OnIaidoGained(creature.Player);
         }
 
@@ -92,25 +93,28 @@ public static class FeiyapIaidoCmd
         return modified;
     }
 
-    /// <summary>居合反击伤害乘算（如斋时雨翻倍、狱华落增幅）。</summary>
-    public static int ApplyCounterDamageMultiplier(Creature creature, int baseDamage)
+    /// <summary>居合反击伤害乘算（如斋时雨翻倍、完美居合遗物增幅）。</summary>
+    public static decimal ApplyCounterDamageMultiplier(Creature creature, decimal baseDamage, bool isPerfect)
     {
-        if (baseDamage <= 0)
+        if (baseDamage <= 0m)
         {
-            return baseDamage;
+            return 0m;
         }
 
         var damage = baseDamage;
 
         if (creature.FindPower<FeiyapIaidoRainPower>() != null)
         {
-            damage *= 2;
+            damage *= 2m;
         }
 
-        var surge = creature.FindPower<FeiyapIaidoSurgePower>();
-        if (surge != null && surge.Amount > 0m)
+        var forcedPerfect = creature.FindPower<FeiyapIaidoSurgePower>() != null;
+        if (creature.Player is { } player && (forcedPerfect || isPerfect))
         {
-            damage = (int)Math.Round((double)(damage * surge.Amount));
+            foreach (var relic in player.Relics.OfType<SwordSaintBase>())
+            {
+                damage *= relic.PerfectIaidoDamageMultiplier;
+            }
         }
 
         return damage;
@@ -126,6 +130,58 @@ public static class FeiyapIaidoCmd
 
         await PowerCmd.Apply(choiceContext, power, creature, -power.Amount, creature, null);
         IaidoHealthBarOverlay.RefreshForCreature(creature);
+    }
+
+    private static (
+        decimal ScaledAmount,
+        List<(IFeiyapIaidoGainAdditive Source, decimal Bonus)> Additives,
+        decimal TotalAmount) ComputeGainAmount(
+        Creature creature,
+        decimal amount,
+        ValueProp props,
+        CardModel? cardSource)
+    {
+        if (amount <= 0m)
+        {
+            return (0m, [], 0m);
+        }
+
+        var modified = amount;
+
+        if (IsDexterityAmplified(props, cardSource, creature))
+        {
+            modified += creature.GetPowerAmount<DexterityPower>();
+        }
+
+        var context = new FeiyapIaidoGainContext
+        {
+            ChoiceContext = null!,
+            Creature = creature,
+            BaseAmount = amount,
+            ScaledAmount = modified,
+            Props = props,
+            CardSource = cardSource,
+            CardPlay = null
+        };
+
+        modified = ApplyMultiplicativeModifiers(creature.Player, context, modified);
+        modified = Math.Max(0m, modified);
+
+        if (creature.Player != null)
+        {
+            modified += FeiyapCombatTracker.Get(creature.Player).IaidoGainCombatBonus;
+        }
+
+        var scaledAmount = modified;
+        context = context with { ScaledAmount = scaledAmount };
+
+        var additives = CollectAdditiveModifiers(creature, creature.Player, context);
+        foreach (var (_, bonus) in additives)
+        {
+            modified += bonus;
+        }
+
+        return (scaledAmount, additives, Math.Max(0m, modified));
     }
 
     private static decimal ApplyMultiplicativeModifiers(

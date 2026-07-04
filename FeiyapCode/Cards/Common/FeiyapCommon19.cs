@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// X-命运之轮：塔罗技能牌，正位获得活力与残心，逆位对所有敌人施加易伤与虚弱。
+/// X-命运之轮：塔罗技能牌，正位获得残心并对所有敌人施加虚弱，逆位获得活力并对所有敌人施加易伤。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon19 : FeiyapTarotCardBase
@@ -23,13 +23,11 @@ public sealed class FeiyapCommon19 : FeiyapTarotCardBase
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<VigorPower>(2m),
         new PowerVar<FeiyapZanxinPower>(2m),
-        new PowerVar<VulnerablePower>(1m),
-        new PowerVar<WeakPower>(1m)
+        new PowerVar<WeakPower>(1m),
+        new PowerVar<VigorPower>(2m),
+        new PowerVar<VulnerablePower>(1m)
     ];
-
-    protected override bool ShouldGlowGoldInternal => IsTarotEffectTriggered(Owner);
 
     public FeiyapCommon19()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
@@ -41,49 +39,55 @@ public sealed class FeiyapCommon19 : FeiyapTarotCardBase
     {
         EnsureOrientationInitialized();
 
-        if (IsUprightTriggered(Owner))
-        {
-            await PowerCmd.Apply<VigorPower>(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars["VigorPower"].BaseValue,
-                Owner.Creature,
-                this);
+        await RunTarotBranches(
+            choiceContext,
+            async () =>
+            {
+                await FeiyapZanxinCmd.Gain(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["FeiyapZanxinPower"].BaseValue,
+                    this);
 
-            await FeiyapZanxinCmd.Gain(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars["FeiyapZanxinPower"].BaseValue,
-                this);
-            return;
-        }
+                if (Owner.Creature.CombatState is not CombatState state)
+                {
+                    return;
+                }
 
-        if (!IsReversedTriggered(Owner))
-        {
-            return;
-        }
+                foreach (var enemy in state.HittableEnemies)
+                {
+                    await PowerCmd.Apply<WeakPower>(
+                        choiceContext,
+                        enemy,
+                        DynamicVars["WeakPower"].BaseValue,
+                        Owner.Creature,
+                        this);
+                }
+            },
+            async () =>
+            {
+                await PowerCmd.Apply<VigorPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["VigorPower"].BaseValue,
+                    Owner.Creature,
+                    this);
 
-        if (Owner.Creature.CombatState is not CombatState state)
-        {
-            return;
-        }
+                if (Owner.Creature.CombatState is not CombatState state)
+                {
+                    return;
+                }
 
-        foreach (var enemy in state.HittableEnemies)
-        {
-            await PowerCmd.Apply<VulnerablePower>(
-                choiceContext,
-                enemy,
-                DynamicVars["VulnerablePower"].BaseValue,
-                Owner.Creature,
-                this);
-
-            await PowerCmd.Apply<WeakPower>(
-                choiceContext,
-                enemy,
-                DynamicVars["WeakPower"].BaseValue,
-                Owner.Creature,
-                this);
-        }
+                foreach (var enemy in state.HittableEnemies)
+                {
+                    await PowerCmd.Apply<VulnerablePower>(
+                        choiceContext,
+                        enemy,
+                        DynamicVars["VulnerablePower"].BaseValue,
+                        Owner.Creature,
+                        this);
+                }
+            });
     }
 
     protected override void OnUpgrade()

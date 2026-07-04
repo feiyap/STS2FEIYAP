@@ -27,7 +27,7 @@ public sealed class ZhaiShiYu : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapIaidoPower>(12m)
+        new IaidoVar(12m, ValueProp.Move)
     ];
 
     public ZhaiShiYu()
@@ -40,7 +40,7 @@ public sealed class ZhaiShiYu : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars["FeiyapIaidoPower"].BaseValue,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
             ValueProp.Move,
             this,
             cardPlay);
@@ -56,6 +56,6 @@ public sealed class ZhaiShiYu : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapIaidoPower"].UpgradeValueBy(9m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(9m);
     }
 }

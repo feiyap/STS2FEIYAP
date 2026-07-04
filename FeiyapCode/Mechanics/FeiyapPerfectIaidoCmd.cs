@@ -1,3 +1,4 @@
+using Feiyap.Cards.Rare;
 using Feiyap.Cards.Uncommon;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -12,7 +13,7 @@ namespace Feiyap.Mechanics;
 public static class FeiyapPerfectIaidoCmd
 {
     /// <summary>
-    /// 当居合完全抵消一次攻击伤害时触发完美居合。
+    /// 当居合数值与本次攻击伤害相等时触发完美居合。
     /// </summary>
     public static Task Trigger(PlayerChoiceContext choiceContext, Creature creature, decimal blockedDamage)
     {
@@ -32,9 +33,14 @@ public static class FeiyapPerfectIaidoCmd
 
         foreach (var card in hand.Cards)
         {
-            if (card is FeiyapUncommon20 yeYin)
+            if (card is FeiyapUncommon18 yeYin)
             {
                 yeYin.MarkPerfectIaidoWitnessed();
+            }
+
+            if (card is FeiyapRare4 karesansui)
+            {
+                karesansui.MarkPerfectIaidoWitnessed();
             }
         }
 
@@ -56,7 +62,7 @@ public static class FeiyapPerfectIaidoCmd
 
         foreach (var card in allCards)
         {
-            if (card is FeiyapUncommon21 heavenMay)
+            if (card is FeiyapUncommon19 heavenMay)
             {
                 heavenMay.OnIaidoGained();
             }

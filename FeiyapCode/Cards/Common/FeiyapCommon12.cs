@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 心传：获得 11 / 13 点格挡，获得 5 / 7 点残心。
+/// 心传：获得 11 / 14 点格挡，获得 5 / 8 点残心。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon12 : FeiyapCardTemplate
@@ -49,7 +49,7 @@ public sealed class FeiyapCommon12 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(3m);
     }
 }
