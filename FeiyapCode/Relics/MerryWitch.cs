@@ -6,6 +6,7 @@ using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
@@ -19,16 +20,49 @@ public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultipl
 {
     protected abstract decimal AlternateBonusMultiplier { get; }
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
+
+    /// <summary>
+    /// 遗物加成仅对持有者本人的角色实体生效（联机下不误作用于队友）。
+    /// </summary>
+    private bool IsRelicOwnerCreature(Creature? creature) =>
+        creature != null && creature == Owner.Creature;
+
+    /// <summary>
+    /// 出牌结算时根据上一张攻击/技能牌判断是否处于交替出牌。
+    /// 不能用 AlternateBonusActive：它在 AfterCardPlayed 才更新，且同类型连打时会短暂残留 true。
+    /// </summary>
+    private bool ShouldApplyAlternateBonus(CardModel? cardSource, CardPlay? cardPlay = null)
+    {
+        if (cardSource?.Owner != Owner)
+        {
+            return false;
+        }
+
+        if (cardPlay != null && cardPlay.Card.Owner != Owner)
+        {
+            return false;
+        }
+
+        var type = cardSource.Type;
+        if (type is not (CardType.Attack or CardType.Skill))
+        {
+            return false;
+        }
+
+        var lastPlayedType = FeiyapCombatTracker.Get(Owner).LastPlayedType;
+        return lastPlayedType is CardType.Attack or CardType.Skill && lastPlayedType != type;
+    }
 
     public decimal ModifyIaidoGainMultiplicative(in FeiyapIaidoGainContext context, decimal amount)
     {
-        if (context.Creature.Player == Owner && FeiyapCombatTracker.Get(Owner).AlternateBonusActive)
+        if (!IsRelicOwnerCreature(context.Creature)
+            || !ShouldApplyAlternateBonus(context.CardSource, context.CardPlay))
         {
-            return amount * AlternateBonusMultiplier;
+            return amount;
         }
 
-        return amount;
+        return amount * AlternateBonusMultiplier;
     }
 
     public override decimal ModifyDamageMultiplicative(
@@ -36,14 +70,16 @@ public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultipl
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
-        if (dealer?.Player == Owner && FeiyapCombatTracker.Get(Owner).AlternateBonusActive)
+        if (!IsRelicOwnerCreature(dealer)
+            || !ShouldApplyAlternateBonus(cardSource, cardPlay))
         {
-            return amount * AlternateBonusMultiplier;
+            return 1m;
         }
 
-        return amount;
+        return AlternateBonusMultiplier;
     }
 
     public override decimal ModifyBlockMultiplicative(
@@ -53,12 +89,13 @@ public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultipl
         CardModel? cardSource,
         CardPlay? cardPlay)
     {
-        if (target.Player == Owner && FeiyapCombatTracker.Get(Owner).AlternateBonusActive)
+        if (!IsRelicOwnerCreature(target)
+            || !ShouldApplyAlternateBonus(cardSource, cardPlay))
         {
-            return block * AlternateBonusMultiplier;
+            return 1m;
         }
 
-        return block;
+        return AlternateBonusMultiplier;
     }
 }
 
@@ -74,6 +111,11 @@ public sealed class MerryWitch : MerryWitchBase
 
     public override async Task AfterObtained()
     {
+        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
+        {
+            return;
+        }
+
         await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner);
     }
 }
@@ -90,6 +132,11 @@ public sealed class KuangXiaoMoNv : MerryWitchBase
 
     public override async Task AfterObtained()
     {
+        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
+        {
+            return;
+        }
+
         await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner);
     }
 }

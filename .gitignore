@@ -13,3 +13,6 @@ dist/
 .godot/
 .idea/
 /tools
+
+# 本地反编译/调试临时目录
+.tmp_*/

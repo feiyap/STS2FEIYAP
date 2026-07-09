@@ -20,14 +20,6 @@
 
   "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.description": "本回合内，[gold]居合[/gold]对所有敌人造成伤害。",
 
-  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.title": "连续施法",
-
-  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，抽 1 张牌。",
-
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "转换施法",
-
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "本回合内每次交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，获得 {Amount} 点[gold]残心[/gold]。",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.title": "斋时雨",
 
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.description": "本回合内，[gold]居合[/gold]造成的伤害翻倍。",
@@ -47,10 +39,6 @@
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.title": "世界",
 
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "所有[gold]塔罗牌[/gold]同时触发正位和逆位效果。",
-
-  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.title": "世界",
-
-  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "本回合内，[gold]塔罗牌[/gold]耗能变为0{energyPrefix:energyIcons(1)}。",
 
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.title": "逆袈裟",
 
@@ -80,17 +68,29 @@
 
   "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.description": "打出[gold]攻击牌[/gold]时，本回合获得 {Amount} 点[gold]敏捷[/gold]。打出[gold]技能牌[/gold]时，本回合获得 {Amount} 点[gold]力量[/gold]。",
 
-  "FEIYAP_POWER_FEIYAP_FOOL_POWER.title": "0-愚者",
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.title": "0-愚者（正位）",
 
-  "FEIYAP_POWER_FEIYAP_FOOL_POWER.description": "回合开始时触发愚者的[gold]塔罗[/gold]效果。",
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.description": "回合开始时，所有敌人失去 1 点[gold]力量[/gold]。",
 
-  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.title": "VI-恋人",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.title": "0-愚者（逆位）",
 
-  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.description": "下一次伤害事件触发恋人效果。",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.description": "回合开始时，抽 1 张随机[gold]技能牌[/gold]，使其本回合内耗能减少 1、附带[gold]虚无[/gold]。",
 
-  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.title": "IX-隐者",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.title": "VI-恋人（正位）",
 
-  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.description": "下一次消耗[gold]活力[/gold]或[gold]残心[/gold]时，获得等量的对应资源。",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.description": "你下一次受到伤害时，对[gold]{Target}[/gold]造成相同伤害。",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.title": "VI-恋人（逆位）",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.description": "[gold]{Target}[/gold]下一次受到伤害时，你对[gold]{Target}[/gold]造成相同伤害。",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.title": "IX-隐者（正位）",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.description": "你下一次消耗[gold]活力[/gold]时，获得等量的[gold]活力[/gold]。",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.title": "IX-隐者（逆位）",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.description": "你下一次消耗[gold]残心[/gold]时，获得等量的[gold]残心[/gold]。",
 
   "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.title": "天下五剑",
 
@@ -118,7 +118,11 @@
 
   "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.title": "侘寂",
 
-  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "本回合获得 {Amount} 层[gold]人工制品[/gold]。"
+  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "本回合获得 {Amount} 层[gold]人工制品[/gold]。",
+
+  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.title": "于万千碎裂的世界破片",
+
+  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.description": "回合开始时，获得 1 点[gold]力量[/gold]、[gold]敏捷[/gold]、[gold]集中[/gold]、[gold]格挡[/gold]、[gold]居合[/gold]、[gold]活力[/gold]、[gold]残心[/gold]、[gold]荆棘[/gold]、[gold]覆甲[/gold]。"
 
 }
 

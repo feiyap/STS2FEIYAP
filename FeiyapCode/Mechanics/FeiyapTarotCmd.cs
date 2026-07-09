@@ -47,7 +47,7 @@ public static class FeiyapTarotCmd
         var player = card.Owner;
         if (player == null)
         {
-            return card.IsReversed;
+            return false;
         }
 
         if (HasDualEffect(player))
@@ -61,6 +61,6 @@ public static class FeiyapTarotCmd
             return !upright;
         }
 
-        return card.IsReversed;
+        return FeiyapTarotCardBase.IsReversedEffectTriggeredFor(player);
     }
 }

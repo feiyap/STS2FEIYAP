@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 踏影步：丢弃 1 张牌，获得 8 / 11 点居合。
+/// 步月：丢弃 1 张牌，获得 8 / 11 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon14 : FeiyapCardTemplate

@@ -23,6 +23,8 @@ public sealed class FeiyapMistSlashPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapMistSlashPower));
+
     public override int ModifyAttackHitCount(AttackCommand attack, int hitCount)
     {
         if (Amount <= 0 || attack.Attacker != Owner || hitCount <= 1)

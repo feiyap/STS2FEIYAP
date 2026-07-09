@@ -27,15 +27,28 @@ public sealed class FeiyapUncommon25 : FeiyapTarotCardBase
     {
         EnsureOrientationInitialized();
 
-        var power = (FeiyapHermitPower)ModelDb.Power<FeiyapHermitPower>().ToMutable();
         if (FeiyapTarotCmd.HasDualEffect(Owner))
         {
-            power.SetDualEffect(true);
+            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
+            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
+            return;
+        }
+
+        var reversed = await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this);
+        if (reversed)
+        {
+            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
         }
         else
         {
-            power.SetReversed(await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this));
+            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
         }
+    }
+
+    private async Task ApplyHermitPower<TPower>(PlayerChoiceContext choiceContext)
+        where TPower : ModPowerTemplate
+    {
+        var power = ModelDb.Power<TPower>().ToMutable();
         await PowerCmd.Apply(
             choiceContext,
             power,

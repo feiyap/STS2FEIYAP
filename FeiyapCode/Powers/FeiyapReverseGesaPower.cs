@@ -22,6 +22,8 @@ public sealed class FeiyapReverseGesaPower : ModPowerTemplate, IFeiyapIaidoGainM
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapReverseGesaPower));
+
     public decimal ModifyIaidoGainMultiplicative(in FeiyapIaidoGainContext context, decimal amount)
     {
         if (context.Creature != Owner || amount <= 0m)
@@ -41,10 +43,10 @@ public sealed class FeiyapReverseGesaPower : ModPowerTemplate, IFeiyapIaidoGainM
     {
         if (target != Owner || block <= 0m || !props.HasFlag(ValueProp.Move))
         {
-            return block;
+            return 1m;
         }
 
-        return block * 2m;
+        return 2m;
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)

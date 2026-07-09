@@ -25,6 +25,8 @@ public sealed class FeiyapSwordSaintHeartPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapSwordSaintHeartPower));
+
     protected override IEnumerable<string> RegisteredKeywordIds =>
         [FeiyapKeywords.IaidoId, FeiyapKeywords.PerfectIaidoId];
 

@@ -3,8 +3,10 @@ using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -27,7 +29,10 @@ public sealed class JianQiaoDaJi : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3, ValueProp.Move)
+        new CalculationBaseVar(3m),
+        new ExtraDamageVar(1m),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+            (CardModel card, Creature? _) => card.Owner.Creature.GetPowerAmount<FeiyapIaidoPower>())
     ];
 
     public JianQiaoDaJi()
@@ -39,11 +44,8 @@ public sealed class JianQiaoDaJi : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var iaidoBonus = Owner.Creature.GetPowerAmount<FeiyapIaidoPower>();
-        var damage = DynamicVars.Damage.BaseValue + iaidoBonus;
-
-        await DamageCmd.Attack(damage)
-            .FromCard(this)
+        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
@@ -60,6 +62,6 @@ public sealed class JianQiaoDaJi : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.CalculationBase.UpgradeValueBy(3m);
     }
 }

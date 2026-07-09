@@ -28,15 +28,28 @@ public sealed class FeiyapUncommon35 : FeiyapTarotCardBase
         EnsureOrientationInitialized();
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
 
-        var power = (FeiyapFoolPower)ModelDb.Power<FeiyapFoolPower>().ToMutable();
         if (FeiyapTarotCmd.HasDualEffect(Owner))
         {
-            power.SetDualEffect(true);
+            await ApplyFoolPower<FeiyapFoolUprightPower>(choiceContext);
+            await ApplyFoolPower<FeiyapFoolReversedPower>(choiceContext);
+            return;
+        }
+
+        var reversed = await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this);
+        if (reversed)
+        {
+            await ApplyFoolPower<FeiyapFoolReversedPower>(choiceContext);
         }
         else
         {
-            power.SetReversed(await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this));
+            await ApplyFoolPower<FeiyapFoolUprightPower>(choiceContext);
         }
+    }
+
+    private async Task ApplyFoolPower<TPower>(PlayerChoiceContext choiceContext)
+        where TPower : ModPowerTemplate
+    {
+        var power = ModelDb.Power<TPower>().ToMutable();
         await PowerCmd.Apply(
             choiceContext,
             power,

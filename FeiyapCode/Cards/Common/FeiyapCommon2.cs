@@ -35,7 +35,7 @@ public sealed class FeiyapCommon2 : FeiyapCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 

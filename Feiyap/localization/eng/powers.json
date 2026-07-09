@@ -20,14 +20,6 @@
 
   "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.description": "Your [gold]Iaido[/gold] damages ALL enemies this turn.",
 
-  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.title": "Continuous Cast",
-
-  "FEIYAP_POWER_FEIYAP_CONTINUOUS_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, draw 1 card.",
-
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.title": "Conversion Cast",
-
-  "FEIYAP_POWER_FEIYAP_CONVERSION_CAST_POWER.description": "Whenever you alternate [gold]Attacks[/gold] and [gold]Skills[/gold] this turn, gain {Amount} [gold]Zanxin[/gold].",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.title": "Zhai Shi Yu",
 
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.description": "[gold]Iaido[/gold] deals double damage this turn.",
@@ -47,10 +39,6 @@
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.title": "World",
 
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "All [gold]Tarot[/gold] cards trigger both their upright and reversed effects.",
-
-  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.title": "World",
-
-  "FEIYAP_POWER_FEIYAP_TAROT_FREE_PLAY_POWER.description": "This turn, [gold]Tarot[/gold] cards cost 0{energyPrefix:energyIcons(1)}.",
 
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.title": "Reverse Kesagiri",
 
@@ -80,17 +68,29 @@
 
   "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.description": "When you play an [gold]Attack[/gold], gain {Amount} [gold]Dexterity[/gold] this turn. When you play a [gold]Skill[/gold], gain {Amount} [gold]Strength[/gold] this turn.",
 
-  "FEIYAP_POWER_FEIYAP_FOOL_POWER.title": "The Fool",
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.title": "The Fool (Upright)",
 
-  "FEIYAP_POWER_FEIYAP_FOOL_POWER.description": "At the start of your turn, trigger The Fool's [gold]Tarot[/gold] effect.",
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.description": "At the start of your turn, ALL enemies lose 1 [gold]Strength[/gold].",
 
-  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.title": "The Lovers",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.title": "The Fool (Reversed)",
 
-  "FEIYAP_POWER_FEIYAP_LOVERS_POWER.description": "The next damage event triggers The Lovers' effect.",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.description": "At the start of your turn, draw 1 random [gold]Skill[/gold], reduce its cost by 1 this turn, and apply [gold]Ethereal[/gold].",
 
-  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.title": "The Hermit",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.title": "The Lovers (Upright)",
 
-  "FEIYAP_POWER_FEIYAP_HERMIT_POWER.description": "The next time you consume [gold]Vigor[/gold] or [gold]Zanxin[/gold], gain equal resources back.",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.description": "The next time you take damage, deal that much damage to [gold]{Target}[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.title": "The Lovers (Reversed)",
+
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.description": "The next time [gold]{Target}[/gold] takes damage, you deal that much damage to [gold]{Target}[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.title": "The Hermit (Upright)",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.description": "The next time you consume [gold]Vigor[/gold], gain equal [gold]Vigor[/gold].",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.title": "The Hermit (Reversed)",
+
+  "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.description": "The next time you consume [gold]Zanxin[/gold], gain equal [gold]Zanxin[/gold].",
 
   "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.title": "Tenka Five Swords",
 
@@ -118,7 +118,11 @@
 
   "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.title": "Wabi-Sabi",
 
-  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "Gain {Amount} [gold]Artifact[/gold] this turn."
+  "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "Gain {Amount} [gold]Artifact[/gold] this turn.",
+
+  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.title": "World Shards",
+
+  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold]."
 
 }
 

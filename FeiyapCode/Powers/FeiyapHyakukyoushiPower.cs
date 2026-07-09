@@ -20,6 +20,8 @@ public sealed class FeiyapHyakukyoushiPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapHyakukyoushiPower));
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner?.Creature != Owner || Amount <= 0)

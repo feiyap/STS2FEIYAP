@@ -1,9 +1,9 @@
+using Feiyap.Characters;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
-using Feiyap.Characters;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -17,23 +17,33 @@ namespace Feiyap.Cards.Ancients;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class WorldShards : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
+        HoverTipFactory.FromPower<FocusPower>(),
+        HoverTipFactory.FromPower<FeiyapIaidoPower>(),
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<FeiyapZanxinPower>(),
+        HoverTipFactory.FromPower<ThornsPower>(),
+        HoverTipFactory.FromPower<PlatingPower>()
+    ];
+
     public WorldShards()
-        : base(2, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
+        : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new PowerVar<StrengthPower>(2m)
-    ];
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
         await PowerCmd.Apply(
             choiceContext,
-            ModelDb.Power<StrengthPower>().ToMutable(),
+            ModelDb.Power<FeiyapWorldShardsPower>().ToMutable(),
             Owner.Creature,
-            DynamicVars["StrengthPower"].BaseValue,
+            1m,
             Owner.Creature,
             this);
     }

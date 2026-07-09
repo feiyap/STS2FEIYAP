@@ -22,6 +22,8 @@ public sealed class FeiyapSilverBowlSnowPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapSilverBowlSnowPower));
+
     public override async Task BeforeBlockGained(
         Creature creature,
         decimal amount,

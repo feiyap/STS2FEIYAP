@@ -182,7 +182,8 @@ Feiyap/
 |---|---|
 | 类型 | `FeiyapCharacter` |
 | 预期 id | `FEIYAP_CHARACTER_FEIYAP_CHARACTER` |
-| starter 牌组 | 4 × `FeiyapStrike`、4 × `FeiyapDefend`、1 × `FeiyapRelic` |
+| starter 牌组 | 4 × `FeiyapStrike`、4 × `FeiyapDefend`、1 × `JianQiaoDaJi`、1 × `JuHeShu` |
+| 初始遗物 | `YuQu`（`YuQuYuDuo` 为欧罗巴斯之触升级形态） |
 | 资源配置 | `CharacterAssetProfile`；模板只指定静态占位资源，未指定的音频/拖尾/转场等字段从 `PlaceholderCharacterId` 回退 |
 
 ### 示例卡牌与遗物
@@ -191,14 +192,14 @@ Feiyap/
 |---|---|---|
 | `FeiyapStrike`（攻击） | 角色卡池 | `FEIYAP_CARD_FEIYAP_STRIKE` |
 | `FeiyapDefend`（技能） | 角色卡池 | `FEIYAP_CARD_FEIYAP_DEFEND` |
-| `FeiyapRelic` | `FeiyapRelicPool` | `FEIYAP_RELIC_FEIYAP_RELIC` |
+| `YuQu` | `FeiyapRelicPool` | `FEIYAP_RELIC_YU_QU` |
 
 ### 静态占位资源
 
 **图片**（`res://Feiyap/images/...`）：
 
 - `cards/FeiyapStrike.png`、`cards/FeiyapDefend.png`：示例卡图。
-- `relics/FeiyapRelic.png`：示例遗物图标。
+- `relics/YuQu.png`、`relics/YuQuYuDuo.png`：初始遗物图标。
 - `characters/Feiyap_character_*.png`：角色头像、角色选择图、地图标记和能量图标。
 
 **场景**（`res://Feiyap/scenes/characters/...`）：

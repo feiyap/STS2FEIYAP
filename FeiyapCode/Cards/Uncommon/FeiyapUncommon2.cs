@@ -36,7 +36,7 @@ public sealed class FeiyapUncommon2 : FeiyapCardTemplate
         var hitCount = DynamicVars.Repeat.IntValue + CountDebuffTypes(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }

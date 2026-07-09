@@ -24,6 +24,8 @@ public sealed class FeiyapKachuuFuugetsuPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapKachuuFuugetsuPower));
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player.Creature != Owner || Amount <= 0)

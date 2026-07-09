@@ -50,7 +50,7 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
@@ -62,7 +62,8 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
                 iaido,
                 ValueProp.Move,
                 Owner.Creature,
-                this);
+                this,
+                cardPlay);
         }
     }
 

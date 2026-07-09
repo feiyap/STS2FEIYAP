@@ -13,7 +13,8 @@ namespace Feiyap.Relics;
 
 public abstract class SwordSaintBase : ModRelicTemplate
 {
-    internal abstract decimal PerfectIaidoDamageMultiplier { get; }
+    /// <summary>完美居合伤害提升百分比（如 500 表示 +500%）。</summary>
+    internal abstract decimal PerfectIaidoDamageBonusPercent { get; }
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.PerfectIaidoId];
 
@@ -22,6 +23,11 @@ public abstract class SwordSaintBase : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
+        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
+        {
+            return;
+        }
+
         await FeiyapQuestRewards.GainAncientCard<FeiYingYuHuaLuo>(Owner);
     }
 }
@@ -29,9 +35,9 @@ public abstract class SwordSaintBase : ModRelicTemplate
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class SwordSaint : SwordSaintBase
 {
-    internal override decimal PerfectIaidoDamageMultiplier => 10m;
+    internal override decimal PerfectIaidoDamageBonusPercent => 500m;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(SwordSaint));
 }
@@ -39,9 +45,9 @@ public sealed class SwordSaint : SwordSaintBase
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class WuMingRen : SwordSaintBase
 {
-    internal override decimal PerfectIaidoDamageMultiplier => 20m;
+    internal override decimal PerfectIaidoDamageBonusPercent => 1000m;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(WuMingRen));
 }

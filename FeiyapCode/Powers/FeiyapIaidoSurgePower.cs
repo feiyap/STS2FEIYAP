@@ -20,6 +20,8 @@ public sealed class FeiyapIaidoSurgePower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapIaidoSurgePower));
+
     protected override IEnumerable<string> RegisteredKeywordIds =>
         [FeiyapKeywords.IaidoId, FeiyapKeywords.PerfectIaidoId];
 

@@ -24,6 +24,8 @@ public sealed class FeiyapSnowApproachingPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapSnowApproachingPower));
+
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext choiceContext,
         CombatSide side,
@@ -46,6 +48,7 @@ public sealed class FeiyapSnowApproachingPower : ModPowerTemplate
             Owner,
             DamageAmount,
             ValueProp.Unblockable | ValueProp.Unpowered,
+            null,
             null,
             null);
         await PowerCmd.Remove(this);

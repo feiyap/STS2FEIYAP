@@ -32,6 +32,11 @@ public abstract class InvestigatorBase : ModRelicTemplate
 
     public override async Task AfterObtained()
     {
+        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
+        {
+            return;
+        }
+
         await FeiyapQuestRewards.GainAncientCard<KeXueZheng>(Owner);
     }
 
@@ -53,7 +58,7 @@ public sealed class Investigator : InvestigatorBase
 {
     protected override int RegenAmount => 3;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(Investigator));
 }
@@ -63,7 +68,7 @@ public sealed class FeiShengYiWenZi : InvestigatorBase
 {
     protected override int RegenAmount => 5;
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Event;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(FeiShengYiWenZi));
 }

@@ -24,6 +24,8 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapZanxinPower));
+
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.ZanxinId];
 
     public decimal GetIaidoGainAdditiveBonus(in FeiyapIaidoGainContext context)
@@ -51,7 +53,7 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             -appliedBonus,
             Owner,
             context.CardSource);
-        await FeiyapHermitPower.TryRefundZanxin(context.ChoiceContext, Owner, appliedBonus);
+        await FeiyapHermitReversedPower.TryRefundZanxin(context.ChoiceContext, Owner, appliedBonus);
     }
 
     public override decimal ModifyBlockAdditive(
@@ -81,6 +83,6 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
         _pendingBlockBonus = 0;
         Flash();
         await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), this, Owner, -consume, Owner, null);
-        await FeiyapHermitPower.TryRefundZanxin(new ThrowingPlayerChoiceContext(), Owner, consume);
+        await FeiyapHermitReversedPower.TryRefundZanxin(new ThrowingPlayerChoiceContext(), Owner, consume);
     }
 }

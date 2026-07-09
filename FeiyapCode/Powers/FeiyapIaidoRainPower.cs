@@ -19,6 +19,8 @@ public sealed class FeiyapIaidoRainPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapIaidoRainPower));
+
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

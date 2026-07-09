@@ -14,8 +14,44 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public static class FeiyapQuestRewards
 {
+    /// <summary>
+    /// 欧罗巴斯之触将任务奖励遗物替换为升级形态时，跳过再次发放先古卡等获得副作用。
+    /// </summary>
+    internal static bool SuppressQuestRelicObtainEffects { get; set; }
+
     public static bool HasUpgradedQuestRewards(Player player) =>
         player.Relics.Any(r => r is YuQuYuDuo);
+
+    /// <summary>
+    /// 将玩家已持有的基础任务奖励遗物替换为升级形态。
+    /// </summary>
+    public static async Task UpgradeExistingQuestRelics(Player player)
+    {
+        SuppressQuestRelicObtainEffects = true;
+        try
+        {
+            await TryUpgradeQuestRelic<Investigator, FeiShengYiWenZi>(player);
+            await TryUpgradeQuestRelic<SwordSaint, WuMingRen>(player);
+            await TryUpgradeQuestRelic<MerryWitch, KuangXiaoMoNv>(player);
+        }
+        finally
+        {
+            SuppressQuestRelicObtainEffects = false;
+        }
+    }
+
+    private static async Task TryUpgradeQuestRelic<TBase, TUpgraded>(Player player)
+        where TBase : RelicModel
+        where TUpgraded : RelicModel
+    {
+        var existing = player.Relics.FirstOrDefault(r => r is TBase);
+        if (existing == null)
+        {
+            return;
+        }
+
+        await RelicCmd.Replace(existing, ModelDb.Relic<TUpgraded>().ToMutable());
+    }
 
     public static async Task GrantQuestRelic<TBase, TUpgraded>(PlayerChoiceContext context, Player player)
         where TBase : RelicModel

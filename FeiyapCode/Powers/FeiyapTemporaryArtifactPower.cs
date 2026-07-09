@@ -2,6 +2,7 @@ using Feiyap.Cards.Uncommon;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Combat.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Powers;
 
@@ -11,5 +12,6 @@ namespace Feiyap.Powers;
 [RegisterPower]
 public sealed class FeiyapTemporaryArtifactPower : ModTemporaryAppliedPowerTemplate<FeiyapUncommon21, ArtifactPower>
 {
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapTemporaryArtifactPower));
     protected override bool UntilEndOfOtherSideTurn => true;
 }

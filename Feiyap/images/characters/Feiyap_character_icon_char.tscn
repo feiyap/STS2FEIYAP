@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1fe6i8r50yc8"]
+
+[ext_resource type="Texture2D" uid="uid://5bsoke1fqpvu" path="res://character/Feiyap_character_icon_char.png" id="1_6v8lh"]
+
+[node name="FeiyapCharacterIconChar" type="TextureRect"]
+texture = ExtResource("1_6v8lh")

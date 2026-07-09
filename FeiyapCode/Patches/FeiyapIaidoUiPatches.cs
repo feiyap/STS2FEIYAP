@@ -13,5 +13,6 @@ public sealed class FeiyapIaidoUiPatches : IModPatches
         patcher.RegisterPatch<FeiyapIaidoHealthBarRefreshPatch>();
         patcher.RegisterPatch<FeiyapIaidoHealthBarBlockUiPatch>();
         patcher.RegisterPatch<FeiyapIaidoIntentPreviewPatch>();
+        patcher.RegisterPatch<FeiyapSilverBowlBlockPreviewPatch>();
     }
 }

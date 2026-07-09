@@ -41,25 +41,13 @@ public sealed class FeiyapCommon8 : FeiyapTarotCardBase
             return false;
         }
 
-        if (!IsReversed)
-        {
-            return false;
-        }
-
-        if (FeiyapTarotCmd.HasDualEffect(Owner))
+        if (FeiyapTarotCmd.HasDualEffect(Owner) || IsReversedTriggered(Owner))
         {
             modifiedCost = 0m;
             return true;
         }
 
-        if (IsReversedTriggered(Owner))
-        {
-            modifiedCost = 0m;
-            return true;
-        }
-
-        modifiedCost = originalCost + 2m;
-        return true;
+        return false;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -89,7 +77,7 @@ public sealed class FeiyapCommon8 : FeiyapTarotCardBase
         }
 
         await DamageCmd.Attack(damage)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }

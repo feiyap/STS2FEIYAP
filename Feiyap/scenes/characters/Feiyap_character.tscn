@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ce1pp03yqrxx4"]
 
-[ext_resource type="Texture2D" uid="uid://bu7j3adncafk7" path="res://00022-8269913523.png" id="1_77pk2"]
+[ext_resource type="Texture2D" uid="uid://bu7j3adncafk7" path="res://Feiyap/scenes/characters/00022-8269913523.png" id="1_77pk2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k4d0h"]
 animations = [{

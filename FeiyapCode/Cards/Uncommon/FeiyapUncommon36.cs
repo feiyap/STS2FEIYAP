@@ -40,26 +40,26 @@ public sealed class FeiyapUncommon36 : FeiyapTarotCardBase
         EnsureOrientationInitialized();
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
 
-        if (IsUprightTriggered(Owner))
-        {
-            await PowerCmd.Apply<DexterityPower>(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars["DexterityPower"].BaseValue,
-                Owner.Creature,
-                this);
-            return;
-        }
-
-        if (IsReversedTriggered(Owner))
-        {
-            await PowerCmd.Apply<StrengthPower>(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars["StrengthPower"].BaseValue,
-                Owner.Creature,
-                this);
-        }
+        await RunTarotBranches(
+            choiceContext,
+            async () =>
+            {
+                await PowerCmd.Apply<DexterityPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["DexterityPower"].BaseValue,
+                    Owner.Creature,
+                    this);
+            },
+            async () =>
+            {
+                await PowerCmd.Apply<StrengthPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["StrengthPower"].BaseValue,
+                    Owner.Creature,
+                    this);
+            });
     }
 
     protected override void OnUpgrade()

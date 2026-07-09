@@ -1,10 +1,11 @@
 using Feiyap.Characters;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -20,7 +21,12 @@ public sealed class FeiyapUncommon5 : FeiyapCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(14, ValueProp.Move),
-        new PowerVar<FeiyapBloodSplashVigorPower>(3m)
+        new DynamicVar("FeiyapBloodSplashVigorPower", 3m)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<VigorPower>()
     ];
 
     public FeiyapUncommon5()
@@ -32,24 +38,10 @@ public sealed class FeiyapUncommon5 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        await PowerCmd.Apply(
-            choiceContext,
-            ModelDb.Power<FeiyapBloodSplashVigorPower>().ToMutable(),
-            Owner.Creature,
-            DynamicVars["FeiyapBloodSplashVigorPower"].BaseValue,
-            Owner.Creature,
-            this);
-
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-
-        var boost = Owner.Creature.GetPower<FeiyapBloodSplashVigorPower>();
-        if (boost != null)
-        {
-            await PowerCmd.Remove(boost);
-        }
     }
 
     protected override void OnUpgrade()

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,6 +16,8 @@ namespace Feiyap.Cards.Common;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon17 : FeiyapCardTemplate
 {
+    private static readonly LocString DrawSelectionPrompt = new("cards", "FEIYAP_CARD_FEIYAP_COMMON17.drawSelectionPrompt");
+
     public FeiyapCommon17()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
@@ -38,16 +41,11 @@ public sealed class FeiyapCommon17 : FeiyapCardTemplate
         await CardPileCmd.Add(handCard, PileType.Draw, CardPilePosition.Bottom);
 
         var drawPile = PileType.Draw.GetPile(Owner);
-        if (drawPile.Cards.Count == 0)
-        {
-            return;
-        }
-
         var selected = await CardSelectCmd.FromCombatPile(
             choiceContext,
             drawPile,
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1),
+            new CardSelectorPrefs(DrawSelectionPrompt, 1),
             c => c.Type == cardType);
 
         var picked = selected.FirstOrDefault();

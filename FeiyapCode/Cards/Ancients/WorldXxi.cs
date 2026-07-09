@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Feiyap.Mechanics;
 using Feiyap.Characters;
 using Feiyap.Cards.Tarot;
 using Feiyap.Powers;
@@ -28,13 +29,17 @@ public sealed class WorldXxi : FeiyapTarotCardBase
         EnsureOrientationInitialized();
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
 
-        if (IsReversed)
+        if (FeiyapTarotCmd.HasDualEffect(Owner))
         {
+            await ApplyWorldPowerOnce<FeiyapTarotWorldFreeChoicePower>(choiceContext);
             await ApplyWorldPowerOnce<FeiyapTarotWorldDualEffectPower>(choiceContext);
             return;
         }
 
-        await ApplyWorldPowerOnce<FeiyapTarotWorldFreeChoicePower>(choiceContext);
+        await RunTarotBranches(
+            choiceContext,
+            () => ApplyWorldPowerOnce<FeiyapTarotWorldFreeChoicePower>(choiceContext),
+            () => ApplyWorldPowerOnce<FeiyapTarotWorldDualEffectPower>(choiceContext));
     }
 
     protected override void OnUpgrade()

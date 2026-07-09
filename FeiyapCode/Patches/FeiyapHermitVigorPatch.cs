@@ -34,11 +34,9 @@ public sealed class FeiyapHermitVigorPatch : IPatchMethod
 
     public static bool Prefix(VigorPower __instance, PlayerChoiceContext choiceContext, AttackCommand command)
     {
-        var hermit = __instance.Owner.FindPower<FeiyapHermitPower>();
+        var hermit = __instance.Owner.FindPower<FeiyapHermitUprightPower>();
         if (hermit == null
-            || hermit.IsUprightConsumed
-            || command.Attacker != __instance.Owner
-            || (!hermit.IsDualEffect && hermit.IsReversed))
+            || command.Attacker != __instance.Owner)
         {
             return true;
         }
@@ -54,12 +52,8 @@ public sealed class FeiyapHermitVigorPatch : IPatchMethod
             return true;
         }
 
-        hermit.MarkUprightConsumed();
         hermit.Flash();
-        if (hermit.IsFullyConsumed())
-        {
-            _ = PowerCmd.Remove(hermit);
-        }
+        _ = PowerCmd.Remove(hermit);
         return false;
     }
 }

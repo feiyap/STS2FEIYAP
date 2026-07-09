@@ -1,0 +1,7 @@
+﻿dotnet : 鍦ㄦ竻鍗曟枃浠朵腑鎵句笉鍒板懡浠ゅ悕涓衡€渋lspycmd鈥濈殑宸ュ叿銆?
+所在位置 C:\Users\25081\AppData\Local\Temp\ps-script-537a842f-98bd-40a7-b8ce-4ac5965996ab.ps1:86 字符: 117
++ ... ath $dll) { dotnet tool run ilspycmd -- $dll -t MegaCrit.Sts2.Core.Mo ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (鍦ㄦ竻鍗曟枃浠朵腑鎵句笉鍒板懡浠ゅ悕涓衡€渋lspycmd鈥濈殑宸ュ叿銆?:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

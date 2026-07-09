@@ -113,7 +113,7 @@ public static class FeiyapIaidoCmd
         {
             foreach (var relic in player.Relics.OfType<SwordSaintBase>())
             {
-                damage *= relic.PerfectIaidoDamageMultiplier;
+                damage *= 1m + relic.PerfectIaidoDamageBonusPercent / 100m;
             }
         }
 

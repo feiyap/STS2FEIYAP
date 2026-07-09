@@ -1,10 +1,11 @@
 using Feiyap.Characters;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 天下五剑：造成 5 点伤害 5 次；升级后力量与活力获得 2 倍效果。
+/// 天下五剑：造成 5 点伤害 5 次；升级后力量与活力在该牌上发挥 2 倍效果。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare1 : FeiyapCardTemplate
@@ -21,7 +22,13 @@ public sealed class FeiyapRare1 : FeiyapCardTemplate
     [
         new DamageVar(5, ValueProp.Move),
         new RepeatVar(5),
-        new PowerVar<FeiyapTenkaFiveSwordsBoostPower>(2m)
+        new DynamicVar("FeiyapTenkaFiveSwordsBoostPower", 2m)
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<VigorPower>()
     ];
 
     public FeiyapRare1()
@@ -33,35 +40,10 @@ public sealed class FeiyapRare1 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        if (IsUpgraded)
-        {
-            await PowerCmd.Apply(
-                choiceContext,
-                ModelDb.Power<FeiyapTenkaFiveSwordsBoostPower>().ToMutable(),
-                Owner.Creature,
-                DynamicVars["FeiyapTenkaFiveSwordsBoostPower"].BaseValue,
-                Owner.Creature,
-                this);
-        }
-
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-
-        if (IsUpgraded)
-        {
-            var boost = Owner.Creature.GetPower<FeiyapTenkaFiveSwordsBoostPower>();
-            if (boost != null)
-            {
-                await PowerCmd.Remove(boost);
-            }
-        }
-    }
-
-    protected override void OnUpgrade()
-    {
-        // 升级效果由临时倍率能力承担。
     }
 }

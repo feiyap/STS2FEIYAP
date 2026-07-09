@@ -51,6 +51,8 @@ public sealed class FeiyapCharacter : ModCharacterTemplate<FeiyapCardPool, Feiya
         Ui: new CharacterUiAssetSet(
             // 人物头像路径。
             IconTexturePath: $"{ImageRoot}/Feiyap_character_icon.png",
+            // 左上角头像场景
+            IconPath: $"{ImageRoot}/Feiyap_character_icon_char.png",
             // 人物头像轮廓。
             IconOutlineTexturePath: $"{ImageRoot}/Feiyap_character_icon_outline.png",
             // 人物选择背景。
@@ -60,7 +62,7 @@ public sealed class FeiyapCharacter : ModCharacterTemplate<FeiyapCardPool, Feiya
             // 人物选择图标-锁定状态。
             CharacterSelectLockedIconPath: $"{ImageRoot}/Feiyap_character_select_locked.png",
             // 地图上的角色标记图标、表情轮盘上的角色头像。
-            MapMarkerPath: $"{ImageRoot}/Feiyap_map_marker.png"));
+            MapMarkerPath: $"{ImageRoot}/Feiyap_character_icon.png"));
 
     // 某个字段没写时，RitsuLib 会从占位角色配置里补齐。
     public override string? PlaceholderCharacterId => "ironclad";

@@ -1,11 +1,12 @@
 using System.Linq;
 using Feiyap.Characters;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -33,7 +34,7 @@ public sealed class FeiyapRare12 : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await GainBlockForAllPlayers(choiceContext, DynamicVars.Block.BaseValue, cardPlay);
+        await GainBlockForAllPlayers(choiceContext, DynamicVars.Block, cardPlay);
     }
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -47,21 +48,35 @@ public sealed class FeiyapRare12 : FeiyapCardTemplate
             return;
         }
 
-        await GainBlockForAllPlayers(choiceContext, DynamicVars["TriggerBlock"].BaseValue, null);
+        await GainBlockForAllPlayers(
+            choiceContext,
+            DynamicVars["TriggerBlock"].BaseValue,
+            cardPlay: null);
 
-        var sun = Owner.RunState.CreateCard<FeiyapRare6>(Owner);
-        if (IsUpgraded)
-        {
-            CardCmd.Upgrade(sun);
-        }
-
-        await CardCmd.Transform(this, sun);
+        var shouldUpgrade = IsUpgraded;
+        TaskHelper.RunSafely(TransformToSunAsync(shouldUpgrade));
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(5m);
         DynamicVars["TriggerBlock"].UpgradeValueBy(3m);
+    }
+
+    private async Task GainBlockForAllPlayers(
+        PlayerChoiceContext choiceContext,
+        BlockVar blockVar,
+        CardPlay? cardPlay)
+    {
+        if (CombatState == null)
+        {
+            return;
+        }
+
+        foreach (var player in GetLivingPlayerCreatures())
+        {
+            await CreatureCmd.GainBlock(player, blockVar, cardPlay);
+        }
     }
 
     private async Task GainBlockForAllPlayers(
@@ -74,12 +89,28 @@ public sealed class FeiyapRare12 : FeiyapCardTemplate
             return;
         }
 
-        var players = CombatState.GetTeammatesOf(Owner.Creature)
-            .Where(c => c.IsAlive && c.IsPlayer);
-
-        foreach (var player in players)
+        foreach (var player in GetLivingPlayerCreatures())
         {
             await CreatureCmd.GainBlock(player, amount, ValueProp.Move, cardPlay);
         }
+    }
+
+    private IEnumerable<Creature> GetLivingPlayerCreatures() =>
+        CombatState!.PlayerCreatures.Where(c => c.IsAlive && c.IsPlayer);
+
+    private async Task TransformToSunAsync(bool shouldUpgrade)
+    {
+        if (Pile?.Type != PileType.Hand || CombatState == null)
+        {
+            return;
+        }
+
+        var sun = CombatState.CreateCard<FeiyapRare6>(Owner);
+        if (shouldUpgrade)
+        {
+            CardCmd.Upgrade(sun);
+        }
+
+        await CardCmd.Transform(this, sun, CardPreviewStyle.None);
     }
 }

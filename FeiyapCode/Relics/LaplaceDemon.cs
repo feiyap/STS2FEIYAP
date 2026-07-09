@@ -20,7 +20,7 @@ namespace Feiyap.Relics;
 /// 拉普拉斯妖：完成全部 3 个转职任务后的隐藏奖励遗物。
 /// </summary>
 [RegisterRelic(typeof(FeiyapRelicPool))]
-public sealed class LaplaceDemon : ModRelicTemplate
+public sealed class LaplaceDemon : ModRelicTemplate, IFeiyapHiddenFromRelicCompendium
 {
     public override RelicRarity Rarity => RelicRarity.Event;
 

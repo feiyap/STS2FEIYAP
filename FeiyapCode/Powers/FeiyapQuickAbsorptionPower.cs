@@ -22,6 +22,8 @@ public sealed class FeiyapQuickAbsorptionPower : ModPowerTemplate, IFeiyapIaidoG
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapQuickAbsorptionPower));
+
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
 
     public decimal GetIaidoGainAdditiveBonus(in FeiyapIaidoGainContext context)

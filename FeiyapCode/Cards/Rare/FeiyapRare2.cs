@@ -52,7 +52,7 @@ public sealed class FeiyapRare2 : FeiyapCardTemplate
 
         var totalDamage = DynamicVars.Damage.BaseValue + BonusDamage;
         await DamageCmd.Attack(totalDamage)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
     }

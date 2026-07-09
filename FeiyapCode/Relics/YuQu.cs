@@ -6,7 +6,6 @@ using Feiyap.Characters;
 using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -28,7 +27,7 @@ public abstract class YuQuBase : ModRelicTemplate
 {
     private int _completedQuestFlags;
     private bool _hasMadeInitialQuestSelection;
-    private bool _startingQuestCardSelectionInProgress;
+    private Task? _startingQuestCardSelectionTask;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
@@ -68,22 +67,15 @@ public abstract class YuQuBase : ModRelicTemplate
     public override Task AfterActEntered()
     {
         // EnterAct 在淡入完成后才调用 AfterActEntered，可直接弹选牌。
-        if (LocalContext.IsMe(Owner))
-        {
-            return TrySelectStartingQuestCardAsync();
-        }
-
-        return Task.CompletedTask;
+        // 联机时所有客户端都必须执行同一套选牌/状态更新逻辑；CardSelectCmd 会自行同步玩家选择。
+        return TrySelectStartingQuestCardAsync();
     }
 
     public override Task AfterRoomEntered(AbstractRoom room)
     {
-        // 读档不经过 EnterAct，需在房间淡入完成后再补发选牌。
-        if (LocalContext.IsMe(Owner))
-        {
-            TaskHelper.RunSafely(TrySelectStartingQuestCardAfterFadeAsync());
-        }
-
+        // 读档不经过 EnterAct，在此补发选牌；但不能 await，否则会阻塞 FadeIn（进涅奥前黑屏）。
+        // 联机时所有客户端都必须启动同一任务，CardSelectCmd 会同步玩家选择。
+        TaskHelper.RunSafely(TrySelectStartingQuestCardAfterFadeAsync());
         return Task.CompletedTask;
     }
 
@@ -107,21 +99,25 @@ public abstract class YuQuBase : ModRelicTemplate
         await TrySelectStartingQuestCardAsync();
     }
 
-    private async Task TrySelectStartingQuestCardAsync()
+    private Task TrySelectStartingQuestCardAsync()
     {
-        if (!NeedsInitialQuestSelection() || _startingQuestCardSelectionInProgress)
+        if (!NeedsInitialQuestSelection())
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        _startingQuestCardSelectionInProgress = true;
+        return _startingQuestCardSelectionTask ??= RunStartingQuestCardSelectionAsync();
+    }
+
+    private async Task RunStartingQuestCardSelectionAsync()
+    {
         try
         {
             await SelectStartingQuestCardCoreAsync();
         }
         finally
         {
-            _startingQuestCardSelectionInProgress = false;
+            _startingQuestCardSelectionTask = null;
         }
     }
 
@@ -206,4 +202,9 @@ public sealed class YuQuYuDuo : YuQuBase
         IconPath: $"{Entry.ResPath}/images/relics/{nameof(YuQuYuDuo)}.png",
         IconOutlinePath: $"{Entry.ResPath}/images/relics/{nameof(YuQuYuDuo)}.png",
         BigIconPath: $"{Entry.ResPath}/images/relics/{nameof(YuQuYuDuo)}.png");
+
+    public override async Task AfterObtained()
+    {
+        await FeiyapQuestRewards.UpgradeExistingQuestRelics(Owner);
+    }
 }

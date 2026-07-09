@@ -25,6 +25,8 @@ public sealed class FeiyapHyakuhanheiPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapHyakuhanheiPower));
+
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
 
     public static int GetAttackIaidoConsume() => 1;

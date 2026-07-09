@@ -18,5 +18,7 @@ public sealed class FeiyapGameplayPatches : IModPatches
         patcher.RegisterPatch<FeiyapCombatTrackingAfterDamageGivenPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingBeforeSideTurnStartPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterCombatEndPatch>();
+        patcher.RegisterPatch<FeiyapRelicCompendiumLoadRelicNodesPatch>();
+        patcher.RegisterPatch<FeiyapRelicCompendiumAddRelicsPatch>();
     }
 }

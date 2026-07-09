@@ -28,7 +28,9 @@
 
   "FEIYAP_CARD_WORLD_SHARDS.title": "World Shards",
 
-  "FEIYAP_CARD_WORLD_SHARDS.description": "Gain {StrengthPower:diff()} [gold]Strength[/gold].",
+  "FEIYAP_CARD_WORLD_SHARDS.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
+
+  "FEIYAP_CARD_WORLD_SHARDS.smartDescription": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
 
   "FEIYAP_CARD_FEIYAP_STRIKE.title": "Template Strike",
 
@@ -47,6 +49,12 @@
   "FEIYAP_CARD_JU_HE_SHU.description": "Gain {Iaido:diff()} [gold]Iaido[/gold].",
 
   "FEIYAP_CARD_JU_HE_SHU.smartDescription": "Gain {Iaido:diff()} [gold]Iaido[/gold].",
+
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.title": "Sheath Strike",
+
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.description": "Deal {CalculationBase:diff()} damage plus damage equal to your [gold]Iaido[/gold].\nThis attack does not consume [gold]Iaido[/gold].{InCombat:\n(Deals {CalculatedDamage:diff()} damage.)|}{IfUpgraded:show:\nApply 1 [gold]Weak[/gold].|}",
+
+  "FEIYAP_CARD_JIAN_QIAO_DA_JI.smartDescription": "Deal {CalculationBase:diff()} damage plus damage equal to your [gold]Iaido[/gold].\nThis attack does not consume [gold]Iaido[/gold].{InCombat:\n(Deals {CalculatedDamage:diff()} damage.)|}",
 
   "FEIYAP_CARD_FEIYAP_COMMON1.title": "Wan Ying",
 
@@ -126,7 +134,7 @@
 
   "FEIYAP_CARD_FEIYAP_COMMON13.smartDescription": "Gain {Iaido:diff()} [gold]Iaido[/gold].\nGain {DexterityPower:diff()} [gold]Dexterity[/gold] this turn.",
 
-  "FEIYAP_CARD_FEIYAP_COMMON14.title": "Ta Ying Bu",
+  "FEIYAP_CARD_FEIYAP_COMMON14.title": "Bu Yue",
 
   "FEIYAP_CARD_FEIYAP_COMMON14.description": "[gold]Discard[/gold] 1 card.\nGain {Iaido:diff()} [gold]Iaido[/gold].",
 
@@ -149,6 +157,10 @@
   "FEIYAP_CARD_FEIYAP_COMMON17.description": "Put a card from your [gold]Hand[/gold] on the bottom of your [gold]Draw pile[/gold].\nChoose 1 card of the same type from your [gold]Draw pile[/gold] and add it to your [gold]Hand[/gold].",
 
   "FEIYAP_CARD_FEIYAP_COMMON17.smartDescription": "Put a card from your [gold]Hand[/gold] on the bottom of your [gold]Draw pile[/gold].\nChoose 1 card of the same type from your [gold]Draw pile[/gold] and add it to your [gold]Hand[/gold].",
+
+  "FEIYAP_CARD_FEIYAP_COMMON17.selectionScreenPrompt": "Choose a card from your [gold]Hand[/gold].",
+
+  "FEIYAP_CARD_FEIYAP_COMMON17.drawSelectionPrompt": "Choose 1 card of the same type from your [gold]Draw pile[/gold].",
 
   "FEIYAP_CARD_FEIYAP_COMMON18.title": "Xing Mu",
 
@@ -238,7 +250,7 @@
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON15.description": "Consume all [gold]Iaido[/gold]. Gain equal [gold]Vigor[/gold].{IfUpgraded:show: (Upgraded: no longer [gold]Exhausts[/gold].)|}",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON15.smartDescription": "Consume all [gold]Iaido[/gold]. Gain equal [gold]Vigor[/gold].{IfUpgraded:show: (Upgraded: no longer [gold]Exhausts[/gold].)|}",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON15.smartDescription": "Consume all [gold]Iaido[/gold]. Gain equal [gold]Vigor[/gold].",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON16.title": "Sakura Drunk",
 
@@ -316,7 +328,7 @@
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON31.description": "Whenever you trigger [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].\nWhenever you trigger [gold]Perfect Iaido[/gold], gain 5 [gold]Vigor[/gold].{IfUpgraded:show: (Upgraded: [gold]Innate[/gold].)|}",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON31.smartDescription": "Whenever you trigger [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].\nWhenever you trigger [gold]Perfect Iaido[/gold], gain 5 [gold]Vigor[/gold].{IfUpgraded:show: (Upgraded: [gold]Innate[/gold].)|}",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON31.smartDescription": "Whenever you trigger [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].\nWhenever you trigger [gold]Perfect Iaido[/gold], gain 5 [gold]Vigor[/gold].",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON32.title": "Sword Heart Remains",
 
@@ -328,7 +340,7 @@
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON33.description": "When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 1 instead.\nWhen you play a [gold]Skill[/gold], gain 1 [gold]Iaido[/gold].{IfUpgraded:show: (Upgraded: [gold]Innate[/gold].)|}",
 
-  "FEIYAP_CARD_FEIYAP_UNCOMMON33.smartDescription": "When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 1 instead.\nWhen you play a [gold]Skill[/gold], gain 1 [gold]Iaido[/gold].{IfUpgraded:show: (Upgraded: [gold]Innate[/gold].)|}",
+  "FEIYAP_CARD_FEIYAP_UNCOMMON33.smartDescription": "When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 1 instead.\nWhen you play a [gold]Skill[/gold], gain 1 [gold]Iaido[/gold].",
 
   "FEIYAP_CARD_FEIYAP_UNCOMMON34.title": "Hyakukyōshu",
 
@@ -364,7 +376,7 @@
 
   "FEIYAP_CARD_FEIYAP_RARE1.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.{IfUpgraded:show:\n[gold]Strength[/gold] and [gold]Vigor[/gold] have {FeiyapTenkaFiveSwordsBoostPower:diff()}x effect on Tenka Five Swords.|}",
 
-  "FEIYAP_CARD_FEIYAP_RARE1.smartDescription": "Deal {Damage:diff()} damage {Repeat:diff()} times.{IfUpgraded:show:\n[gold]Strength[/gold] and [gold]Vigor[/gold] have {FeiyapTenkaFiveSwordsBoostPower:diff()}x effect on Tenka Five Swords.|}",
+  "FEIYAP_CARD_FEIYAP_RARE1.smartDescription": "Deal {Damage:diff()} damage {Repeat:diff()} times.",
 
   "FEIYAP_CARD_FEIYAP_RARE2.title": "Musou Slash",
 

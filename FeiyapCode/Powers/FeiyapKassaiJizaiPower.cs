@@ -19,6 +19,8 @@ public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapKassaiJizaiPower));
+
     public static async Task OnIaidoGained(
         PlayerChoiceContext choiceContext,
         Creature owner,

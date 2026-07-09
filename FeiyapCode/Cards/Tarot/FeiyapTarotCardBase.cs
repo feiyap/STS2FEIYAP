@@ -75,14 +75,22 @@ public abstract class FeiyapTarotCardBase(
         FeiyapTarotRegistry.Register(factory);
 
     /// <summary>正位效果是否满足触发条件（上一张打出的是技能牌）。</summary>
-    protected bool IsUprightTriggered(Player? player) =>
+    public static bool IsUprightEffectTriggeredFor(Player? player) =>
         player != null
         && FeiyapCombatTracker.Get(player).LastPlayedType == CardType.Skill;
 
     /// <summary>逆位效果是否满足触发条件（上一张打出的是攻击牌）。</summary>
-    protected bool IsReversedTriggered(Player? player) =>
+    public static bool IsReversedEffectTriggeredFor(Player? player) =>
         player != null
         && FeiyapCombatTracker.Get(player).LastPlayedType == CardType.Attack;
+
+    /// <summary>正位效果是否满足触发条件（上一张打出的是技能牌）。</summary>
+    protected bool IsUprightTriggered(Player? player) =>
+        IsUprightEffectTriggeredFor(player);
+
+    /// <summary>逆位效果是否满足触发条件（上一张打出的是攻击牌）。</summary>
+    protected bool IsReversedTriggered(Player? player) =>
+        IsReversedEffectTriggeredFor(player);
 
     /// <summary>当前朝向下，对应塔罗效果是否可触发。</summary>
     protected bool IsTarotEffectTriggered(Player? player)

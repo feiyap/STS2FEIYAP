@@ -27,6 +27,8 @@ public sealed class FeiyapChariotPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapChariotPower));
+
     public void SetReversed(bool reversed)
     {
         AssertMutable();

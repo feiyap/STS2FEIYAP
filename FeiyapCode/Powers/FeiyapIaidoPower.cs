@@ -20,19 +20,22 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 居合：受击时消耗等值居合并反击；打出攻击牌或回合开始时清空。
+/// ??????????????????????????????
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapIaidoPower : ModPowerTemplate
 {
     private int _pendingConsume;
     private decimal _pendingIncomingDamage;
+    private CardPlay? _pendingCardPlay;
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    /// <summary>居合数值由格挡槽 UI 显示，不在能力栏展示。</summary>
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapIaidoPower));
+
+    /// <summary>???????? UI ???????????</summary>
     protected override bool IsVisibleInternal => false;
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
@@ -42,7 +45,8 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (FeiyapIaidoIntentPreviewScope.IsActive)
         {
@@ -65,6 +69,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
 
         _pendingConsume = consume;
         _pendingIncomingDamage = amount;
+        _pendingCardPlay = cardPlay;
         return -consume;
     }
 
@@ -83,15 +88,16 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         }
 
         var consume = _pendingConsume;
+        var pendingCardPlay = _pendingCardPlay;
         ClearPendingConsume();
         var shouldCounter = ShouldIaidoCounter(dealer, props);
 
         var forcedPerfect = shouldCounter && Owner.FindPower<FeiyapIaidoSurgePower>() != null;
-        var attackDamage = ComputeAttackDamageWithoutIaido(consume, amount, props, dealer, cardSource);
+        var attackDamage = ComputeAttackDamageWithoutIaido(consume, amount, props, dealer, cardSource, pendingCardPlay);
         var blockedDamage = Math.Max(0m, attackDamage - amount);
         var isPerfect = shouldCounter && (forcedPerfect || Amount == attackDamage);
         var counterDamage = shouldCounter
-            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(Owner, attackDamage, isPerfect)
+            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(Owner, blockedDamage, isPerfect)
             : 0m;
 
         Flash();
@@ -130,6 +136,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
                         counterDamage,
                         ValueProp.Unpowered | ValueProp.SkipHurtAnim,
                         Owner,
+                        null,
                         null);
                 }
 
@@ -151,6 +158,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
                     counterDamage,
                     ValueProp.Unpowered | ValueProp.SkipHurtAnim,
                     Owner,
+                    null,
                     null);
 
                 if (Owner.Player != null)
@@ -214,19 +222,6 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         return FeiyapIaidoCmd.ClearAll(choiceContext, Owner);
     }
 
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IEnumerable<Creature> participants)
-    {
-        if (participants.Contains(Owner) && Owner.Player != null)
-        {
-            FeiyapCombatTracker.Get(Owner.Player).OnTurnEnd(Owner.Player);
-        }
-
-        return Task.CompletedTask;
-    }
-
     private bool ShouldConsumeIaido(Creature? target, Creature? dealer, decimal amount, ValueProp props) =>
         target == Owner
         && amount > 0m
@@ -234,7 +229,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         && IsIaidoBlockableDamage(dealer, props);
 
     /// <summary>
-    /// 居合可抵消的伤害：所有可被格挡的伤害；其中仅敌方 powered attack 会触发反击。
+    /// ???????????????????????? powered attack ??????
     /// </summary>
     private bool IsIaidoBlockableDamage(Creature? dealer, ValueProp props)
     {
@@ -260,32 +255,34 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
     {
         _pendingConsume = 0;
         _pendingIncomingDamage = 0m;
+        _pendingCardPlay = null;
     }
 
     /// <summary>
-    /// 还原若无居合时的完整攻击伤害（含居合之后施加的力量等加算，以及易伤等乘算）。
+    /// ??????????????????????????????????????
     /// </summary>
     private decimal ComputeAttackDamageWithoutIaido(
         int consume,
         decimal finalAmountWithIaido,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (consume <= 0)
         {
             return 0m;
         }
 
-        var multFactor = ComputeDamageMultiplicativeFactor(props, dealer, cardSource);
+        var multFactor = ComputeDamageMultiplicativeFactor(props, dealer, cardSource, cardPlay);
         if (multFactor <= 0m)
         {
             return 0m;
         }
 
-        // 全部加算修正（含居合、居合之后的力量等）后的值，尚未乘算。
+        // ?????????????????????????????
         var additiveWithIaido = finalAmountWithIaido / multFactor;
-        // 把居合消耗的部分加回，得到完整加算总量。
+        // ????????????????????
         var additiveWithoutIaido = additiveWithIaido + consume;
         return additiveWithoutIaido * multFactor;
     }
@@ -293,12 +290,13 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
     private decimal ComputeDamageMultiplicativeFactor(
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         var factor = 1m;
         foreach (var power in Owner.Powers)
         {
-            factor *= power.ModifyDamageMultiplicative(Owner, 1m, props, dealer, cardSource);
+            factor *= power.ModifyDamageMultiplicative(Owner, 1m, props, dealer, cardSource, cardPlay);
         }
 
         return factor;
