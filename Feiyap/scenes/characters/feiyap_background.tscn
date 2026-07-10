@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3cayhcv528cy"]
+
+[ext_resource type="Texture2D" uid="uid://dkg5v2eud1s7j" path="res://Feiyap/scenes/characters/feiyap_background.png" id="1_bgltl"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Control" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 322.0
+offset_top = 86.0
+offset_right = 2242.0
+offset_bottom = 1366.0
+texture = ExtResource("1_bgltl")

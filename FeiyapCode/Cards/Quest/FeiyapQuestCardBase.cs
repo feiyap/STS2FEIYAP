@@ -96,6 +96,18 @@ public abstract class FeiyapQuestCardBase : FeiyapCardTemplate
         FeiyapQuestCardVisuals.RefreshQuestProgress(this);
     }
 
+    /// <summary>按任务目标比例增加进度（向上取整，至少 1 点）。</summary>
+    internal void AddProgressPercent(double ratio)
+    {
+        if (ratio <= 0 || IsComplete)
+        {
+            return;
+        }
+
+        var amount = Math.Max(1, (int)Math.Ceiling(QuestGoal * ratio));
+        AddProgress(amount);
+    }
+
     internal void SyncProgressToCombatClones()
     {
         if (Owner?.PlayerCombatState == null)

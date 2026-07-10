@@ -146,7 +146,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
                         Owner.Player,
                         (int)Math.Round(counterDamage * enemies.Count));
                 }
-            });
+            }, isPerfect);
         }
         else if (dealer != null && dealer.Side != Owner.Side && dealer.IsAlive)
         {
@@ -165,7 +165,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
                 {
                     FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, (int)Math.Round(counterDamage));
                 }
-            });
+            }, isPerfect);
         }
     }
 

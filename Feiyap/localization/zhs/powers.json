@@ -6,7 +6,7 @@
 
   "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.title": "残心",
 
-  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.description": "你下一次获得的[gold]格挡[/gold]或[gold]居合[/gold]增加 1 点。",
+  "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.description": "你下一次打出的卡牌，其获得的[gold]格挡[/gold]与[gold]居合[/gold]增加 {Amount} 点。",
 
   "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.title": "迷雾斩",
 

@@ -14,7 +14,7 @@
 
   "FEIYAP_CARD_KE_XUE_ZHENG.title": "Ke Xue Zheng",
 
-  "FEIYAP_CARD_KE_XUE_ZHENG.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nWhile in your hand, each time you take damage, gain 1 additional attack hit.\n{IfUpgraded:show:While in your hand, if your HP is below 1, restore to 1, then play and [gold]Exhaust[/gold] this card.|}",
+  "FEIYAP_CARD_KE_XUE_ZHENG.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\nWhile in your hand, each time you take damage, gain 1 additional attack hit.\n(Extra hits stored: [blue]{ExtraHits}[/blue])\n{IfUpgraded:show:While in your hand, if your HP is below 1, restore to 1, then play and [gold]Exhaust[/gold] this card.|}",
 
   "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.title": "Fei Ying Yu Hua Luo",
 

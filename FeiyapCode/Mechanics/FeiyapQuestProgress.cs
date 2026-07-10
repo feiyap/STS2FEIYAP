@@ -10,6 +10,17 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public static class FeiyapQuestProgress
 {
+    private const double ActEndProgressRatio = 0.33;
+
+    /// <summary>幕间过渡时为牌库中所有未完成任务牌增加进度。</summary>
+    public static void GrantActEndProgress(Player player)
+    {
+        foreach (var quest in player.Deck.Cards.OfType<FeiyapQuestCardBase>())
+        {
+            quest.AddProgressPercent(ActEndProgressRatio);
+        }
+    }
+
     /// <summary>累计居合反击造成的伤害。</summary>
     public static void RecordIaidoDamage(Player player, int amount)
     {

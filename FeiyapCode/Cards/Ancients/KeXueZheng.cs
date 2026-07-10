@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -32,7 +33,7 @@ public sealed class KeXueZheng : FeiyapCardTemplate
     [
         new DamageVar(5, ValueProp.Move),
         new RepeatVar(3),
-        new DynamicVar("ExtraHits", 0m)
+        new IntVar("ExtraHits", 0)
     ];
 
     [SavedProperty]
@@ -76,6 +77,7 @@ public sealed class KeXueZheng : FeiyapCardTemplate
         }
 
         BonusHitCount++;
+        FeiyapQuestCardVisuals.RefreshCardVisuals(this);
 
         if (!IsUpgraded || Owner.Creature.CurrentHp >= 1m || _autoPlayPending)
         {

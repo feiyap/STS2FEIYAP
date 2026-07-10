@@ -2,7 +2,7 @@
 
   "FEIYAP_RELIC_YU_QU.title": "予取",
 
-  "FEIYAP_RELIC_YU_QU.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。",
+  "FEIYAP_RELIC_YU_QU.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。\n每一幕结束后，你牌库中的所有转职任务牌获得 33% 进度。",
 
   "FEIYAP_RELIC_YU_QU.flavor": "取舍之间，命运已然转动。",
 
@@ -10,7 +10,7 @@
 
   "FEIYAP_RELIC_YU_QU_YU_DUO.title": "予取予夺",
 
-  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。拥有该遗物时，从转职任务牌中获取的遗物将升级。",
+  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。拥有该遗物时，从转职任务牌中获取的遗物将升级。\n每一幕结束后，你牌库中的所有转职任务牌获得 33% 进度。",
 
   "FEIYAP_RELIC_YU_QU_YU_DUO.flavor": "予取予夺，皆在一念。",
 

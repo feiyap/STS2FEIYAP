@@ -12,9 +12,19 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public static class FeiyapSlashCmd
 {
-    // CC0：Medieval sound effects - Weapon impacts (Ben Jaszczak & Brian Nelson, OpenGameArt)
-    // Norse Sword × Katana 刃击交击声，裁剪为短促金属弹反感，见 Feiyap/Sounds/iaido_slash.wav
-    private static FeiyapModSound? _iaidoSlashSound;
+    private static readonly FeiyapModSound[] IaidoSlashSounds =
+    [
+        new($"{Entry.ResPath}/Sounds/iaido_1.mp3"),
+        new($"{Entry.ResPath}/Sounds/iaido_2.mp3"),
+        new($"{Entry.ResPath}/Sounds/iaido_3.mp3"),
+        new($"{Entry.ResPath}/Sounds/iaido_4.mp3")
+    ];
+
+    private static readonly FeiyapModSound[] PerfectIaidoSlashSounds =
+    [
+        new($"{Entry.ResPath}/Sounds/perfect_iaido_1.mp3"),
+        new($"{Entry.ResPath}/Sounds/perfect_iaido_2.mp3")
+    ];
     private enum SlashAreaMode
     {
         TargetHitbox,
@@ -27,7 +37,7 @@ public static class FeiyapSlashCmd
         NFeiyapDimensionSlashVfx.Initialize($"{Entry.ResPath}/scenes/vfx/feiyap_dimension_slash.tscn");
 
     /// <summary>居合单体反击：先播放斩击，再执行反击伤害。</summary>
-    public static async Task PlayIaidoCounterSlash(Creature? target, Func<Task> onCounter)
+    public static async Task PlayIaidoCounterSlash(Creature? target, Func<Task> onCounter, bool isPerfect = false)
     {
         if (target == null)
         {
@@ -36,7 +46,7 @@ public static class FeiyapSlashCmd
         }
 
         var slashVfx = CreateJianQiSlashAt(target);
-        PlayIaidoSlashSound();
+        PlayIaidoSlashSound(isPerfect);
         slashVfx?.DoSlash();
         await onCounter();
         slashVfx?.ForceComplete();
@@ -45,7 +55,8 @@ public static class FeiyapSlashCmd
     /// <summary>居合群体反击：先对每个目标播放斩击，再执行反击伤害。</summary>
     public static async Task PlayIaidoCounterSlashAll(
         IReadOnlyList<Creature> targets,
-        Func<Task> onCounter)
+        Func<Task> onCounter,
+        bool isPerfect = false)
     {
         var slashVfxList = new List<NFeiyapDimensionSlashVfx?>();
         var playedSound = false;
@@ -59,7 +70,7 @@ public static class FeiyapSlashCmd
             var slashVfx = CreateJianQiSlashAt(target);
             if (!playedSound)
             {
-                PlayIaidoSlashSound();
+                PlayIaidoSlashSound(isPerfect);
                 playedSound = true;
             }
 
@@ -75,10 +86,15 @@ public static class FeiyapSlashCmd
         }
     }
 
-    private static void PlayIaidoSlashSound()
+    private static void PlayIaidoSlashSound(bool isPerfect)
     {
-        _iaidoSlashSound ??= new FeiyapModSound($"{Entry.ResPath}/Sounds/iaido_slash.wav");
-        _iaidoSlashSound.Play();
+        var sounds = isPerfect ? PerfectIaidoSlashSounds : IaidoSlashSounds;
+        if (sounds.Length == 0)
+        {
+            return;
+        }
+
+        sounds[Random.Shared.Next(sounds.Length)].Play();
     }
 
     private static NFeiyapDimensionSlashVfx? CreateJianQiSlashAt(Creature? target, int lineCount = 1)

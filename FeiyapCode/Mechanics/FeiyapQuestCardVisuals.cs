@@ -16,6 +16,16 @@ namespace Feiyap.Mechanics;
 /// </summary>
 internal static class FeiyapQuestCardVisuals
 {
+    internal static void RefreshCardVisuals(CardModel card)
+    {
+        if (TestMode.IsOn)
+        {
+            return;
+        }
+
+        RefreshCard(card);
+    }
+
     internal static void RefreshQuestProgress(FeiyapQuestCardBase canonical)
     {
         if (TestMode.IsOn)

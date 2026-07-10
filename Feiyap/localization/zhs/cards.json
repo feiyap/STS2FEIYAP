@@ -14,7 +14,7 @@
 
   "FEIYAP_CARD_KE_XUE_ZHENG.title": "渴血症",
 
-  "FEIYAP_CARD_KE_XUE_ZHENG.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n握在手中时，每受到 1 次伤害，额外增加 1 次攻击段数。{IfUpgraded:show:\n握在手中时，若生命低于 1，则回复至 1，立即释放并[gold]消耗[/gold]该卡牌。|}",
+  "FEIYAP_CARD_KE_XUE_ZHENG.description": "造成 {Damage:diff()} 点伤害 {Repeat:diff()} 次。\n握在手中时，每受到 1 次伤害，额外增加 1 次攻击段数。\n（已积攒额外攻击次数：[blue]{ExtraHits}[/blue]）{IfUpgraded:show:\n握在手中时，若生命低于 1，则回复至 1，立即释放并[gold]消耗[/gold]该卡牌。|}",
 
   "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.title": "绯樱狱华落",
 

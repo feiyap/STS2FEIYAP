@@ -68,6 +68,11 @@ public abstract class YuQuBase : ModRelicTemplate
     {
         // EnterAct 在淡入完成后才调用 AfterActEntered，可直接弹选牌。
         // 联机时所有客户端都必须执行同一套选牌/状态更新逻辑；CardSelectCmd 会自行同步玩家选择。
+        if (Owner.RunState.CurrentActIndex > 0)
+        {
+            FeiyapQuestProgress.GrantActEndProgress(Owner);
+        }
+
         return TrySelectStartingQuestCardAsync();
     }
 
@@ -82,11 +87,53 @@ public abstract class YuQuBase : ModRelicTemplate
     private bool HasStartingQuestCard() =>
         Owner.Deck.Cards.Any(c => c is FeiyapQuestCardBase);
 
+    /// <summary>
+    /// 从局内其它状态回填任务进度。欧罗巴斯之触将予取替换为予取予夺时不会复制 SavedProperty，
+    /// 读档后若仅依赖遗物字段会误判为「尚未选过任务牌」。
+    /// </summary>
+    private void SyncQuestProgressFromRunState()
+    {
+        if (Owner == null)
+        {
+            return;
+        }
+
+        if (HasStartingQuestCard()
+            || this is YuQuYuDuo
+            || Owner.Relics.Any(static r => r is LaplaceDemon))
+        {
+            HasMadeInitialQuestSelection = true;
+        }
+
+        if (Owner.Relics.Any(static r => r is InvestigatorBase))
+        {
+            CompletedQuestFlags |= (int)FeiyapQuestKind.MiWang;
+        }
+
+        if (Owner.Relics.Any(static r => r is SwordSaintBase))
+        {
+            CompletedQuestFlags |= (int)FeiyapQuestKind.KuXiu;
+        }
+
+        if (Owner.Relics.Any(static r => r is MerryWitchBase))
+        {
+            CompletedQuestFlags |= (int)FeiyapQuestKind.FaWei;
+        }
+
+        if (CompletedQuestFlags != 0)
+        {
+            HasMadeInitialQuestSelection = true;
+        }
+    }
+
     /// <summary>是否仍需弹出「游戏开始时」的任务牌选择界面。</summary>
-    private bool NeedsInitialQuestSelection() =>
-        !HasMadeInitialQuestSelection
-        && CompletedQuestFlags == 0
-        && !HasStartingQuestCard();
+    private bool NeedsInitialQuestSelection()
+    {
+        SyncQuestProgressFromRunState();
+        return !HasMadeInitialQuestSelection
+            && !HasStartingQuestCard()
+            && !HasCompletedAllQuests;
+    }
 
     private async Task TrySelectStartingQuestCardAfterFadeAsync()
     {
