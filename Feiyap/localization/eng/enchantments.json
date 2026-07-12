@@ -1,0 +1,13 @@
+{
+  "FEIYAP_ENCHANTMENT_FEIYAP_INFUSION_ENCHANTMENT.title": "Infusion",
+  "FEIYAP_ENCHANTMENT_FEIYAP_INFUSION_ENCHANTMENT.description": "At the start of the first turn of combat, play this card automatically.",
+  "FEIYAP_ENCHANTMENT_FEIYAP_INFUSION_ENCHANTMENT.extraCardText": "Infusion.",
+
+  "FEIYAP_ENCHANTMENT_FEIYAP_ASSAULT_ENCHANTMENT.title": "Assault",
+  "FEIYAP_ENCHANTMENT_FEIYAP_ASSAULT_ENCHANTMENT.description": "Whenever you play another [gold]Attack[/gold], play this card automatically.",
+  "FEIYAP_ENCHANTMENT_FEIYAP_ASSAULT_ENCHANTMENT.extraCardText": "Assault.",
+
+  "FEIYAP_ENCHANTMENT_FEIYAP_REKINDLE_ENCHANTMENT.title": "Rekindle",
+  "FEIYAP_ENCHANTMENT_FEIYAP_REKINDLE_ENCHANTMENT.description": "The first time this card is played each combat, return it to your Hand.",
+  "FEIYAP_ENCHANTMENT_FEIYAP_REKINDLE_ENCHANTMENT.extraCardText": "Rekindle."
+}

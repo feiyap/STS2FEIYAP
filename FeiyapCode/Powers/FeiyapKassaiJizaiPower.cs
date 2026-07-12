@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -10,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 活杀自在：每获得 1 点居合，获得等量活力（Amount 为倍率）。
+/// 活杀自在：每获得 Amount 点居合，获得 1 点活力。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
@@ -27,7 +28,24 @@ public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
         decimal amountGained)
     {
         var power = owner.GetPower<FeiyapKassaiJizaiPower>();
-        if (power == null || amountGained <= 0m || power.Amount <= 0m)
+        if (power == null || amountGained <= 0m || power.Amount <= 0)
+        {
+            return;
+        }
+
+        var player = owner.Player;
+        if (player == null)
+        {
+            return;
+        }
+
+        var threshold = (decimal)power.Amount;
+        var tracker = FeiyapCombatTracker.Get(player);
+        var total = tracker.KassaiJizaiIaidoRemainder + amountGained;
+        var vigorGain = Math.Floor(total / threshold);
+        tracker.KassaiJizaiIaidoRemainder = total % threshold;
+
+        if (vigorGain <= 0m)
         {
             return;
         }
@@ -36,7 +54,7 @@ public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
         await PowerCmd.Apply<VigorPower>(
             choiceContext,
             owner,
-            amountGained * power.Amount,
+            vigorGain,
             owner,
             null);
     }

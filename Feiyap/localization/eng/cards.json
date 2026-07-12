@@ -18,7 +18,7 @@
 
   "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.title": "Fei Ying Yu Hua Luo",
 
-  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "Gain {Iaido:diff()} [gold]Iaido[/gold].{IfUpgraded:show:\nThis turn, all [gold]Iaido[/gold] counts as [gold]Perfect Iaido[/gold].|}",
+  "FEIYAP_CARD_FEI_YING_YU_HUA_LUO.description": "This turn, [gold]Iaido[/gold] becomes ∞.{IfUpgraded:show:\nThis turn, all [gold]Iaido[/gold] counts as [gold]Perfect Iaido[/gold].|}",
 
   "FEIYAP_CARD_WORLD_XXI.title": "XXI - World",
 
@@ -28,9 +28,9 @@
 
   "FEIYAP_CARD_WORLD_SHARDS.title": "World Shards",
 
-  "FEIYAP_CARD_WORLD_SHARDS.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
+  "FEIYAP_CARD_WORLD_SHARDS.description": "Draw {Cards:diff()} card.\nAt the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
 
-  "FEIYAP_CARD_WORLD_SHARDS.smartDescription": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
+  "FEIYAP_CARD_WORLD_SHARDS.smartDescription": "Draw {Cards:diff()} card.\nAt the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
 
   "FEIYAP_CARD_FEIYAP_STRIKE.title": "Template Strike",
 
@@ -440,9 +440,9 @@
 
   "FEIYAP_CARD_FEIYAP_RARE20.title": "Kassai Jizai",
 
-  "FEIYAP_CARD_FEIYAP_RARE20.description": "Whenever you gain [gold]Iaido[/gold], gain {FeiyapKassaiJizaiPower:diff()} [gold]Vigor[/gold] per [gold]Iaido[/gold] gained.",
+  "FEIYAP_CARD_FEIYAP_RARE20.description": "Whenever you gain {FeiyapKassaiJizaiPower:diff()} [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].",
 
-  "FEIYAP_CARD_FEIYAP_RARE20.smartDescription": "Whenever you gain [gold]Iaido[/gold], gain {FeiyapKassaiJizaiPower:diff()} [gold]Vigor[/gold] per [gold]Iaido[/gold] gained.",
+  "FEIYAP_CARD_FEIYAP_RARE20.smartDescription": "Whenever you gain {FeiyapKassaiJizaiPower:diff()} [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].",
 
   "FEIYAP_CARD_FEIYAP_RARE23.title": "Silver Bowl Snow",
 

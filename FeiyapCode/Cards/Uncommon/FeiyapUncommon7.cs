@@ -27,12 +27,12 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(5, ValueProp.Move),
+        new DamageVar(6, ValueProp.Move),
         new RepeatVar(2)
     ];
 
     protected override bool IsPlayable =>
-        Owner.Creature.GetPowerAmount<FeiyapIaidoPower>() > 0;
+        FeiyapIaidoCmd.HasIaido(Owner.Creature);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 
@@ -45,7 +45,7 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var iaido = Owner.Creature.GetPowerAmount<FeiyapIaidoPower>();
+        var iaido = FeiyapIaidoCmd.GetNumericAmount(Owner.Creature);
         await FeiyapIaidoCmd.ClearAll(choiceContext, Owner.Creature);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

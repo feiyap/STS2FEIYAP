@@ -37,7 +37,7 @@ public abstract class InvestigatorBase : ModRelicTemplate
             return;
         }
 
-        await FeiyapQuestRewards.GainAncientCard<KeXueZheng>(Owner);
+        await FeiyapQuestRewards.GainAncientCard<KeXueZheng>(Owner, this is FeiShengYiWenZi);
     }
 
     public override async Task BeforeCombatStart()

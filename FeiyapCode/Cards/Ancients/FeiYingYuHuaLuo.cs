@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
+using Feiyap.Patches;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
@@ -30,12 +29,7 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<FeiyapIaidoPower>()
-    ];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new IaidoVar(999m, ValueProp.Move)
+        HoverTipFactory.FromPower<FeiyapInfiniteIaidoPower>()
     ];
 
     public FeiYingYuHuaLuo()
@@ -45,13 +39,15 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await FeiyapIaidoCmd.Gain(
+        await FeiyapIaidoCmd.ClearAll(choiceContext, Owner.Creature);
+
+        await PowerCmd.Apply(
             choiceContext,
+            ModelDb.Power<FeiyapInfiniteIaidoPower>().ToMutable(),
             Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue,
-            ValueProp.Move,
-            this,
-            cardPlay);
+            1m,
+            Owner.Creature,
+            this);
 
         if (IsUpgraded)
         {
@@ -63,6 +59,8 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
                 Owner.Creature,
                 this);
         }
+
+        IaidoHealthBarOverlay.RefreshForCreature(Owner.Creature);
     }
 
     protected override void OnUpgrade()

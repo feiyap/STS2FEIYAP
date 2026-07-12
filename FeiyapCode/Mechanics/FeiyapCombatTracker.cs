@@ -31,6 +31,9 @@ public sealed class FeiyapCombatTracker
     /// <summary>本场战斗每次获得居合时的额外加算（如幾星霜）。</summary>
     public decimal IaidoGainCombatBonus { get; set; }
 
+    /// <summary>活杀自在：累计未兑换活力的居合余数。</summary>
+    public decimal KassaiJizaiIaidoRemainder { get; set; }
+
     public void OnTurnStart(Player player) =>
         TurnDamageDealt = 0;
 
@@ -57,6 +60,7 @@ public sealed class FeiyapCombatTracker
         tracker.RetainIaidoNextTurn = false;
         tracker.TurnDamageDealt = 0;
         tracker.IaidoGainCombatBonus = 0m;
+        tracker.KassaiJizaiIaidoRemainder = 0m;
     }
 
     public void RecordCardPlayed(CardType type)

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -18,6 +19,8 @@ namespace Feiyap.Cards.Ancients;
 public sealed class WorldShards : FeiyapCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
@@ -46,5 +49,6 @@ public sealed class WorldShards : FeiyapCardTemplate
             1m,
             Owner.Creature,
             this);
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 }

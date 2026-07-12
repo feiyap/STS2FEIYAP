@@ -24,7 +24,6 @@ public sealed class FeiyapRare5 : FeiyapCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        CardKeyword.Retain,
         CardKeyword.Exhaust,
         FeiyapKeywords.Iaido
     ];

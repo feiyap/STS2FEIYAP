@@ -18,7 +18,6 @@ namespace Feiyap.Powers;
 [RegisterPower]
 public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditive
 {
-    private int _pendingBlockBonus;
     private CardModel? _deferredCardSource;
     private int _deferredConsumeAmount;
 
@@ -37,29 +36,24 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             return 0m;
         }
 
-        if (IsCardPlayDeferred(context.CardSource, context.CardPlay))
+        if (!IsOwnCardPlay(context.CardSource, context.CardPlay))
         {
-            EnsureDeferredConsumption(context.CardSource!, Amount);
+            return 0m;
         }
 
+        EnsureDeferredConsumption(context.CardSource!, Amount);
         return Amount;
     }
 
-    public async ValueTask OnIaidoGainApplied(FeiyapIaidoGainContext context, decimal appliedBonus)
+    public ValueTask OnIaidoGainApplied(FeiyapIaidoGainContext context, decimal appliedBonus)
     {
-        if (appliedBonus <= 0m)
+        if (appliedBonus <= 0m || !IsOwnCardPlay(context.CardSource, context.CardPlay))
         {
-            return;
+            return ValueTask.CompletedTask;
         }
 
         Flash();
-
-        if (IsCardPlayDeferred(context.CardSource, context.CardPlay))
-        {
-            return;
-        }
-
-        await ConsumeAmountAsync(context.ChoiceContext, appliedBonus);
+        return ValueTask.CompletedTask;
     }
 
     public override decimal ModifyBlockAdditive(
@@ -74,37 +68,13 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             return 0m;
         }
 
-        if (IsCardPlayDeferred(cardSource, cardPlay))
+        if (!IsOwnCardPlay(cardSource, cardPlay))
         {
-            EnsureDeferredConsumption(cardSource!, Amount);
-            return Amount;
+            return 0m;
         }
 
-        _pendingBlockBonus = Amount;
+        EnsureDeferredConsumption(cardSource!, Amount);
         return Amount;
-    }
-
-    public override async Task AfterBlockGained(Creature creature, decimal amount, ValueProp props, CardModel? cardSource)
-    {
-        if (creature != Owner || amount <= 0m)
-        {
-            return;
-        }
-
-        if (IsDeferredForCard(cardSource))
-        {
-            return;
-        }
-
-        if (_pendingBlockBonus <= 0)
-        {
-            return;
-        }
-
-        var consume = _pendingBlockBonus;
-        _pendingBlockBonus = 0;
-        Flash();
-        await ConsumeAmountAsync(new ThrowingPlayerChoiceContext(), consume);
     }
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -124,11 +94,10 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
         await ConsumeAmountAsync(choiceContext, consume);
     }
 
-    private static bool IsCardPlayDeferred(CardModel? cardSource, CardPlay? cardPlay) =>
-        cardSource != null && cardPlay != null;
-
-    private bool IsDeferredForCard(CardModel? cardSource) =>
-        cardSource != null && cardSource == _deferredCardSource;
+    private bool IsOwnCardPlay(CardModel? cardSource, CardPlay? cardPlay) =>
+        cardPlay != null
+        && cardSource != null
+        && cardSource.Owner?.Creature == Owner;
 
     private void EnsureDeferredConsumption(CardModel cardSource, int amount)
     {

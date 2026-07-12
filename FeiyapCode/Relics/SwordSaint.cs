@@ -28,7 +28,7 @@ public abstract class SwordSaintBase : ModRelicTemplate
             return;
         }
 
-        await FeiyapQuestRewards.GainAncientCard<FeiYingYuHuaLuo>(Owner);
+        await FeiyapQuestRewards.GainAncientCard<FeiYingYuHuaLuo>(Owner, this is WuMingRen);
     }
 }
 

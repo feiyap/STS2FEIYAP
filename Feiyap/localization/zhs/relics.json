@@ -54,7 +54,46 @@
 
   "FEIYAP_RELIC_LAPLACE_DEMON.description": "获得先古卡「于万千碎裂的世界破片」。获得时，立即获得「古老牙齿」、「欧罗巴斯之触」。所有的卡牌奖励将被升级。",
 
-  "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "「我见过所有的未来。而你不在那儿。」——绯夜氏。"
+  "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "「我见过所有的未来。而你不在那儿。」——绯夜氏。",
 
+  "FEIYAP_RELIC_GOU_CHEN_YI.title": "勾陈一",
+  "FEIYAP_RELIC_GOU_CHEN_YI.description": "从你的牌组中选择 [blue]{Cards}[/blue] 张牌。为这些牌[gold]附魔[/gold]：[purple]{Enchantment}[/purple]。",
+  "FEIYAP_RELIC_GOU_CHEN_YI.flavor": "「星官赐印，命格自此不同。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.title": "天市右垣七",
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.description": "选择 [blue]1[/blue] 张自己卡池的任意[gold]稀有[/gold]卡加入牌组。",
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.flavor": "「稀有的光芒，才配落入你的星图。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_TIAN_JIN_SI.title": "天津四",
+  "FEIYAP_RELIC_TIAN_JIN_SI.description": "拾起时，选择一张[gold]能力牌[/gold]为它[gold]附魔[/gold]：[purple]注能[/purple]。",
+  "FEIYAP_RELIC_TIAN_JIN_SI.flavor": "「潜藏的能力，会在第一声星鸣中苏醒。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_ZHI_NV_YI.title": "织女一",
+  "FEIYAP_RELIC_ZHI_NV_YI.description": "拾起时，选择一张[gold]攻击牌[/gold]为它[gold]附魔[/gold]：[purple]强袭[/purple]。",
+  "FEIYAP_RELIC_ZHI_NV_YI.flavor": "「一刀未落，另一刀已追随而至。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_HE_GU_ER.title": "河鼓二",
+  "FEIYAP_RELIC_HE_GU_ER.description": "拾起时，选择一张[gold]技能牌[/gold]为它[gold]附魔[/gold]：[purple]重燃[/purple]。",
+  "FEIYAP_RELIC_HE_GU_ER.flavor": "「灰烬之中，仍有余温可再燃。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_TIAN_LANG_XING.title": "天狼星",
+  "FEIYAP_RELIC_TIAN_LANG_XING.description": "在每场战斗开始时，额外抽 [blue]{Cards}[/blue] 张牌。你每次将抽牌堆洗牌时，抽 [blue]{ShuffleDraw}[/blue] 张牌。",
+  "FEIYAP_RELIC_TIAN_LANG_XING.flavor": "「最亮的星，总在最深的夜里眨眼。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_NAN_HE_SAN.title": "南河三",
+  "FEIYAP_RELIC_NAN_HE_SAN.description": "每回合，你第一次打出[gold]攻击牌[/gold]、[gold]技能牌[/gold]、[gold]能力牌[/gold]时，各抽 [blue]{Cards}[/blue] 张牌。",
+  "FEIYAP_RELIC_NAN_HE_SAN.flavor": "「三种轨迹，各引一条流向。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_SHEN_SU_SI.title": "参宿四",
+  "FEIYAP_RELIC_SHEN_SU_SI.description": "在回合开始时获得 [blue]{Energy}[/blue] 点能量。第一回合无法打出[gold]攻击牌[/gold]。",
+  "FEIYAP_RELIC_SHEN_SU_SI.flavor": "「红星升起时，先静后动。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.title": "凤凰座 A",
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.description": "拾起时，从你的牌组中移除最多 [blue]{Cards}[/blue] 张牌。每移除 1 张牌，失去 [red]{MaxHp}[/red] 点最大生命值。",
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.flavor": "「涅槃之前，总要烧掉些什么。」——斩星官·绯夜氏。",
+
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.title": "十月天龙座流星雨",
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.description": "抽到[gold]状态牌[/gold]时，使其[gold]消耗[/gold]，对随机敌人造成 [blue]{Damage}[/blue] 点伤害。",
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.flavor": "「每一颗坠星，都是一记斩击。」——斩星官·绯夜氏。"
 }
 

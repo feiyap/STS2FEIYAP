@@ -20,6 +20,18 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public static class FeiyapIaidoCmd
 {
+    /// <summary>本回合是否处于无限居合状态。</summary>
+    public static bool IsInfinite(Creature creature) =>
+        creature.FindPower<FeiyapInfiniteIaidoPower>() != null;
+
+    /// <summary>是否视为拥有居合（含无限居合）。</summary>
+    public static bool HasIaido(Creature creature) =>
+        IsInfinite(creature) || creature.GetPowerAmount<FeiyapIaidoPower>() > 0;
+
+    /// <summary>数值型居合量（无限居合时恒为 0）。</summary>
+    public static int GetNumericAmount(Creature creature) =>
+        creature.GetPowerAmount<FeiyapIaidoPower>();
+
     /// <summary>计算居合获得预览值（敏捷、残心、战斗加成等），不实际施加。</summary>
     public static decimal PreviewGain(
         Creature creature,
@@ -40,6 +52,11 @@ public static class FeiyapIaidoCmd
         CardPlay? cardPlay)
     {
         if (creature == null || amount <= 0m || CombatManager.Instance.IsOverOrEnding)
+        {
+            return 0m;
+        }
+
+        if (IsInfinite(creature))
         {
             return 0m;
         }

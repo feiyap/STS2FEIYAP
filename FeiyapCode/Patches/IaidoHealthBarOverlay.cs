@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using Godot;
 using HarmonyLib;
@@ -27,6 +28,7 @@ internal static class IaidoHealthBarOverlay
     private sealed class State
     {
         public int LastIaido;
+        public bool LastIaidoInfinite;
         public int LastBlock;
         public bool CycleRunning;
         public bool PreferIaido = true;
@@ -127,13 +129,16 @@ internal static class IaidoHealthBarOverlay
             return;
         }
 
-        var iaido = creature.FindPower<FeiyapIaidoPower>()?.Amount ?? 0;
+        var iaido = FeiyapIaidoCmd.GetNumericAmount(creature);
+        var iaidoInfinite = FeiyapIaidoCmd.IsInfinite(creature);
+        var hasIaido = iaidoInfinite || iaido > 0;
         var block = Math.Max(0, creature.Block);
         var state = States.GetOrCreateValue(healthBar);
         state.LastIaido = iaido;
+        state.LastIaidoInfinite = iaidoInfinite;
         state.LastBlock = block;
 
-        if (block > 0 && iaido > 0)
+        if (block > 0 && hasIaido)
         {
             StartAlternatingCycle(healthBar, state);
             var mode = state.LastMode is DisplayMode.Block or DisplayMode.Iaido
@@ -142,7 +147,7 @@ internal static class IaidoHealthBarOverlay
 
             if (!state.IsFading)
             {
-                ApplyMode(healthBar, mode, block, iaido, state);
+                ApplyMode(healthBar, mode, block, iaido, iaidoInfinite, state);
             }
         }
         else
@@ -151,13 +156,13 @@ internal static class IaidoHealthBarOverlay
             state.FadeSerial++;
             state.IsFading = false;
 
-            if (iaido > 0)
+            if (hasIaido)
             {
-                ApplyMode(healthBar, DisplayMode.Iaido, block, iaido, state);
+                ApplyMode(healthBar, DisplayMode.Iaido, block, iaido, iaidoInfinite, state);
             }
             else
             {
-                ApplyMode(healthBar, block > 0 ? DisplayMode.Block : DisplayMode.None, block, iaido, state);
+                ApplyMode(healthBar, block > 0 ? DisplayMode.Block : DisplayMode.None, block, iaido, iaidoInfinite, state);
             }
         }
     }
@@ -194,18 +199,21 @@ internal static class IaidoHealthBarOverlay
                     break;
                 }
 
-                var iaido = creature.FindPower<FeiyapIaidoPower>()?.Amount ?? 0;
+                var iaido = FeiyapIaidoCmd.GetNumericAmount(creature);
+                var iaidoInfinite = FeiyapIaidoCmd.IsInfinite(creature);
+                var hasIaido = iaidoInfinite || iaido > 0;
                 var block = Math.Max(0, creature.Block);
-                if (iaido <= 0 || block <= 0)
+                if (!hasIaido || block <= 0)
                 {
                     break;
                 }
 
                 state.PreferIaido = !state.PreferIaido;
                 state.LastIaido = iaido;
+                state.LastIaidoInfinite = iaidoInfinite;
                 state.LastBlock = block;
                 var mode = state.PreferIaido ? DisplayMode.Iaido : DisplayMode.Block;
-                await FadeToModeAsync(healthBar, mode, block, iaido, state);
+                await FadeToModeAsync(healthBar, mode, block, iaido, iaidoInfinite, state);
             }
         }
         catch (Exception ex)
@@ -228,12 +236,13 @@ internal static class IaidoHealthBarOverlay
         DisplayMode mode,
         int block,
         int iaido,
+        bool iaidoInfinite,
         State state)
     {
         var blockContainer = healthBar.GetNodeOrNull<Control>("%BlockContainer");
         if (blockContainer == null)
         {
-            ApplyMode(healthBar, mode, block, iaido, state);
+            ApplyMode(healthBar, mode, block, iaido, iaidoInfinite, state);
             return;
         }
 
@@ -245,7 +254,7 @@ internal static class IaidoHealthBarOverlay
             await FadeContainerAlphaAsync(healthBar, blockContainer, 1f, 0.18f, serial, state);
             if (serial == state.FadeSerial && GodotObject.IsInstanceValid(healthBar))
             {
-                ApplyMode(healthBar, mode, block, iaido, state);
+                ApplyMode(healthBar, mode, block, iaido, iaidoInfinite, state);
                 SetContainerAlpha(blockContainer, 0.18f);
                 await FadeContainerAlphaAsync(healthBar, blockContainer, 0.18f, 1f, serial, state);
             }
@@ -312,6 +321,7 @@ internal static class IaidoHealthBarOverlay
         DisplayMode mode,
         int block,
         int iaido,
+        bool iaidoInfinite,
         State state)
     {
         var blockContainer = healthBar.GetNodeOrNull<Control>("%BlockContainer");
@@ -345,7 +355,7 @@ internal static class IaidoHealthBarOverlay
                     hpForeground.SelfModulate = IaidoHpForeground;
                 }
 
-                blockLabel.SetTextAutoSize(iaido.ToString());
+                blockLabel.SetTextAutoSize(iaidoInfinite ? "∞" : iaido.ToString());
                 ApplyBlockLabelPosition(blockLabel, state, iaidoMode: true);
                 blockLabel.SelfModulate = White;
                 blockLabel.Modulate = White;
@@ -357,7 +367,7 @@ internal static class IaidoHealthBarOverlay
             case DisplayMode.Block:
                 if (block <= 0)
                 {
-                    ApplyMode(healthBar, DisplayMode.None, block, iaido, state);
+                    ApplyMode(healthBar, DisplayMode.None, block, iaido, iaidoInfinite, state);
                     break;
                 }
 

@@ -116,7 +116,7 @@ public sealed class MerryWitch : MerryWitchBase
             return;
         }
 
-        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner);
+        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner, upgraded: false);
     }
 }
 
@@ -137,6 +137,6 @@ public sealed class KuangXiaoMoNv : MerryWitchBase
             return;
         }
 
-        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner);
+        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner, upgraded: true);
     }
 }

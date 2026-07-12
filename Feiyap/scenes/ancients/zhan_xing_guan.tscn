@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8zhanxingguan01"]
+
+[ext_resource type="Texture2D" uid="uid://dk70xingport1" path="res://Feiyap/scenes/ancients/zhan_xing_guan_portrait.png" id="1_portrait"]
+
+[sub_resource type="Shader" id="Shader_zhan_xing_guan_bg"]
+code = "shader_type canvas_item;
+
+group_uniforms Colors;
+uniform vec4 color_a : source_color = vec4(0.04, 0.03, 0.12, 1.0);
+uniform vec4 color_b : source_color = vec4(0.12, 0.08, 0.28, 1.0);
+uniform vec4 color_c : source_color = vec4(0.28, 0.20, 0.08, 1.0);
+
+group_uniforms Timing;
+uniform float cycle_seconds : hint_range(4.0, 120.0, 0.5) = 24.0;
+uniform float phase_offset : hint_range(0.0, 6.283, 0.01) = 1.57;
+
+group_uniforms Layout;
+uniform float vertical_mix : hint_range(0.0, 1.0, 0.01) = 0.24;
+
+void fragment() {
+	float t = TIME / max(cycle_seconds, 0.001);
+	float w_ab = sin(t * TAU) * 0.5 + 0.5;
+	float w_c = sin(t * TAU + phase_offset) * 0.5 + 0.5;
+	vec3 rgb = mix(color_a.rgb, color_b.rgb, w_ab);
+	rgb = mix(rgb, color_c.rgb, w_c);
+
+	float v = clamp(UV.y, 0.0, 1.0);
+	vec3 top_bias = mix(rgb, color_a.rgb, (1.0 - v) * vertical_mix);
+	vec3 bot_bias = mix(top_bias, color_b.rgb, v * vertical_mix);
+	rgb = bot_bias;
+
+	vec4 tex = texture(TEXTURE, UV);
+	COLOR = vec4(rgb, color_a.a * tex.a) * tex * COLOR;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_zhan_xing_guan_bg"]
+shader = SubResource("Shader_zhan_xing_guan_bg")
+shader_parameter/color_a = Color(0.04, 0.03, 0.12, 1)
+shader_parameter/color_b = Color(0.12, 0.08, 0.28, 1)
+shader_parameter/color_c = Color(0.28, 0.2, 0.08, 1)
+shader_parameter/cycle_seconds = 24.0
+shader_parameter/phase_offset = 1.57
+shader_parameter/vertical_mix = 0.24
+
+[sub_resource type="Gradient" id="Gradient_zhan_xing_guan_stars"]
+offsets = PackedFloat32Array(0, 0.32, 1)
+colors = PackedColorArray(0.95, 0.88, 0.55, 0, 1, 1, 1, 1, 0.72, 0.58, 0.92, 0)
+
+[node name="ZhanXingGuan" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="TimeColorBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_zhan_xing_guan_bg")
+layout_mode = 1
+offset_left = -329.0
+offset_top = -49.0
+offset_right = 2253.0
+offset_bottom = 1172.0
+
+[node name="stars" type="CPUParticles2D" parent="."]
+position = Vector2(925, 626)
+scale = Vector2(1.01, 1.01)
+amount = 280
+lifetime = 3.5
+preprocess = 5.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1500, 1000)
+gravity = Vector2(0, -8)
+scale_amount_min = 3.0
+scale_amount_max = 9.0
+color = Color(0.92, 0.82, 0.45, 0.55)
+color_ramp = SubResource("Gradient_zhan_xing_guan_stars")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = -329.0
+offset_top = -49.0
+offset_right = 2253.0
+offset_bottom = 1172.0
+texture = ExtResource("1_portrait")
+expand_mode = 1
+stretch_mode = 5

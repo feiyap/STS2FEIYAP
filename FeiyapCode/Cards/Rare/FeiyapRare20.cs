@@ -11,14 +11,14 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 活杀自在：每获得 1 点居合，获得等量活力（Amount 为倍率）。
+/// 活杀自在：每获得 2 点居合，获得 1 点活力（Amount 为所需居合数）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare20 : FeiyapCardTemplate
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapKassaiJizaiPower>(1m)
+        new PowerVar<FeiyapKassaiJizaiPower>(2m)
     ];
 
     public FeiyapRare20()
@@ -40,6 +40,6 @@ public sealed class FeiyapRare20 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapKassaiJizaiPower"].UpgradeValueBy(1m);
+        DynamicVars["FeiyapKassaiJizaiPower"].UpgradeValueBy(-1m);
     }
 }

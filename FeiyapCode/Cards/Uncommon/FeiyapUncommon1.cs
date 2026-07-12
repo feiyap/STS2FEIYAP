@@ -10,14 +10,14 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 空切：造成 5 点伤害 3 / 4 次。
+/// 空切：造成 4 点伤害 3 / 4 次。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon1 : FeiyapCardTemplate
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(5, ValueProp.Move),
+        new DamageVar(4, ValueProp.Move),
         new RepeatVar(3)
     ];
 

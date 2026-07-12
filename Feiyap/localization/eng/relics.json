@@ -54,7 +54,46 @@
 
   "FEIYAP_RELIC_LAPLACE_DEMON.description": "Gain the Ancient card World Shards. Upon pickup, also gain Archaic Tooth and Touch of Orobas. All card rewards are upgraded.",
 
-  "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "\"I have seen every future. You are not in them.\" — Feiyap Clan."
+  "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "\"I have seen every future. You are not in them.\" — Feiyap Clan.",
 
+  "FEIYAP_RELIC_GOU_CHEN_YI.title": "Alpha Herculis",
+  "FEIYAP_RELIC_GOU_CHEN_YI.description": "Choose [blue]{Cards}[/blue] cards from your deck. [gold]Enchant[/gold] them with [purple]{Enchantment}[/purple].",
+  "FEIYAP_RELIC_GOU_CHEN_YI.flavor": "\"A star seal changes the chart forever.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.title": "Cebalrai",
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.description": "Choose [blue]1[/blue] [gold]Rare[/gold] card from your character's card pool to add to your deck.",
+  "FEIYAP_RELIC_TIAN_SHI_YOU_YUAN_QI.flavor": "\"Only rare light belongs on your chart.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_TIAN_JIN_SI.title": "Altair",
+  "FEIYAP_RELIC_TIAN_JIN_SI.description": "Upon pickup, choose a [gold]Power[/gold] card to [gold]Enchant[/gold] with [purple]Infusion[/purple].",
+  "FEIYAP_RELIC_TIAN_JIN_SI.flavor": "\"Hidden power wakes at the first star-chime.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_ZHI_NV_YI.title": "Vega",
+  "FEIYAP_RELIC_ZHI_NV_YI.description": "Upon pickup, choose an [gold]Attack[/gold] card to [gold]Enchant[/gold] with [purple]Assault[/purple].",
+  "FEIYAP_RELIC_ZHI_NV_YI.flavor": "\"One blade falls; the next follows before it lands.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_HE_GU_ER.title": "Altair β",
+  "FEIYAP_RELIC_HE_GU_ER.description": "Upon pickup, choose a [gold]Skill[/gold] card to [gold]Enchant[/gold] with [purple]Rekindle[/purple].",
+  "FEIYAP_RELIC_HE_GU_ER.flavor": "\"Even ash can burn again.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_TIAN_LANG_XING.title": "Sirius",
+  "FEIYAP_RELIC_TIAN_LANG_XING.description": "At the start of each combat, draw [blue]{Cards}[/blue] additional card. Whenever you shuffle your draw pile, draw [blue]{ShuffleDraw}[/blue] cards.",
+  "FEIYAP_RELIC_TIAN_LANG_XING.flavor": "\"The brightest star blinks in the deepest night.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_NAN_HE_SAN.title": "Fomalhaut",
+  "FEIYAP_RELIC_NAN_HE_SAN.description": "Each turn, the first time you play an [gold]Attack[/gold], [gold]Skill[/gold], and [gold]Power[/gold], draw [blue]{Cards}[/blue] card.",
+  "FEIYAP_RELIC_NAN_HE_SAN.flavor": "\"Three paths, three currents.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_SHEN_SU_SI.title": "Betelgeuse",
+  "FEIYAP_RELIC_SHEN_SU_SI.description": "At the start of your turn, gain [blue]{Energy}[/blue] Energy. You cannot play [gold]Attacks[/gold] on your first turn.",
+  "FEIYAP_RELIC_SHEN_SU_SI.flavor": "\"When the red star rises, stillness comes before motion.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.title": "Phoenix A",
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.description": "Upon pickup, remove up to [blue]{Cards}[/blue] cards from your deck. Lose [red]{MaxHp}[/red] Max HP for each card removed.",
+  "FEIYAP_RELIC_FEN_HUANG_ZUO_A.flavor": "\"Before rebirth, something must burn away.\" — Star-Slasher, Feiyap Clan.",
+
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.title": "October Draconids",
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.description": "Whenever you draw a [gold]Status[/gold] card, [gold]Exhaust[/gold] it and deal [blue]{Damage}[/blue] damage to a random enemy.",
+  "FEIYAP_RELIC_SHI_YUE_TIAN_LONG_ZUO_LIU_XING_YU.flavor": "\"Every falling star is a slash.\" — Star-Slasher, Feiyap Clan."
 }
 

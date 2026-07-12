@@ -32,6 +32,10 @@
 
   "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "本回合内，所有[gold]居合[/gold]都视为[gold]完美居合[/gold]。",
 
+  "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.title": "无限居合",
+
+  "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.description": "本回合内，居合变为 ∞。",
+
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.title": "世界",
 
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.description": "所有[gold]塔罗牌[/gold]可自由选择触发正位或逆位效果。",
@@ -102,7 +106,7 @@
 
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "活杀自在",
 
-  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "每获得 1 点[gold]居合[/gold]，获得 {Amount} 点[gold]活力[/gold]。",
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "每获得 {Amount} 点[gold]居合[/gold]，获得 1 点[gold]活力[/gold]。",
 
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "银碗盛雪",
 

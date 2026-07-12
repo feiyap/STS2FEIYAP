@@ -31,7 +31,7 @@ public sealed class FeiyapCommon15 : FeiyapCardTemplate
     ];
 
     protected override bool IsPlayable =>
-        Owner.Creature.GetPowerAmount<FeiyapIaidoPower>() <= 0;
+        !FeiyapIaidoCmd.HasIaido(Owner.Creature);
 
     protected override bool ShouldGlowGoldInternal => IsPlayable;
 

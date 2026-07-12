@@ -67,10 +67,14 @@ public static class FeiyapQuestRewards
         }
     }
 
-    public static async Task GainAncientCard<TCard>(Player player) where TCard : CardModel
+    public static async Task GainAncientCard<TCard>(Player player, bool upgraded = false) where TCard : CardModel
     {
         var card = player.RunState.CreateCard<TCard>(player);
-        CardCmd.Upgrade(card);
+        if (upgraded)
+        {
+            CardCmd.Upgrade(card);
+        }
+
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck), 2f);
     }
 

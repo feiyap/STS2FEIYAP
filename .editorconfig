@@ -1,0 +1,7 @@
+root = true
+
+[FeiyapCode/Ancients/**.cs]
+# ModAnalyzers 对 [RegisterActAncient] 推断的本地化前缀为 *_ANCIENT_*；
+# RitsuLib 运行时 ModelDb Entry 实际为 *_EVENT_*（AncientEventModel 继承 EventModel）。
+# ancients.json 请使用运行时 Entry，例如 FEIYAP_EVENT_ZHAN_XING_GUAN.*。
+dotnet_diagnostic.RITSU001.severity = none

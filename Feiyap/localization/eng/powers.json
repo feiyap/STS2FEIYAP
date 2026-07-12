@@ -32,6 +32,10 @@
 
   "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "This turn, all [gold]Iaido[/gold] counts as [gold]Perfect Iaido[/gold].",
 
+  "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.title": "Infinite Iaido",
+
+  "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.description": "This turn, [gold]Iaido[/gold] becomes ∞.",
+
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.title": "World",
 
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.description": "All [gold]Tarot[/gold] cards can freely choose to trigger their upright or reversed effect.",
@@ -102,7 +106,7 @@
 
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "Kassai Jizai",
 
-  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain [gold]Iaido[/gold], gain {Amount} [gold]Vigor[/gold] per [gold]Iaido[/gold] gained.",
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain {Amount} [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].",
 
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "Silver Bowl Snow",
 

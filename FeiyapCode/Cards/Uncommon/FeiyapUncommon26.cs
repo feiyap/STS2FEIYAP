@@ -55,6 +55,12 @@ public sealed class FeiyapUncommon26 : FeiyapTarotCardBase
             return;
         }
 
+        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, 1)
+        {
+            Cancelable = true,
+            RequireManualConfirmation = true
+        };
+
         var maxPick = DynamicVars.Cards.IntValue;
         for (var i = 0; i < maxPick; i++)
         {
@@ -68,21 +74,22 @@ public sealed class FeiyapUncommon26 : FeiyapTarotCardBase
                 break;
             }
 
-            var card = await CardSelectCmd.FromChooseACardScreen(
+            var selected = await CardSelectCmd.FromSimpleGrid(
                 choiceContext,
                 candidates,
                 Owner,
-                canSkip: true);
+                prefs);
 
+            var card = selected.FirstOrDefault();
             if (card == null)
             {
                 break;
             }
 
-            await CardCmd.Discard(choiceContext, card);
-            var stolen = (CardModel)card.ClonePreservingMutability();
-            CombatState!.AddCard(stolen, Owner);
-            await CardPileCmd.Add(stolen, PileType.Hand);
+            card.RemoveFromCurrentPile();
+            state.RemoveCard(card);
+            state.AddCard(card, Owner);
+            await CardPileCmd.Add(card, PileType.Hand);
         }
     }
 

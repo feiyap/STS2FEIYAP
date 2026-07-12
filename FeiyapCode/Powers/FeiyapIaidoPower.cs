@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -26,6 +27,7 @@ namespace Feiyap.Powers;
 public sealed class FeiyapIaidoPower : ModPowerTemplate
 {
     private int _pendingConsume;
+    private bool _pendingInfinite;
     private decimal _pendingIncomingDamage;
     private CardPlay? _pendingCardPlay;
 
@@ -60,6 +62,15 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
             return 0m;
         }
 
+        if (FeiyapIaidoCmd.IsInfinite(Owner))
+        {
+            _pendingInfinite = true;
+            _pendingConsume = (int)Math.Min(int.MaxValue, Math.Ceiling(amount));
+            _pendingIncomingDamage = amount;
+            _pendingCardPlay = cardPlay;
+            return -amount;
+        }
+
         var consume = (int)Math.Min(Amount, amount);
         if (consume <= 0)
         {
@@ -88,21 +99,40 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         }
 
         var consume = _pendingConsume;
+        var infinite = _pendingInfinite;
+        var preIaidoRunningTotal = _pendingIncomingDamage;
         var pendingCardPlay = _pendingCardPlay;
         ClearPendingConsume();
         var shouldCounter = ShouldIaidoCounter(dealer, props);
 
+        var damageWithoutIaido = ComputeDamageWithoutIaidoConsumption(
+            preIaidoRunningTotal,
+            props,
+            dealer,
+            cardSource,
+            pendingCardPlay);
+        var blockedDamage = infinite
+            ? Math.Max(0m, damageWithoutIaido - amount)
+            : Math.Max(0m, Math.Min(consume, damageWithoutIaido - amount));
+        var actualConsume = (int)Math.Round(blockedDamage);
+        if (actualConsume <= 0)
+        {
+            return;
+        }
+
         var forcedPerfect = shouldCounter && Owner.FindPower<FeiyapIaidoSurgePower>() != null;
-        var attackDamage = ComputeAttackDamageWithoutIaido(consume, amount, props, dealer, cardSource, pendingCardPlay);
-        var blockedDamage = Math.Max(0m, attackDamage - amount);
-        var isPerfect = shouldCounter && (forcedPerfect || Amount == attackDamage);
+        var isPerfect = shouldCounter && (forcedPerfect || (!infinite && Amount == damageWithoutIaido));
         var counterDamage = shouldCounter
             ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(Owner, blockedDamage, isPerfect)
             : 0m;
 
         Flash();
 
-        await PowerCmd.Apply(choiceContext, this, Owner, -consume, Owner, null);
+        if (!infinite)
+        {
+            await PowerCmd.Apply(choiceContext, this, Owner, -actualConsume, Owner, null);
+        }
+
         IaidoHealthBarOverlay.RefreshForCreature(Owner);
 
         if (Owner.Player != null)
@@ -187,7 +217,9 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        if (FeiyapCardTags.SkipIaidoConsumeOnPlay(cardPlay.Card) || Amount <= 0)
+        if (FeiyapIaidoCmd.IsInfinite(Owner)
+            || FeiyapCardTags.SkipIaidoConsumeOnPlay(cardPlay.Card)
+            || Amount <= 0)
         {
             return Task.CompletedTask;
         }
@@ -225,7 +257,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
     private bool ShouldConsumeIaido(Creature? target, Creature? dealer, decimal amount, ValueProp props) =>
         target == Owner
         && amount > 0m
-        && Amount > 0
+        && (FeiyapIaidoCmd.IsInfinite(Owner) || Amount > 0)
         && IsIaidoBlockableDamage(dealer, props);
 
     /// <summary>
@@ -254,51 +286,76 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
     private void ClearPendingConsume()
     {
         _pendingConsume = 0;
+        _pendingInfinite = false;
         _pendingIncomingDamage = 0m;
         _pendingCardPlay = null;
     }
 
     /// <summary>
-    /// ??????????????????????????????????????
+    /// 模拟居合未参与减伤时的最终攻击伤害（含居合之后的力量等加算修正）。
     /// </summary>
-    private decimal ComputeAttackDamageWithoutIaido(
-        int consume,
-        decimal finalAmountWithIaido,
+    private decimal ComputeDamageWithoutIaidoConsumption(
+        decimal preIaidoRunningTotal,
         ValueProp props,
         Creature? dealer,
         CardModel? cardSource,
         CardPlay? cardPlay)
     {
-        if (consume <= 0)
+        var combatState = Owner.CombatState;
+        var runState = combatState?.RunState;
+        if (runState == null)
         {
-            return 0m;
+            return Math.Max(0m, preIaidoRunningTotal);
         }
 
-        var multFactor = ComputeDamageMultiplicativeFactor(props, dealer, cardSource, cardPlay);
-        if (multFactor <= 0m)
+        var num = preIaidoRunningTotal;
+        var passedSelf = false;
+
+        foreach (var item in runState.IterateHookListeners(combatState))
         {
-            return 0m;
+            if (ReferenceEquals(item, this))
+            {
+                passedSelf = true;
+                continue;
+            }
+
+            if (!passedSelf)
+            {
+                continue;
+            }
+
+            num += item.ModifyDamageAdditive(Owner, num, props, dealer, cardSource, cardPlay);
         }
 
-        // ?????????????????????????????
-        var additiveWithIaido = finalAmountWithIaido / multFactor;
-        // ????????????????????
-        var additiveWithoutIaido = additiveWithIaido + consume;
-        return additiveWithoutIaido * multFactor;
-    }
-
-    private decimal ComputeDamageMultiplicativeFactor(
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
-    {
-        var factor = 1m;
-        foreach (var power in Owner.Powers)
+        foreach (var item in runState.IterateHookListeners(combatState))
         {
-            factor *= power.ModifyDamageMultiplicative(Owner, 1m, props, dealer, cardSource, cardPlay);
+            if (ReferenceEquals(item, this))
+            {
+                continue;
+            }
+
+            num *= item.ModifyDamageMultiplicative(Owner, num, props, dealer, cardSource, cardPlay);
         }
 
-        return factor;
+        var cap = decimal.MaxValue;
+        foreach (var item in runState.IterateHookListeners(combatState))
+        {
+            if (ReferenceEquals(item, this))
+            {
+                continue;
+            }
+
+            var damageCap = item.ModifyDamageCap(Owner, props, dealer, cardSource, cardPlay);
+            if (damageCap < cap)
+            {
+                cap = damageCap;
+                if (num > cap)
+                {
+                    num = cap;
+                }
+            }
+        }
+
+        return Math.Max(0m, num);
     }
 }
