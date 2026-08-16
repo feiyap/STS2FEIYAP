@@ -1,75 +1,76 @@
-﻿using Feiyap.Characters;
+﻿using System.Linq;
+using Feiyap.Characters;
 using Feiyap.Mechanics;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 叶隐：保留；完美居合后可打出；获得耗能并抽牌。消耗。
+/// 叶隐：消耗任意数量手牌；状态牌失血获残心，非状态牌失血抽牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon19 : FeiyapCardTemplate
 {
-    private bool _witnessedPerfectIaido;
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Retain,
-        CardKeyword.Exhaust
-    ];
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-    [
-        EnergyHoverTip,
-        HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)
-    ];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new EnergyVar(3),
-        new CardsVar(3)
-    ];
-
-    [SavedProperty]
-    public bool WitnessedPerfectIaido
-    {
-        get => _witnessedPerfectIaido;
-        set
-        {
-            AssertMutable();
-            _witnessedPerfectIaido = value;
-        }
-    }
-
-    protected override bool IsPlayable =>
-        Pile?.Type != PileType.Hand || WitnessedPerfectIaido;
-
-    protected override bool ShouldGlowGoldInternal =>
-        Pile?.Type == PileType.Hand && WitnessedPerfectIaido;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Zanxin];
 
     public FeiyapUncommon19()
-        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
-
-    public void MarkPerfectIaidoWitnessed() => WitnessedPerfectIaido = true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
+        var handCount = Owner.PlayerCombatState?.Hand.Cards.Count ?? 0;
+        if (handCount <= 0)
+        {
+            return;
+        }
+
+        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, handCount)
+        {
+            RequireManualConfirmation = true
+        };
+
+        var selected = (await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            prefs,
+            filter: null,
+            source: this)).ToList();
+
+        foreach (var card in selected)
+        {
+            var isStatus = card.Type == CardType.Status;
+            await CardCmd.Exhaust(choiceContext, card);
+            await CreatureCmd.Damage(
+                choiceContext,
+                Owner.Creature,
+                1,
+                ValueProp.Unblockable | ValueProp.Unpowered,
+                null,
+                this,
+                null);
+
+            if (isStatus)
+            {
+                await FeiyapZanxinCmd.Gain(choiceContext, Owner.Creature, 1m, this);
+            }
+            else
+            {
+                await CardPileCmd.Draw(choiceContext, 1, Owner);
+            }
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

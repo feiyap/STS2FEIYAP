@@ -26,7 +26,7 @@ public sealed class FeiyapUncommon33 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapZanxinPower>(4m)
+        new PowerVar<FeiyapZanxinPower>(3m)
     ];
 
     public FeiyapUncommon33()
@@ -46,6 +46,6 @@ public sealed class FeiyapUncommon33 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(2m);
+        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(1m);
     }
 }

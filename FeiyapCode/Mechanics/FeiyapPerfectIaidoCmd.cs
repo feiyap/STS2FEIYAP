@@ -45,11 +45,6 @@ public static class FeiyapPerfectIaidoCmd
 
         foreach (var card in hand.Cards)
         {
-            if (card is FeiyapUncommon19 yeYin)
-            {
-                yeYin.MarkPerfectIaidoWitnessed();
-            }
-
             if (card is FeiyapRare5 shinzato)
             {
                 shinzato.MarkPerfectIaidoWitnessed();

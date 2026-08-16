@@ -1,6 +1,10 @@
-using MegaCrit.Sts2.Core.Entities.Cards;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -9,13 +13,11 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 担刀势：攻击牌造成的伤害提升 25%。
+/// 担刀势：每次命中敌人时给予破绽（Amount 为每次命中施加的层数）。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapTandaoStancePower : ModPowerTemplate
 {
-    private const decimal AttackDamageMultiplier = 1.25m;
-
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
@@ -23,19 +25,32 @@ public sealed class FeiyapTandaoStancePower : ModPowerTemplate
     public override PowerAssetProfile AssetProfile =>
         FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapTandaoStancePower), "FeiyapSwordSaintHeartPower");
 
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<FeiyapPozhanPower>()];
+
+    public override async Task AfterDamageGiven(
+        PlayerChoiceContext choiceContext,
         Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
+        DamageResult result,
+        ValueProp props,
+        Creature target,
+        CardModel? cardSource)
     {
-        if (dealer != Owner || cardSource?.Type != CardType.Attack || cardSource.Owner?.Creature != Owner)
+        if (dealer != Owner
+            || Amount <= 0m
+            || !target.IsMonster
+            || !target.IsAlive
+            || !props.IsPoweredAttack())
         {
-            return 1m;
+            return;
         }
 
-        return AttackDamageMultiplier;
+        Flash();
+        await PowerCmd.Apply<FeiyapPozhanPower>(
+            choiceContext,
+            target,
+            Amount,
+            Owner,
+            null);
     }
 }

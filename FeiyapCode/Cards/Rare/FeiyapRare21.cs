@@ -26,7 +26,7 @@ public sealed class FeiyapRare21 : FeiyapCardTemplate
     ];
 
     public FeiyapRare21()
-        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 

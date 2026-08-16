@@ -30,7 +30,7 @@ public sealed class FeiyapRare9 : FeiyapCardTemplate
     ];
 
     public FeiyapRare9()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
     }
 

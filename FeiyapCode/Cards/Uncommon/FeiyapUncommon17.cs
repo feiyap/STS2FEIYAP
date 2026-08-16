@@ -1,77 +1,50 @@
-using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
-using MegaCrit.Sts2.Core.CardSelection;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 孤燕之瞥：消耗任意数量手牌；状态牌失血获残心，非状态牌失血抽牌。
+/// 孤燕之瞥：给予目标破绽。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon17 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Zanxin];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<FeiyapPozhanPower>()];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<FeiyapPozhanPower>(3m)
+    ];
 
     public FeiyapUncommon17()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var handCount = Owner.PlayerCombatState?.Hand.Cards.Count ?? 0;
-        if (handCount <= 0)
-        {
-            return;
-        }
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, handCount)
-        {
-            RequireManualConfirmation = true
-        };
-
-        var selected = (await CardSelectCmd.FromHand(
+        await PowerCmd.Apply(
             choiceContext,
-            Owner,
-            prefs,
-            filter: null,
-            source: this)).ToList();
-
-        foreach (var card in selected)
-        {
-            var isStatus = card.Type == CardType.Status;
-            await CardCmd.Exhaust(choiceContext, card);
-            var hpLoss = 1;
-            await CreatureCmd.Damage(
-                choiceContext,
-                Owner.Creature,
-                hpLoss,
-                ValueProp.Unblockable | ValueProp.Unpowered,
-                null,
-                this,
-                null);
-
-            if (isStatus)
-            {
-                await FeiyapZanxinCmd.Gain(choiceContext, Owner.Creature, 1m, this);
-            }
-            else
-            {
-                await CardPileCmd.Draw(choiceContext, 1, Owner);
-            }
-        }
+            ModelDb.Power<FeiyapPozhanPower>().ToMutable(),
+            cardPlay.Target,
+            DynamicVars["FeiyapPozhanPower"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["FeiyapPozhanPower"].UpgradeValueBy(2m);
     }
 }

@@ -67,7 +67,7 @@ public sealed class FeiyapUncommon25 : FeiyapTarotCardBase
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(2m);
-        DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(1m);
+        DynamicVars.Block.UpgradeValueBy(1m);
     }
 }

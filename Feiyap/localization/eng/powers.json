@@ -62,7 +62,7 @@
   "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.title": "World Shards",
   "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
   "FEIYAP_POWER_FEIYAP_TANDAO_STANCE_POWER.title": "Shoulder Blade Stance",
-  "FEIYAP_POWER_FEIYAP_TANDAO_STANCE_POWER.description": "Your [gold]Attacks[/gold] deal 25% more damage.",
+  "FEIYAP_POWER_FEIYAP_TANDAO_STANCE_POWER.description": "Whenever you hit an enemy, apply {Amount} [gold]Opening[/gold].",
   "FEIYAP_POWER_FEIYAP_YINDAO_STANCE_POWER.title": "Draw Blade Stance",
   "FEIYAP_POWER_FEIYAP_YINDAO_STANCE_POWER.description": "At the start of your turn, gain {Amount} [gold]Vigor[/gold].",
   "FEIYAP_POWER_FEIYAP_NADAO_STANCE_POWER.title": "Sheathe Blade Stance",
@@ -86,5 +86,7 @@
   "FEIYAP_POWER_FEIYAP_JUDGEMENT_UPRIGHT_POWER.title": "XX - Judgement (Upright)",
   "FEIYAP_POWER_FEIYAP_JUDGEMENT_UPRIGHT_POWER.description": "At the start of your turn, lose 2 [gold]Strength[/gold].",
   "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.title": "XX - Judgement (Reversed)",
-  "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.description": "At the start of your turn, lose 2 [gold]Dexterity[/gold]."
+  "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.description": "At the start of your turn, lose 2 [gold]Dexterity[/gold].",
+  "FEIYAP_POWER_FEIYAP_POZHAN_POWER.title": "Opening",
+  "FEIYAP_POWER_FEIYAP_POZHAN_POWER.description": "Take [blue]10%[/blue] more damage from Attacks per stack. At the end of the turn, lose half your stacks."
 }
