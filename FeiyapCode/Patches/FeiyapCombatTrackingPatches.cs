@@ -11,7 +11,7 @@ using STS2RitsuLib.Patching.Models;
 namespace Feiyap.Patches;
 
 /// <summary>
-/// 将战斗追踪从予取遗物解耦，通过全局 Hook 为持有绯夜氏卡牌的玩家更新状态。
+/// 将战斗追踪从睡莲遗物解耦，通过全局 Hook 为持有绯夜氏卡牌的玩家更新状态。
 /// </summary>
 public sealed class FeiyapCombatTrackingAfterCardPlayedPatch : IPatchMethod
 {

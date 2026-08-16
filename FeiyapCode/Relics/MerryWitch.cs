@@ -102,7 +102,7 @@ public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultipl
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class MerryWitch : MerryWitchBase
 {
-    protected override decimal AlternateBonusMultiplier => 1.25m;
+    protected override decimal AlternateBonusMultiplier => 1.15m;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard(ModelDb.Card<WorldXxi>())];
@@ -123,7 +123,7 @@ public sealed class MerryWitch : MerryWitchBase
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class KuangXiaoMoNv : MerryWitchBase
 {
-    protected override decimal AlternateBonusMultiplier => 1.5m;
+    protected override decimal AlternateBonusMultiplier => 1.3m;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard(ModelDb.Card<WorldXxi>())];

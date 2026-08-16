@@ -10,7 +10,7 @@ namespace Feiyap.Powers;
 /// 侘寂：本回合获得人工制品，敌人回合结束后移除（默认在玩家回合结束移除会导致无法抵挡敌人攻击）。
 /// </summary>
 [RegisterPower]
-public sealed class FeiyapTemporaryArtifactPower : ModTemporaryAppliedPowerTemplate<FeiyapUncommon21, ArtifactPower>
+public sealed class FeiyapTemporaryArtifactPower : ModTemporaryAppliedPowerTemplate<FeiyapUncommon18, ArtifactPower>
 {
     public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapTemporaryArtifactPower));
     protected override bool UntilEndOfOtherSideTurn => true;

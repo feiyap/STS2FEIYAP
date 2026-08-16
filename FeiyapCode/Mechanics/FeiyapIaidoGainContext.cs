@@ -26,4 +26,7 @@ public readonly struct FeiyapIaidoGainContext
     public CardModel? CardSource { get; init; }
 
     public CardPlay? CardPlay { get; init; }
+
+    /// <summary>卡牌预览计算时为 true；此时残心可显示加成但不登记消耗。</summary>
+    public bool IsPreview { get; init; }
 }

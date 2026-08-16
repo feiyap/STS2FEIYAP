@@ -1,92 +1,73 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
-using Feiyap.Powers;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 霜雪雷电闪：条件秒杀；握牌结束回合获得居合。消耗。
+/// 神座屠：完美居合后可打出；对所有敌人造成多段伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare5 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Exhaust,
-        FeiyapKeywords.Iaido
-    ];
+    private bool _witnessedPerfectIaido;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(7m, ValueProp.Move),
-        new DynamicVar("ExecuteThreshold", 25m)
+        new DamageVar(7, ValueProp.Move),
+        new RepeatVar(3)
     ];
 
-    public override bool HasTurnEndInHandEffect => true;
-
-    public FeiyapRare5()
-        : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    [SavedProperty]
+    public bool WitnessedPerfectIaido
     {
-    }
-
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-
-        if (ShouldExecute(cardPlay.Target))
+        get => _witnessedPerfectIaido;
+        set
         {
-            await CreatureCmd.Kill(cardPlay.Target);
-            return;
+            AssertMutable();
+            _witnessedPerfectIaido = value;
         }
     }
 
-    protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
+    protected override bool IsPlayable =>
+        Pile?.Type != PileType.Hand
+        || WitnessedPerfectIaido
+        || (Owner != null && FeiyapCombatTracker.Get(Owner).ShinzatoUnlockedThisTurn);
+
+    protected override bool ShouldGlowGoldInternal =>
+        Pile?.Type == PileType.Hand
+        && (WitnessedPerfectIaido
+            || (Owner != null && FeiyapCombatTracker.Get(Owner).ShinzatoUnlockedThisTurn));
+
+    public FeiyapRare5()
+        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
-        await FeiyapIaidoCmd.Gain(
-            choiceContext,
-            Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue,
-            ValueProp.Move,
-            this,
-            null);
+    }
+
+    public void MarkPerfectIaidoWitnessed() => WitnessedPerfectIaido = true;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(CombatState!)
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(4m);
-        DynamicVars["ExecuteThreshold"].UpgradeValueBy(15m);
-    }
-
-    private bool ShouldExecute(Creature target)
-    {
-        if (!target.IsAlive)
-        {
-            return false;
-        }
-
-        var roomType = CombatState?.Encounter?.RoomType;
-        if (roomType is not (RoomType.Elite or RoomType.Boss))
-        {
-            return true;
-        }
-
-        if (target.MaxHp <= 0m)
-        {
-            return false;
-        }
-
-        return target.CurrentHp / target.MaxHp * 100m < DynamicVars["ExecuteThreshold"].BaseValue;
+        DynamicVars.Repeat.UpgradeValueBy(2m);
     }
 }

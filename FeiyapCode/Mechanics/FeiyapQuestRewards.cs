@@ -20,7 +20,7 @@ public static class FeiyapQuestRewards
     internal static bool SuppressQuestRelicObtainEffects { get; set; }
 
     public static bool HasUpgradedQuestRewards(Player player) =>
-        player.Relics.Any(r => r is YuQuYuDuo);
+        player.Relics.Any(r => r is LianXinShouYue);
 
     /// <summary>
     /// 将玩家已持有的基础任务奖励遗物替换为升级形态。
@@ -80,14 +80,14 @@ public static class FeiyapQuestRewards
 
     public static void MarkQuestCompleted(Player player, FeiyapQuestKind kind)
     {
-        var yuQu = player.Relics.FirstOrDefault(r => r is YuQuBase) as YuQuBase;
-        yuQu?.MarkQuestCompleted(kind);
+        var shuiLian = player.Relics.FirstOrDefault(r => r is ShuiLianBase) as ShuiLianBase;
+        shuiLian?.MarkQuestCompleted(kind);
     }
 
     public static async Task TryGrantLaplaceDemon(Player player)
     {
-        var yuQu = player.Relics.FirstOrDefault(r => r is YuQuBase) as YuQuBase;
-        if (yuQu == null || !yuQu.HasCompletedAllQuests)
+        var shuiLian = player.Relics.FirstOrDefault(r => r is ShuiLianBase) as ShuiLianBase;
+        if (shuiLian == null || !shuiLian.HasCompletedAllQuests)
         {
             return;
         }

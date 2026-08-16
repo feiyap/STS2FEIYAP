@@ -36,7 +36,18 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             return 0m;
         }
 
-        if (!IsOwnCardPlay(context.CardSource, context.CardPlay))
+        if (!IsOwnCardSource(context.CardSource))
+        {
+            return 0m;
+        }
+
+        // 预览：显示残心加成；实际获得：仅出牌（有 CardPlay）时加算并登记消耗。
+        if (context.IsPreview)
+        {
+            return Amount;
+        }
+
+        if (context.CardPlay == null)
         {
             return 0m;
         }
@@ -47,7 +58,7 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
 
     public ValueTask OnIaidoGainApplied(FeiyapIaidoGainContext context, decimal appliedBonus)
     {
-        if (appliedBonus <= 0m || !IsOwnCardPlay(context.CardSource, context.CardPlay))
+        if (appliedBonus <= 0m || context.CardPlay == null || !IsOwnCardSource(context.CardSource))
         {
             return ValueTask.CompletedTask;
         }
@@ -68,13 +79,33 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             return 0m;
         }
 
-        if (!IsOwnCardPlay(cardSource, cardPlay))
+        if (!IsOwnCardSource(cardSource))
         {
             return 0m;
         }
 
+        // BlockVar 预览时 cardPlay 恒为 null：仍显示残心加成，但不登记消耗。
+        // 实际出牌（有 CardPlay）时加算并登记消耗。
+        if (cardPlay == null)
+        {
+            return Amount;
+        }
+
         EnsureDeferredConsumption(cardSource!, Amount);
         return Amount;
+    }
+
+    public override Task AfterModifyingBlockAmount(
+        decimal modifiedBlock,
+        CardModel? cardSource,
+        CardPlay? cardPlay)
+    {
+        if (cardPlay != null && IsOwnCardSource(cardSource) && _deferredCardSource == cardSource)
+        {
+            Flash();
+        }
+
+        return Task.CompletedTask;
     }
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -94,9 +125,8 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
         await ConsumeAmountAsync(choiceContext, consume);
     }
 
-    private bool IsOwnCardPlay(CardModel? cardSource, CardPlay? cardPlay) =>
-        cardPlay != null
-        && cardSource != null
+    private bool IsOwnCardSource(CardModel? cardSource) =>
+        cardSource != null
         && cardSource.Owner?.Creature == Owner;
 
     private void EnsureDeferredConsumption(CardModel cardSource, int amount)

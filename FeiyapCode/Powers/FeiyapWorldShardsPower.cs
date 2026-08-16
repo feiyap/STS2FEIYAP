@@ -1,17 +1,16 @@
-using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Feiyap.Mechanics;
 
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 于万千碎裂的世界破片：回合开始时获得多种属性。
+/// 于万千碎裂的世界破片：回合开始时获得力量、敏捷、集中、活力、残心、荆棘、覆甲。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapWorldShardsPower : ModPowerTemplate
@@ -34,8 +33,6 @@ public sealed class FeiyapWorldShardsPower : ModPowerTemplate
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, 1m, Owner, null);
         await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, 1m, Owner, null);
         await PowerCmd.Apply<FocusPower>(choiceContext, Owner, 1m, Owner, null);
-        await CreatureCmd.GainBlock(Owner, 1m, ValueProp.Move, null);
-        await FeiyapIaidoCmd.Gain(choiceContext, Owner, 1m, ValueProp.Move, null, null);
         await PowerCmd.Apply<VigorPower>(choiceContext, Owner, 1m, Owner, null);
         await FeiyapZanxinCmd.Gain(choiceContext, Owner, 1m, null);
         await PowerCmd.Apply<ThornsPower>(choiceContext, Owner, 1m, Owner, null);

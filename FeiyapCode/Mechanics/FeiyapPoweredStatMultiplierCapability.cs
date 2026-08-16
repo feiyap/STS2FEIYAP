@@ -1,9 +1,7 @@
 using Feiyap.Cards.Rare;
 using Feiyap.Cards.Uncommon;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -17,9 +15,6 @@ namespace Feiyap.Mechanics;
 /// </summary>
 public abstract class FeiyapPoweredStatMultiplierCapabilityBase : CardCapability
 {
-    private AttackCommand? _pendingAttackCommand;
-    private bool _vigorBonusApplied;
-
     protected abstract string MultiplierVarName { get; }
 
     protected abstract bool AffectStrength { get; }
@@ -27,35 +22,6 @@ public abstract class FeiyapPoweredStatMultiplierCapabilityBase : CardCapability
     protected abstract bool AffectVigor { get; }
 
     protected virtual bool RequiresUpgrade => false;
-
-    public override Task BeforeAttack(AttackCommand command)
-    {
-        if (Owner == null || command.ModelSource != Owner)
-        {
-            return Task.CompletedTask;
-        }
-
-        if (RequiresUpgrade && Owner is CardModel { IsUpgraded: false })
-        {
-            return Task.CompletedTask;
-        }
-
-        _pendingAttackCommand = command;
-        _vigorBonusApplied = false;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
-    {
-        if (command != _pendingAttackCommand)
-        {
-            return Task.CompletedTask;
-        }
-
-        _pendingAttackCommand = null;
-        _vigorBonusApplied = false;
-        return Task.CompletedTask;
-    }
 
     public override decimal ModifyDamageAdditive(
         Creature? target,
@@ -96,17 +62,13 @@ public abstract class FeiyapPoweredStatMultiplierCapabilityBase : CardCapability
             }
         }
 
-        if (AffectVigor && !_vigorBonusApplied)
+        // 原版活力在 AfterAttack 才扣除，多段攻击每一击都应吃到倍率。
+        if (AffectVigor)
         {
             var vigor = card.Owner.Creature.GetPowerAmount<VigorPower>();
             if (vigor > 0m)
             {
                 bonus += vigor * extraMultiplier;
-            }
-
-            if (_pendingAttackCommand != null)
-            {
-                _vigorBonusApplied = true;
             }
         }
 

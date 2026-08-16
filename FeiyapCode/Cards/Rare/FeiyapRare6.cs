@@ -1,10 +1,14 @@
+using System.Linq;
 using Feiyap.Characters;
+using Feiyap.Cards.Tarot;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,70 +16,102 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// XIX-太阳：群体攻击；握牌时打出攻击牌后追加伤害并变为 XVIII-月亮。
+/// VII-战车：正位击晕攻击意图敌人并获 intangible；逆位随机多段伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapRare6 : FeiyapCardTemplate
+public sealed class FeiyapRare6 : FeiyapTarotCardBase
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<IntangiblePower>()
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(12, ValueProp.Move),
-        new DynamicVar("TriggerDamage", 9m)
+        new PowerVar<IntangiblePower>(1m),
+        new DamageVar(15, ValueProp.Move),
+        new RepeatVar(3)
+    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust,
+        ..base.CanonicalKeywords
     ];
 
     public FeiyapRare6()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+        : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
+        RegisterTarotFactory(player => player.RunState.CreateCard<FeiyapRare6>(player));
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
-            .TargetingAllOpponents(CombatState!)
-            .Execute(choiceContext);
-    }
+        EnsureOrientationInitialized();
 
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner != Owner
-            || cardPlay.Card.Type != CardType.Attack
-            || cardPlay.Card == this
-            || Pile?.Type != PileType.Hand
-            || CombatState == null)
-        {
-            return;
-        }
-
-        // 握牌触发伤害不要绑定当前出牌上下文，避免与出牌流程互相等待导致卡死。
-        await DamageCmd.Attack(DynamicVars["TriggerDamage"].BaseValue)
-            .FromCard(this, null)
-            .TargetingAllOpponents(CombatState)
-            .Execute(choiceContext);
-
-        var shouldUpgrade = IsUpgraded;
-        TaskHelper.RunSafely(TransformToMoonAsync(shouldUpgrade));
+        await RunTarotBranches(
+            choiceContext,
+            () => PlayUpright(choiceContext),
+            () => PlayReversed(choiceContext, cardPlay));
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars["IntangiblePower"].UpgradeValueBy(-1m);
         DynamicVars.Damage.UpgradeValueBy(6m);
-        DynamicVars["TriggerDamage"].UpgradeValueBy(3m);
     }
 
-    private async Task TransformToMoonAsync(bool shouldUpgrade)
+    private async Task PlayUpright(PlayerChoiceContext choiceContext)
     {
-        if (Pile?.Type != PileType.Hand || CombatState == null)
+        if (CombatState == null)
         {
             return;
         }
 
-        var moon = CombatState.CreateCard<FeiyapRare12>(Owner);
-        if (shouldUpgrade)
+        var intangible = DynamicVars["IntangiblePower"].BaseValue;
+        foreach (var enemy in CombatState.HittableEnemies)
         {
-            CardCmd.Upgrade(moon);
+            if (!HasAttackIntent(enemy))
+            {
+                continue;
+            }
+
+            await CreatureCmd.Stun(enemy);
+            if (intangible > 0m)
+            {
+                await PowerCmd.Apply<IntangiblePower>(
+                    choiceContext,
+                    enemy,
+                    intangible,
+                    Owner.Creature,
+                    this);
+            }
+        }
+    }
+
+    private async Task PlayReversed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (CombatState == null)
+        {
+            return;
         }
 
-        await CardCmd.Transform(this, moon, CardPreviewStyle.None);
+        for (var i = 0; i < DynamicVars.Repeat.IntValue; i++)
+        {
+            var target = Owner.RunState.Rng.CombatTargets
+                .NextItem(CombatState.HittableEnemies);
+            if (target == null)
+            {
+                break;
+            }
+
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this, cardPlay)
+                .Targeting(target)
+                .Execute(choiceContext);
+        }
     }
+
+    private static bool HasAttackIntent(MegaCrit.Sts2.Core.Entities.Creatures.Creature enemy) =>
+        enemy.Monster?.NextMove?.Intents.Any(i => i is AttackIntent) == true;
 }

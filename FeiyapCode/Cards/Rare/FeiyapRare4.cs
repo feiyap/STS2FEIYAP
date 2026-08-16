@@ -1,10 +1,13 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,54 +15,52 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 枯山水：保留；完美居合后可打出；造成 11 点伤害多次。
+/// 枯山水：移除目标防御并禁止其再获得特定防御效果，然后造成伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare4 : FeiyapCardTemplate
 {
-    private bool _witnessedPerfectIaido;
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)];
+    [
+        HoverTipFactory.FromPower<FeiyapKaresansuiPower>()
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(11, ValueProp.Move),
-        new RepeatVar(3)
+        new DamageVar(10, ValueProp.Move)
     ];
 
-    [SavedProperty]
-    public bool WitnessedPerfectIaido
-    {
-        get => _witnessedPerfectIaido;
-        set
-        {
-            AssertMutable();
-            _witnessedPerfectIaido = value;
-        }
-    }
-
-    protected override bool IsPlayable =>
-        Pile?.Type != PileType.Hand || WitnessedPerfectIaido;
-
-    protected override bool ShouldGlowGoldInternal =>
-        Pile?.Type == PileType.Hand && WitnessedPerfectIaido;
-
     public FeiyapRare4()
-        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
-
-    public void MarkPerfectIaidoWitnessed() => WitnessedPerfectIaido = true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
+        if (cardPlay.Target.Block > 0m)
+        {
+            await CreatureCmd.LoseBlock(
+                choiceContext,
+                cardPlay.Target,
+                cardPlay.Target.Block,
+                Owner.Creature);
+        }
+
+        await FeiyapKaresansuiPower.StripForbiddenPowers(cardPlay.Target);
+
+        await PowerCmd.Apply(
+            choiceContext,
+            ModelDb.Power<FeiyapKaresansuiPower>().ToMutable(),
+            cardPlay.Target,
+            1m,
+            Owner.Creature,
+            this);
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
@@ -67,6 +68,6 @@ public sealed class FeiyapRare4 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Repeat.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(5m);
     }
 }

@@ -1,132 +1,90 @@
 {
-
   "FEIYAP_POWER_FEIYAP_IAIDO_POWER.title": "Iaido",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_POWER.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount as attack damage. Remove all [gold]Iaido[/gold] at turn start. When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 2. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
-
   "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.title": "Zanxin",
-
   "FEIYAP_POWER_FEIYAP_ZANXIN_POWER.description": "Your next played card gains {Amount} additional [gold]Block[/gold] and [gold]Iaido[/gold].",
-
   "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.title": "Mist Slash",
-
   "FEIYAP_POWER_FEIYAP_MIST_SLASH_POWER.description": "Your next [gold]Attack[/gold] with more than 1 hit gains {Amount} additional hits.",
-
   "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.title": "Quick Absorption",
-
   "FEIYAP_POWER_FEIYAP_QUICK_ABSORPTION_POWER.description": "Whenever you gain [gold]Iaido[/gold] this turn, gain {Amount} additional [gold]Iaido[/gold].",
-
   "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.title": "Heaven May",
-
   "FEIYAP_POWER_FEIYAP_HEAVEN_MAY_POWER.description": "Your [gold]Iaido[/gold] damages ALL enemies this turn.",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.title": "Zhai Shi Yu",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_RAIN_POWER.description": "[gold]Iaido[/gold] deals double damage this turn.",
-
   "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.title": "Yu Ceng Wei Zi",
-
   "FEIYAP_POWER_FEIYAP_PRESERVE_VIGOR_POWER.description": "Playing [gold]Attacks[/gold] no longer removes [gold]Vigor[/gold].",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.title": "Hua Luo Surge",
-
   "FEIYAP_POWER_FEIYAP_IAIDO_SURGE_POWER.description": "This turn, all [gold]Iaido[/gold] counts as [gold]Perfect Iaido[/gold].",
-
   "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.title": "Infinite Iaido",
-
   "FEIYAP_POWER_FEIYAP_INFINITE_IAIDO_POWER.description": "This turn, [gold]Iaido[/gold] becomes ∞.",
-
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.title": "World",
-
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.description": "All [gold]Tarot[/gold] cards can freely choose to trigger their upright or reversed effect.",
-
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.title": "World",
-
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "All [gold]Tarot[/gold] cards trigger both their upright and reversed effects.",
-
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.title": "Reverse Kesagiri",
-
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.description": "Double [gold]Block[/gold] and [gold]Iaido[/gold] gained from your next card.",
-
   "FEIYAP_POWER_FEIYAP_BLOOD_SPLASH_VIGOR_POWER.title": "Five Steps of Blood",
-
   "FEIYAP_POWER_FEIYAP_BLOOD_SPLASH_VIGOR_POWER.description": "[gold]Vigor[/gold] has {Amount}x effect on Five Steps of Blood.",
-
   "FEIYAP_POWER_FEIYAP_SNOW_APPROACHING_POWER.title": "Snow Approaches",
-
   "FEIYAP_POWER_FEIYAP_SNOW_APPROACHING_POWER.description": "Take 20 damage at the end of the turn in {Amount} turns.",
-
   "FEIYAP_POWER_FEIYAP_SWORD_SAINT_HEART_POWER.title": "Sword Saint Heart",
-
-  "FEIYAP_POWER_FEIYAP_SWORD_SAINT_HEART_POWER.description": "Whenever you trigger [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold]. Whenever you trigger [gold]Perfect Iaido[/gold], gain 5 [gold]Vigor[/gold].",
-
+  "FEIYAP_POWER_FEIYAP_SWORD_SAINT_HEART_POWER.description": "Your [gold]Iaido[/gold] damages ALL enemies.",
   "FEIYAP_POWER_FEIYAP_SWORD_HEART_REMAINS_POWER.title": "Sword Heart Remains",
-
   "FEIYAP_POWER_FEIYAP_SWORD_HEART_REMAINS_POWER.description": "At the start of your turn, if you lost no HP last turn, gain {Amount} [gold]Dexterity[/gold].",
-
-  "FEIYAP_POWER_FEIYAP_HYAKUHANHEI_POWER.title": "Hyakuhanhei",
-
-  "FEIYAP_POWER_FEIYAP_HYAKUHANHEI_POWER.description": "When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 1 instead. When you play a [gold]Skill[/gold], gain 1 [gold]Iaido[/gold].",
-
   "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.title": "Hyakukyōshu",
-
   "FEIYAP_POWER_FEIYAP_HYAKUKYOUSHI_POWER.description": "When you play an [gold]Attack[/gold], gain {Amount} [gold]Dexterity[/gold] this turn. When you play a [gold]Skill[/gold], gain {Amount} [gold]Strength[/gold] this turn.",
-
-  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.title": "The Fool (Upright)",
-
-  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.description": "At the start of your turn, ALL enemies lose 1 [gold]Strength[/gold].",
-
-  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.title": "The Fool (Reversed)",
-
-  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.description": "At the start of your turn, draw 1 random [gold]Skill[/gold], reduce its cost by 1 this turn, and apply [gold]Ethereal[/gold].",
-
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.title": "0 - The Fool (Upright)",
+  "FEIYAP_POWER_FEIYAP_FOOL_UPRIGHT_POWER.description": "At the start of your turn, draw 1 card, reduce its cost by 1 this turn, and apply [gold]Ethereal[/gold].",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.title": "0 - The Fool (Reversed)",
+  "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.description": "At the start of your turn, ALL enemies lose 1 [gold]Strength[/gold] and [gold]Dexterity[/gold].",
   "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.title": "The Lovers (Upright)",
-
   "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.description": "The next time you take damage, deal that much damage to [gold]{Target}[/gold].",
-
   "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.title": "The Lovers (Reversed)",
-
   "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.description": "The next time [gold]{Target}[/gold] takes damage, you deal that much damage to [gold]{Target}[/gold].",
-
   "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.title": "The Hermit (Upright)",
-
   "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.description": "The next time you consume [gold]Vigor[/gold], gain equal [gold]Vigor[/gold].",
-
   "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.title": "The Hermit (Reversed)",
-
   "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.description": "The next time you consume [gold]Zanxin[/gold], gain equal [gold]Zanxin[/gold].",
-
   "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.title": "Tenka Five Swords",
-
   "FEIYAP_POWER_FEIYAP_TENKA_FIVE_SWORDS_BOOST_POWER.description": "[gold]Strength[/gold] and [gold]Vigor[/gold] have {Amount}x effect on Tenka Five Swords.",
-
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.title": "Kachuu Fugetsu",
-
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.description": "When played and at the start of your turn, gain {Amount} [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], and [gold]Zanxin[/gold].",
-
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "Kassai Jizai",
-
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain {Amount} [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].",
-
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "Silver Bowl Snow",
-
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.description": "All [gold]Block[/gold] you gain is converted into [gold]Iaido[/gold].",
-
   "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.title": "The Chariot",
-
   "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.description": "At the end of your turn, play {Amount} random cards from your Discard Pile.",
-
   "FEIYAP_POWER_FEIYAP_STRENGTH_DOWN_POWER.title": "Strength",
-
   "FEIYAP_POWER_FEIYAP_STRENGTH_DOWN_POWER.description": "Lose {Amount} [gold]Strength[/gold] this turn.",
-
   "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.title": "Wabi-Sabi",
-
   "FEIYAP_POWER_FEIYAP_TEMPORARY_ARTIFACT_POWER.description": "Gain {Amount} [gold]Artifact[/gold] this turn.",
-
   "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.title": "World Shards",
-
-  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold]."
-
+  "FEIYAP_POWER_FEIYAP_WORLD_SHARDS_POWER.description": "At the start of your turn, gain 1 [gold]Strength[/gold], [gold]Dexterity[/gold], [gold]Focus[/gold], [gold]Vigor[/gold], [gold]Zanxin[/gold], [gold]Thorns[/gold], and [gold]Plating[/gold].",
+  "FEIYAP_POWER_FEIYAP_TANDAO_STANCE_POWER.title": "Shoulder Blade Stance",
+  "FEIYAP_POWER_FEIYAP_TANDAO_STANCE_POWER.description": "Your [gold]Attacks[/gold] deal 25% more damage.",
+  "FEIYAP_POWER_FEIYAP_YINDAO_STANCE_POWER.title": "Draw Blade Stance",
+  "FEIYAP_POWER_FEIYAP_YINDAO_STANCE_POWER.description": "At the start of your turn, gain {Amount} [gold]Vigor[/gold].",
+  "FEIYAP_POWER_FEIYAP_NADAO_STANCE_POWER.title": "Sheathe Blade Stance",
+  "FEIYAP_POWER_FEIYAP_NADAO_STANCE_POWER.description": "At the start of your turn, gain {Amount} [gold]Zanxin[/gold].",
+  "FEIYAP_POWER_FEIYAP_IMPERMANENCE_POWER.title": "Blazing Lotus",
+  "FEIYAP_POWER_FEIYAP_IMPERMANENCE_POWER.description": "Your [gold]Attacks[/gold] cost 1 less.",
+  "FEIYAP_POWER_FEIYAP_GUILIAN_MOON_POWER.title": "Demon Sickle Moon",
+  "FEIYAP_POWER_FEIYAP_GUILIAN_MOON_POWER.description": "[gold]Iaido[/gold] deals 50% more damage this turn.",
+  "FEIYAP_POWER_FEIYAP_KARESANSUI_POWER.title": "Karesansui",
+  "FEIYAP_POWER_FEIYAP_KARESANSUI_POWER.description": "Cannot gain [gold]Block[/gold], [gold]Slippery[/gold], [gold]Buffer[/gold], [gold]Hard to Kill[/gold], or [gold]Hardened Shell[/gold].",
+  "FEIYAP_POWER_FEIYAP_EXTRA_TURN_POWER.title": "XIV - Temperance (Reversed)",
+  "FEIYAP_POWER_FEIYAP_EXTRA_TURN_POWER.description": "Take an extra turn.",
+  "FEIYAP_POWER_FEIYAP_SCARLET_KAGURA_POWER.title": "Scarlet Kagura",
+  "FEIYAP_POWER_FEIYAP_SCARLET_KAGURA_POWER.description": "Your next [gold]Attack[/gold] or [gold]Skill[/gold] does not consume [gold]Iaido[/gold], and [gold]Attacks[/gold] deal additional damage equal to your current [gold]Iaido[/gold].",
+  "FEIYAP_POWER_FEIYAP_IMPERMANENCE_SWIFT_POWER.title": "Impermanence Swift",
+  "FEIYAP_POWER_FEIYAP_IMPERMANENCE_SWIFT_POWER.description": "Whenever you hit an enemy with an [gold]Attack[/gold] this turn, draw 1 card.",
+  "FEIYAP_POWER_FEIYAP_STANDING_TRUTH_POWER.title": "Standing Truth",
+  "FEIYAP_POWER_FEIYAP_STANDING_TRUTH_POWER.description": "If you have no [gold]Debuffs[/gold], deal {Amount}% more damage.",
+  "FEIYAP_POWER_FEIYAP_MENKYO_KAIDEN_POWER.title": "Menkyo Kaiden",
+  "FEIYAP_POWER_FEIYAP_MENKYO_KAIDEN_POWER.description": "[gold]Iaido[/gold] counter damage is increased by {Amount}%.",
+  "FEIYAP_POWER_FEIYAP_JUDGEMENT_UPRIGHT_POWER.title": "XX - Judgement (Upright)",
+  "FEIYAP_POWER_FEIYAP_JUDGEMENT_UPRIGHT_POWER.description": "At the start of your turn, lose 2 [gold]Strength[/gold].",
+  "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.title": "XX - Judgement (Reversed)",
+  "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.description": "At the start of your turn, lose 2 [gold]Dexterity[/gold]."
 }
-

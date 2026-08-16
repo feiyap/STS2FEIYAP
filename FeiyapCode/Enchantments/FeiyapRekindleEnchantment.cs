@@ -29,19 +29,18 @@ public sealed class FeiyapRekindleEnchantment : ModEnchantmentTemplate
         return Task.CompletedTask;
     }
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(
+    public override CardLocation ModifyCardPlayResultLocation(
         CardModel card,
         bool isAutoPlay,
         ResourceInfo resources,
-        PileType pileType,
-        CardPilePosition position)
+        CardLocation cardLocation)
     {
-        if (card != Card || _usedThisCombat || pileType != PileType.Discard)
+        if (card != Card || _usedThisCombat || cardLocation.pileType != PileType.Discard)
         {
-            return (pileType, position);
+            return cardLocation;
         }
 
         _usedThisCombat = true;
-        return (PileType.Hand, CardPilePosition.Top);
+        return new CardLocation(card.Owner, PileType.Hand, CardPilePosition.Top);
     }
 }

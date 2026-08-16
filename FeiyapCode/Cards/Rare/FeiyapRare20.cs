@@ -3,7 +3,7 @@ using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -11,18 +11,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 活杀自在：每获得 2 点居合，获得 1 点活力（Amount 为所需居合数）。
+/// 灼莲：攻击牌减少 1 点耗能。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare20 : FeiyapCardTemplate
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new PowerVar<FeiyapKassaiJizaiPower>(2m)
-    ];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<FeiyapImpermanencePower>()];
 
     public FeiyapRare20()
-        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+        : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 
@@ -31,15 +29,15 @@ public sealed class FeiyapRare20 : FeiyapCardTemplate
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
         await PowerCmd.Apply(
             choiceContext,
-            ModelDb.Power<FeiyapKassaiJizaiPower>().ToMutable(),
+            ModelDb.Power<FeiyapImpermanencePower>().ToMutable(),
             Owner.Creature,
-            DynamicVars["FeiyapKassaiJizaiPower"].BaseValue,
+            1m,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapKassaiJizaiPower"].UpgradeValueBy(-1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

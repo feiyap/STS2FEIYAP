@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://ce1pp03yqrxx4"]
 
-[ext_resource type="Texture2D" uid="uid://bu7j3adncafk7" path="res://Feiyap/scenes/characters/00022-8269913523.png" id="1_77pk2"]
+[ext_resource type="Texture2D" uid="uid://ba7adw4q2sgfh" path="res://Feiyap/scenes/characters/00014-91575859522.png" id="1_qtefu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k4d0h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_77pk2")
+"texture": ExtResource("1_qtefu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_77pk2")
+"texture": ExtResource("1_qtefu")
 }],
 "loop": true,
 "name": &"idle_loop",
@@ -20,11 +20,12 @@ animations = [{
 
 [node name="Visuals" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(10, -194)
-scale = Vector2(0.5, 0.5)
+position = Vector2(24, -215.00002)
+scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_k4d0h")
 animation = &"idle_loop"
 autoplay = "idle_loop"
+frame_progress = 0.76557994
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

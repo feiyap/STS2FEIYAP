@@ -1,47 +1,120 @@
+using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 花鸟风月：打出时与回合开始时获得格挡、居合、活力与残心。
+/// XVIII-月亮：所有玩家获得格挡；握牌时打出技能牌后追加格挡并变为 XIX-太阳。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare16 : FeiyapCardTemplate
 {
+    public override bool GainsBlock => true;
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromCard<FeiyapRare8>()];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapKachuuFuugetsuPower>(4m)
+        new BlockVar(10, ValueProp.Move),
+        new DynamicVar("TriggerBlock", 5m)
     ];
 
     public FeiyapRare16()
-        : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.AllAllies)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
-        var power = (FeiyapKachuuFuugetsuPower)ModelDb.Power<FeiyapKachuuFuugetsuPower>().ToMutable();
-        await PowerCmd.Apply(
+        await GainBlockForAllPlayers(choiceContext, DynamicVars.Block, cardPlay);
+    }
+
+    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner != Owner
+            || cardPlay.Card.Type != CardType.Skill
+            || cardPlay.Card == this
+            || Pile?.Type != PileType.Hand
+            || CombatState == null)
+        {
+            return;
+        }
+
+        await GainBlockForAllPlayers(
             choiceContext,
-            power,
-            Owner.Creature,
-            DynamicVars["FeiyapKachuuFuugetsuPower"].BaseValue,
-            Owner.Creature,
-            this);
-        await power.ApplyOnPlay(choiceContext, this);
+            DynamicVars["TriggerBlock"].BaseValue,
+            cardPlay: null);
+
+        var shouldUpgrade = IsUpgraded;
+        TaskHelper.RunSafely(TransformToSunAsync(shouldUpgrade));
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapKachuuFuugetsuPower"].UpgradeValueBy(1m);
+        DynamicVars.Block.UpgradeValueBy(5m);
+        DynamicVars["TriggerBlock"].UpgradeValueBy(3m);
+    }
+
+    private async Task GainBlockForAllPlayers(
+        PlayerChoiceContext choiceContext,
+        BlockVar blockVar,
+        CardPlay? cardPlay)
+    {
+        if (CombatState == null)
+        {
+            return;
+        }
+
+        foreach (var player in GetLivingPlayerCreatures())
+        {
+            await CreatureCmd.GainBlock(player, blockVar, cardPlay);
+        }
+    }
+
+    private async Task GainBlockForAllPlayers(
+        PlayerChoiceContext choiceContext,
+        decimal amount,
+        CardPlay? cardPlay)
+    {
+        if (CombatState == null)
+        {
+            return;
+        }
+
+        foreach (var player in GetLivingPlayerCreatures())
+        {
+            await CreatureCmd.GainBlock(player, amount, ValueProp.Move, cardPlay);
+        }
+    }
+
+    private IEnumerable<Creature> GetLivingPlayerCreatures() =>
+        CombatState!.PlayerCreatures.Where(c => c.IsAlive && c.IsPlayer);
+
+    private async Task TransformToSunAsync(bool shouldUpgrade)
+    {
+        if (Pile?.Type != PileType.Hand || CombatState == null)
+        {
+            return;
+        }
+
+        var sun = CombatState.CreateCard<FeiyapRare8>(Owner);
+        if (shouldUpgrade)
+        {
+            CardCmd.Upgrade(sun);
+        }
+
+        await CardCmd.Transform(this, sun, CardPreviewStyle.None);
     }
 }

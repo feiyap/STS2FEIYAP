@@ -1,7 +1,4 @@
-using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,16 +10,15 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 燕返：造成 3 / 5 点伤害，获得等量于所造成伤害的居合。
+/// 燕返：造成 2 / 4 点伤害 2 次。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon2 : FeiyapCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => new() { FeiyapCardTags.SkipIaidoConsume };
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(3, ValueProp.Move)
+        new DamageVar(2, ValueProp.Move),
+        new RepeatVar(2)
     ];
 
     public FeiyapCommon2()
@@ -34,25 +30,11 @@ public sealed class FeiyapCommon2 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-
-        var damageDealt = attack.Results
-            .SelectMany(results => results)
-            .Sum(result => result.UnblockedDamage);
-
-        if (damageDealt > 0m)
-        {
-            await FeiyapIaidoCmd.Gain(
-                choiceContext,
-                Owner.Creature,
-                damageDealt,
-                ValueProp.Move,
-                this,
-                cardPlay);
-        }
     }
 
     protected override void OnUpgrade()

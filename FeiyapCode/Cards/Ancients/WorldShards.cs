@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -20,14 +19,11 @@ public sealed class WorldShards : FeiyapCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
         HoverTipFactory.FromPower<FocusPower>(),
-        HoverTipFactory.FromPower<FeiyapIaidoPower>(),
         HoverTipFactory.FromPower<VigorPower>(),
         HoverTipFactory.FromPower<FeiyapZanxinPower>(),
         HoverTipFactory.FromPower<ThornsPower>(),
@@ -35,7 +31,7 @@ public sealed class WorldShards : FeiyapCardTemplate
     ];
 
     public WorldShards()
-        : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
+        : base(1, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
     {
     }
 
@@ -49,6 +45,10 @@ public sealed class WorldShards : FeiyapCardTemplate
             1m,
             Owner.Creature,
             this);
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
+    }
+
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
     }
 }

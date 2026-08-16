@@ -1,18 +1,18 @@
 {
 
-  "FEIYAP_RELIC_YU_QU.title": "Yu Qu",
+  "FEIYAP_RELIC_SHUI_LIAN.title": "Water Lily",
 
-  "FEIYAP_RELIC_YU_QU.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nAt the end of each Act, all quest cards in your Deck gain 33% progress.",
+  "FEIYAP_RELIC_SHUI_LIAN.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nIn multiplayer, at the end of each Act, all quest cards in your Deck gain 33% progress.",
 
-  "FEIYAP_RELIC_YU_QU.flavor": "Between taking and leaving, fate already turns.",
+  "FEIYAP_RELIC_SHUI_LIAN.flavor": "Between taking and leaving, fate already turns.",
 
-  "FEIYAP_RELIC_YU_QU.selectionPrompt": "Choose quest cards to add to your Deck (any amount).",
+  "FEIYAP_RELIC_SHUI_LIAN.selectionPrompt": "Choose quest cards to add to your Deck (any amount).",
 
-  "FEIYAP_RELIC_YU_QU_YU_DUO.title": "Yu Qu Yu Duo",
+  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.title": "Lotus Heart Guarding the Moon",
 
-  "FEIYAP_RELIC_YU_QU_YU_DUO.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck. Relics gained from quest cards are upgraded.\nAt the end of each Act, all quest cards in your Deck gain 33% progress.",
+  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nIn multiplayer, at the end of each Act, all quest cards in your Deck gain 33% progress.\nRelics gained from quest cards are upgraded.",
 
-  "FEIYAP_RELIC_YU_QU_YU_DUO.flavor": "To take and to seize, all in one thought.",
+  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.flavor": "Lotus heart guarding the moon, all in one thought.",
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "Investigator",
 
@@ -28,31 +28,31 @@
 
   "FEIYAP_RELIC_SWORD_SAINT.title": "Sword Saint",
 
-  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]500%[/blue] more damage.",
+  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]200%[/blue] more damage.",
 
   "FEIYAP_RELIC_SWORD_SAINT.flavor": "\"The battlefield, a homeland I miss...\" — Sword Saint, Feiyap Clan.",
 
   "FEIYAP_RELIC_WU_MING_REN.title": "Wu Ming Ren",
 
-  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]1000%[/blue] more damage.",
+  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]400%[/blue] more damage.",
 
   "FEIYAP_RELIC_WU_MING_REN.flavor": "\"Listen with your ears, strike with your heart.\" — Sword Saint, Feiyap Clan.",
 
   "FEIYAP_RELIC_MERRY_WITCH.title": "Merry Witch",
 
-  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]25%[/blue].",
+  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]15%[/blue].",
 
   "FEIYAP_RELIC_MERRY_WITCH.flavor": "\"Will this world be more interesting than the last?\" — Merry Witch, Feiyap Clan.",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.title": "Kuang Xiao Mo Nv",
 
-  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]50%[/blue].",
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]30%[/blue].",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.flavor": "\"Dance! Sing! Entertain me with all you have — until the end of your life!\" — Merry Witch, Feiyap Clan.",
 
   "FEIYAP_RELIC_LAPLACE_DEMON.title": "Laplace Demon",
 
-  "FEIYAP_RELIC_LAPLACE_DEMON.description": "Gain the Ancient card World Shards. Upon pickup, also gain Archaic Tooth and Touch of Orobas. All card rewards are upgraded.",
+  "FEIYAP_RELIC_LAPLACE_DEMON.description": "Gain the Ancient card World Shards.\nUpon pickup, gain Archaic Tooth and Touch of Orobas if you do not already have them.",
 
   "FEIYAP_RELIC_LAPLACE_DEMON.flavor": "\"I have seen every future. You are not in them.\" — Feiyap Clan.",
 

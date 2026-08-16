@@ -3,7 +3,6 @@ using Feiyap.Characters;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -13,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 逆鳞斩：造成 9 / 11 点伤害 2 次；目标每有一种负面效果额外攻击 1 次。
+/// 逆鳞斩：造成 9 / 11 点伤害 2 次；目标每有一种效果额外攻击 1 次。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon2 : FeiyapCardTemplate
@@ -33,7 +32,7 @@ public sealed class FeiyapUncommon2 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var hitCount = DynamicVars.Repeat.IntValue + CountDebuffTypes(cardPlay.Target);
+        var hitCount = DynamicVars.Repeat.IntValue + CountPowerTypes(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
             .FromCard(this, cardPlay)
@@ -46,9 +45,9 @@ public sealed class FeiyapUncommon2 : FeiyapCardTemplate
         DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    private static int CountDebuffTypes(Creature target) =>
+    private static int CountPowerTypes(Creature target) =>
         target.Powers
-            .Where(p => p.TypeForCurrentAmount == PowerType.Debuff && p.Amount > 0)
+            .Where(p => p.Amount != 0)
             .Select(p => p.GetType())
             .Distinct()
             .Count();

@@ -10,7 +10,6 @@ public sealed class FeiyapGameplayPatches : IModPatches
 {
     public static void AddTo(ModPatcher patcher)
     {
-        patcher.RegisterPatch<FeiyapDustyTomeSetupPatch>();
         patcher.RegisterPatch<FeiyapPreserveVigorPatch>();
         patcher.RegisterPatch<FeiyapHermitVigorPatch>();
         patcher.RegisterPatch<FeiyapKeywordDescriptionPatch>();
@@ -18,6 +17,12 @@ public sealed class FeiyapGameplayPatches : IModPatches
         patcher.RegisterPatch<FeiyapCombatTrackingAfterDamageGivenPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingBeforeSideTurnStartPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterCombatEndPatch>();
+        patcher.RegisterPatch<FeiyapTarotPortraitRefreshPatch>();
+        patcher.RegisterPatch<FeiyapInspectTarotOrientationReadyPatch>();
+        patcher.RegisterPatch<FeiyapInspectTarotOrientationOpenPatch>();
+        patcher.RegisterPatch<FeiyapInspectTarotOrientationClosePatch>();
+        patcher.RegisterPatch<FeiyapInspectTarotOrientationSetCardPatch>();
+        patcher.RegisterPatch<FeiyapInspectTarotOrientationUpdateDisplayPatch>();
         patcher.RegisterPatch<FeiyapRelicCompendiumLoadRelicNodesPatch>();
         patcher.RegisterPatch<FeiyapRelicCompendiumAddRelicsPatch>();
     }

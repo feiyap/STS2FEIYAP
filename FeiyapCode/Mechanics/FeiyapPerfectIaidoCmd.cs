@@ -25,6 +25,18 @@ public static class FeiyapPerfectIaidoCmd
         var tracker = FeiyapCombatTracker.Get(player);
         tracker.PerfectIaidoActive = true;
 
+        var allCards = player.PlayerCombatState?.AllCards;
+        if (allCards != null)
+        {
+            foreach (var card in allCards)
+            {
+                if (card is FeiyapUncommon8 secretSword)
+                {
+                    secretSword.OnPerfectIaidoTriggered();
+                }
+            }
+        }
+
         var hand = player.PlayerCombatState?.Hand;
         if (hand == null)
         {
@@ -33,14 +45,29 @@ public static class FeiyapPerfectIaidoCmd
 
         foreach (var card in hand.Cards)
         {
-            if (card is FeiyapUncommon18 yeYin)
+            if (card is FeiyapUncommon19 yeYin)
             {
                 yeYin.MarkPerfectIaidoWitnessed();
             }
 
-            if (card is FeiyapRare4 karesansui)
+            if (card is FeiyapRare5 shinzato)
             {
-                karesansui.MarkPerfectIaidoWitnessed();
+                shinzato.MarkPerfectIaidoWitnessed();
+            }
+        }
+
+        if (FeiyapCombatTracker.Get(player).ShinzatoUnlockedThisTurn)
+        {
+            var allCardsUnlocked = player.PlayerCombatState?.AllCards;
+            if (allCardsUnlocked != null)
+            {
+                foreach (var card in allCardsUnlocked)
+                {
+                    if (card is FeiyapRare5 shinzato)
+                    {
+                        shinzato.MarkPerfectIaidoWitnessed();
+                    }
+                }
             }
         }
 
@@ -62,7 +89,7 @@ public static class FeiyapPerfectIaidoCmd
 
         foreach (var card in allCards)
         {
-            if (card is FeiyapUncommon19 heavenMay)
+            if (card is FeiyapUncommon20 heavenMay)
             {
                 heavenMay.OnIaidoGained();
             }

@@ -16,7 +16,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Ancients;
 
 /// <summary>
-/// 先古卡：绯樱狱华落。
+/// 先古卡：绯樱狱华落。本回合居合变为 ∞；升级减费。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
@@ -49,22 +49,11 @@ public sealed class FeiYingYuHuaLuo : FeiyapCardTemplate
             Owner.Creature,
             this);
 
-        if (IsUpgraded)
-        {
-            await PowerCmd.Apply(
-                choiceContext,
-                ModelDb.Power<FeiyapIaidoSurgePower>().ToMutable(),
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this);
-        }
-
         IaidoHealthBarOverlay.RefreshForCreature(Owner.Creature);
     }
 
     protected override void OnUpgrade()
     {
-        // 强化后本回合所有居合视为完美居合。
+        EnergyCost.UpgradeBy(-1);
     }
 }

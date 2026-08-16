@@ -1,10 +1,12 @@
 using Feiyap.Mechanics;
+using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Keywords;
@@ -25,18 +27,85 @@ public abstract class FeiyapTarotCardBase(
 {
     private bool _isReversed;
     private bool _orientationInitialized;
+    private bool? _portraitOrientationOverride;
+
+    /// <summary>
+    /// 检查预览等场景下强制指定卡图朝向；不影响牌面 <see cref="IsReversed"/> 与战斗逻辑。
+    /// </summary>
+    public bool? PortraitOrientationOverride
+    {
+        get => _portraitOrientationOverride;
+        set => _portraitOrientationOverride = value;
+    }
+
+    /// <summary>
+    /// 是否具备可切换查看的独立逆位卡图。
+    /// </summary>
+    public bool HasInspectableReversedPortrait =>
+        FeiyapCardAssets.HasReversedPortrait(GetType().Name);
+
+    /// <summary>
+    /// 卡图是否显示逆位：预览覆盖优先；否则跟随当前可触发的正/逆位效果（与金/红光一致）；
+    /// 双效、自选或尚未可触发时，回退到牌面 <see cref="IsReversed"/>。
+    /// 图鉴等 canonical 实例不可访问 <see cref="CardModel.Owner"/>，固定显示正位图。
+    /// </summary>
+    public bool DisplaysReversedPortrait
+    {
+        get
+        {
+            if (_portraitOrientationOverride.HasValue)
+            {
+                return _portraitOrientationOverride.Value;
+            }
+
+            // canonical 模型（图鉴/池原型）访问 Owner 会抛 CanonicalModelException
+            if (!IsMutable)
+            {
+                return false;
+            }
+
+            var owner = Owner;
+            if (owner != null
+                && !FeiyapTarotCmd.HasDualEffect(owner)
+                && !FeiyapTarotCmd.HasFreeChoice(owner))
+            {
+                if (IsReversedTriggered(owner))
+                {
+                    return true;
+                }
+
+                if (IsUprightTriggered(owner))
+                {
+                    return false;
+                }
+            }
+
+            return IsReversed;
+        }
+    }
+
+    /// <summary>
+    /// 正位使用 <c>{TypeName}.png</c>，逆位优先 <c>{TypeName}_Reversed.png</c>。
+    /// </summary>
+    public override CardAssetProfile AssetProfile =>
+        FeiyapCardAssets.For(GetType().Name, DisplaysReversedPortrait);
+
+    public override string? CustomPortraitPath =>
+        FeiyapCardAssets.ResolvePortraitPath(GetType().Name, DisplaysReversedPortrait);
 
     protected override HashSet<CardTag> CanonicalTags => new() { FeiyapCardTags.Tarot };
 
     protected override bool ShouldGlowGoldInternal =>
-        IsUprightTriggered(Owner)
-        || FeiyapTarotCmd.HasDualEffect(Owner)
-        || FeiyapTarotCmd.HasFreeChoice(Owner);
+        IsMutable
+        && (IsUprightTriggered(Owner)
+            || FeiyapTarotCmd.HasDualEffect(Owner)
+            || FeiyapTarotCmd.HasFreeChoice(Owner));
 
     protected override bool ShouldGlowRedInternal =>
-        IsReversedTriggered(Owner)
-        || FeiyapTarotCmd.HasDualEffect(Owner)
-        || FeiyapTarotCmd.HasFreeChoice(Owner);
+        IsMutable
+        && (IsReversedTriggered(Owner)
+            || FeiyapTarotCmd.HasDualEffect(Owner)
+            || FeiyapTarotCmd.HasFreeChoice(Owner));
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -51,8 +120,20 @@ public abstract class FeiyapTarotCardBase(
         set
         {
             AssertMutable();
+            if (_isReversed == value)
+            {
+                return;
+            }
+
             _isReversed = value;
+            RefreshPortraitVisuals();
+            OnOrientationChanged(value);
         }
+    }
+
+    /// <summary>正/逆位切换时的钩子（如 XIV-节制 减费）。</summary>
+    protected virtual void OnOrientationChanged(bool isReversed)
+    {
     }
 
     [SavedProperty]
@@ -119,6 +200,13 @@ public abstract class FeiyapTarotCardBase(
         {
             await uprightEffect();
             await reversedEffect();
+
+            var tracker = FeiyapCombatTracker.Get(player);
+            if (tracker.DualTarotPlaysRemaining > 0)
+            {
+                tracker.DualTarotPlaysRemaining--;
+            }
+
             return;
         }
 
@@ -145,11 +233,43 @@ public abstract class FeiyapTarotCardBase(
         {
             await reversedEffect();
         }
+        else
+        {
+            // 上一张既非攻击也非技能时无金/红光；回退到牌面朝向（与卡图显示一致）
+            if (IsReversed)
+            {
+                await reversedEffect();
+            }
+            else
+            {
+                await uprightEffect();
+            }
+        }
     }
 
     public void RollOrientation(Rng rng)
     {
         IsReversed = rng.NextBool();
+    }
+
+    public override Task AfterCardEnteredCombat(CardModel card)
+    {
+        if (ReferenceEquals(card, this))
+        {
+            EnsureOrientationInitialized();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    {
+        if (ReferenceEquals(card, this))
+        {
+            EnsureOrientationInitialized();
+        }
+
+        return Task.CompletedTask;
     }
 
     public override Task BeforeSideTurnStart(
@@ -171,5 +291,57 @@ public abstract class FeiyapTarotCardBase(
 
         RollOrientation(Owner.RunState.Rng.Niche);
         OrientationInitialized = true;
+        RefreshPortraitVisuals();
+    }
+
+    /// <summary>朝向变更后刷新桌上已有卡面节点的卡图。</summary>
+    internal void RefreshPortraitVisuals()
+    {
+        var node = NCard.FindOnTable(this);
+        if (node != null)
+        {
+            ApplyPortraitToNode(node);
+        }
+    }
+
+    /// <summary>刷新玩家手牌中所有塔罗牌的卡图。</summary>
+    public static void RefreshHandPortraits(Player player)
+    {
+        var hand = player.PlayerCombatState?.Hand.Cards;
+        if (hand == null)
+        {
+            return;
+        }
+
+        foreach (var card in hand)
+        {
+            if (card is FeiyapTarotCardBase tarot)
+            {
+                tarot.RefreshPortraitVisuals();
+            }
+        }
+    }
+
+    /// <summary>将当前朝向对应的卡图应用到卡面节点。</summary>
+    internal void ApplyPortraitToNode(NCard node)
+    {
+        if (node.Model != this || !GodotObject.IsInstanceValid(node))
+        {
+            return;
+        }
+
+        var portraitNodeName = Rarity == CardRarity.Ancient ? "%AncientPortrait" : "%Portrait";
+        var portraitRect = node.GetNodeOrNull<TextureRect>(portraitNodeName);
+        if (portraitRect == null)
+        {
+            node.Call(NCard.MethodName.Reload);
+            return;
+        }
+
+        var texture = Portrait;
+        if (portraitRect.Texture != texture)
+        {
+            portraitRect.Texture = texture;
+        }
     }
 }

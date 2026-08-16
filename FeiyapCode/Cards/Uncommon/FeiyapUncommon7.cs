@@ -1,3 +1,4 @@
+using System.Linq;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using Feiyap.Powers;
@@ -13,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 无明：仅能在有居合时打出；消耗所有居合并造成多段伤害与额外伤害。
+/// 无明：造成 6 / 9 点伤害；获得等量于所造成伤害的居合；本次攻击不消耗居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon7 : FeiyapCardTemplate
@@ -27,14 +28,8 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6, ValueProp.Move),
-        new RepeatVar(2)
+        new DamageVar(6, ValueProp.Move)
     ];
-
-    protected override bool IsPlayable =>
-        FeiyapIaidoCmd.HasIaido(Owner.Creature);
-
-    protected override bool ShouldGlowGoldInternal => IsPlayable;
 
     public FeiyapUncommon7()
         : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
@@ -45,23 +40,22 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var iaido = FeiyapIaidoCmd.GetNumericAmount(Owner.Creature);
-        await FeiyapIaidoCmd.ClearAll(choiceContext, Owner.Creature);
-
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        if (iaido > 0)
+        var damageDealt = attack.Results
+            .SelectMany(results => results)
+            .Sum(result => result.UnblockedDamage);
+
+        if (damageDealt > 0m)
         {
-            await CreatureCmd.Damage(
+            await FeiyapIaidoCmd.Gain(
                 choiceContext,
-                cardPlay.Target,
-                iaido,
-                ValueProp.Move,
                 Owner.Creature,
+                damageDealt,
+                ValueProp.Move,
                 this,
                 cardPlay);
         }
@@ -69,6 +63,6 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

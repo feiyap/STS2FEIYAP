@@ -1,18 +1,17 @@
+using System.Linq;
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 0-愚者（正位）：回合开始时所有敌人失去力量。
+/// 0-愚者（正位）：回合开始时抽 1 张牌，使其本回合耗能降低 1 并附带虚无。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapFoolUprightPower : ModPowerTemplate
@@ -26,20 +25,21 @@ public sealed class FeiyapFoolUprightPower : ModPowerTemplate
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player.Creature != Owner || Owner.CombatState is not CombatState state)
+        if (player.Creature != Owner)
         {
             return;
         }
 
         Flash();
-        foreach (var enemy in state.HittableEnemies)
+        var drawPile = PileType.Draw.GetPile(player);
+        var card = player.RunState.Rng.CombatCardSelection.NextItem(drawPile.Cards);
+        if (card == null)
         {
-            await PowerCmd.Apply<StrengthPower>(
-                choiceContext,
-                enemy,
-                -1m,
-                Owner,
-                null);
+            return;
         }
+
+        await CardPileCmd.Add(card, PileType.Hand);
+        CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
+        card.EnergyCost.AddThisTurn(-1, reduceOnly: true);
     }
 }

@@ -1,116 +1,65 @@
 using System.Linq;
 using Feiyap.Characters;
+using Feiyap.Cards.Uncommon;
+using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// XVIII-月亮：所有玩家获得格挡；握牌时打出技能牌后追加格挡并变为 XIX-太阳。
+/// 绯神乐：下一张攻击/技能不消耗居合并额外伤害；取鬼镰月到手并解锁神座屠。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare12 : FeiyapCardTemplate
 {
-    public override bool GainsBlock => true;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        new BlockVar(10, ValueProp.Move),
-        new DynamicVar("TriggerBlock", 5m)
+        HoverTipFactory.FromPower<FeiyapScarletKaguraPower>()
     ];
 
     public FeiyapRare12()
-        : base(1, CardType.Skill, CardRarity.Rare, TargetType.AllAllies)
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await GainBlockForAllPlayers(choiceContext, DynamicVars.Block, cardPlay);
-    }
-
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner != Owner
-            || cardPlay.Card.Type != CardType.Skill
-            || cardPlay.Card == this
-            || Pile?.Type != PileType.Hand
-            || CombatState == null)
-        {
-            return;
-        }
-
-        await GainBlockForAllPlayers(
+        await PowerCmd.Apply(
             choiceContext,
-            DynamicVars["TriggerBlock"].BaseValue,
-            cardPlay: null);
+            ModelDb.Power<FeiyapScarletKaguraPower>().ToMutable(),
+            Owner.Creature,
+            1m,
+            Owner.Creature,
+            this);
 
-        var shouldUpgrade = IsUpgraded;
-        TaskHelper.RunSafely(TransformToSunAsync(shouldUpgrade));
+        await FetchCardToHand<FeiyapUncommon22>();
+        FeiyapCombatTracker.Get(Owner).ShinzatoUnlockedThisTurn = true;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(5m);
-        DynamicVars["TriggerBlock"].UpgradeValueBy(3m);
+        EnergyCost.UpgradeBy(-1);
     }
 
-    private async Task GainBlockForAllPlayers(
-        PlayerChoiceContext choiceContext,
-        BlockVar blockVar,
-        CardPlay? cardPlay)
+    private async Task FetchCardToHand<T>() where T : CardModel
     {
-        if (CombatState == null)
+        var candidates = Owner.PlayerCombatState?.AllCards
+            .Where(c => c is T)
+            .Where(c => c.Pile?.Type is PileType.Draw or PileType.Discard)
+            .ToList();
+
+        var card = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates ?? []);
+        if (card != null)
         {
-            return;
+            await CardPileCmd.Add(card, PileType.Hand);
         }
-
-        foreach (var player in GetLivingPlayerCreatures())
-        {
-            await CreatureCmd.GainBlock(player, blockVar, cardPlay);
-        }
-    }
-
-    private async Task GainBlockForAllPlayers(
-        PlayerChoiceContext choiceContext,
-        decimal amount,
-        CardPlay? cardPlay)
-    {
-        if (CombatState == null)
-        {
-            return;
-        }
-
-        foreach (var player in GetLivingPlayerCreatures())
-        {
-            await CreatureCmd.GainBlock(player, amount, ValueProp.Move, cardPlay);
-        }
-    }
-
-    private IEnumerable<Creature> GetLivingPlayerCreatures() =>
-        CombatState!.PlayerCreatures.Where(c => c.IsAlive && c.IsPlayer);
-
-    private async Task TransformToSunAsync(bool shouldUpgrade)
-    {
-        if (Pile?.Type != PileType.Hand || CombatState == null)
-        {
-            return;
-        }
-
-        var sun = CombatState.CreateCard<FeiyapRare6>(Owner);
-        if (shouldUpgrade)
-        {
-            CardCmd.Upgrade(sun);
-        }
-
-        await CardCmd.Transform(this, sun, CardPreviewStyle.None);
     }
 }

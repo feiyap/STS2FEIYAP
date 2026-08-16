@@ -1,12 +1,14 @@
+using System.Globalization;
+using System.Linq;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -24,7 +26,7 @@ public sealed class FeiyapRare9 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("RecordedDamage", 0m)
+        new RecordedDamageVar()
     ];
 
     public FeiyapRare9()
@@ -32,28 +34,23 @@ public sealed class FeiyapRare9 : FeiyapCardTemplate
     {
     }
 
-    public override Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState)
-    {
-        SyncRecordedDamage();
-        return Task.CompletedTask;
-    }
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        SyncRecordedDamage();
-        var amount = DynamicVars["RecordedDamage"].BaseValue;
-        if (amount <= 0m)
+        var player = Owner;
+        if (player == null)
+        {
+            return;
+        }
+
+        var amount = GetTurnDamageDealt(this);
+        if (amount <= 0)
         {
             return;
         }
 
         await FeiyapIaidoCmd.Gain(
             choiceContext,
-            Owner.Creature,
+            player.Creature,
             amount,
             ValueProp.Move,
             this,
@@ -65,13 +62,55 @@ public sealed class FeiyapRare9 : FeiyapCardTemplate
         EnergyCost.UpgradeBy(-1);
     }
 
-    private void SyncRecordedDamage()
+    /// <summary>
+    /// 从战斗历史统计本回合已造成伤害（含格挡吸收与溢出），与原版「本回合」查询一致。
+    /// </summary>
+    private static int GetTurnDamageDealt(CardModel card)
     {
-        if (Owner == null)
+        if (card.Owner?.Creature is not { } dealer
+            || card.CombatState == null
+            || !CombatManager.Instance.IsInProgress)
         {
-            return;
+            return 0;
         }
 
-        DynamicVars["RecordedDamage"].BaseValue = FeiyapCombatTracker.Get(Owner).TurnDamageDealt;
+        return CombatManager.Instance.History.Entries
+            .OfType<DamageReceivedEntry>()
+            .Where(entry =>
+                entry.HappenedThisTurn(card.CombatState)
+                && entry.Dealer != null
+                && (entry.Dealer == dealer || entry.Dealer.PetOwner?.Creature == dealer))
+            .Sum(entry => entry.Result.TotalDamage + entry.Result.OverkillDamage);
+    }
+
+    /// <summary>同步本回合已造成伤害，供卡牌描述预览与打出结算共用。</summary>
+    private sealed class RecordedDamageVar : DynamicVar
+    {
+        public RecordedDamageVar()
+            : base("RecordedDamage", 0m)
+        {
+        }
+
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            PreviewValue = GetTurnDamageDealt(card);
+        }
+
+        protected override decimal GetBaseValueForIConvertible()
+        {
+            if (_owner is not CardModel card)
+            {
+                return BaseValue;
+            }
+
+            return GetTurnDamageDealt(card);
+        }
+
+        public override string ToString() =>
+            ((int)GetBaseValueForIConvertible()).ToString(CultureInfo.InvariantCulture);
     }
 }

@@ -17,8 +17,20 @@ public static class FeiyapTarotCmd
     public static bool HasFreeChoice(Player? player) =>
         player?.Creature.FindPower<FeiyapTarotWorldFreeChoicePower>() != null;
 
-    public static bool HasDualEffect(Player? player) =>
-        player?.Creature.FindPower<FeiyapTarotWorldDualEffectPower>() != null;
+    public static bool HasDualEffect(Player? player)
+    {
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (player.Creature.FindPower<FeiyapTarotWorldDualEffectPower>() != null)
+        {
+            return true;
+        }
+
+        return FeiyapCombatTracker.Get(player).DualTarotPlaysRemaining > 0;
+    }
 
     /// <summary>让玩家在正位与逆位效果间选择，返回 true 表示正位。</summary>
     public static async Task<bool> ChooseUpright(PlayerChoiceContext choiceContext, Player player, FeiyapTarotCardBase source)

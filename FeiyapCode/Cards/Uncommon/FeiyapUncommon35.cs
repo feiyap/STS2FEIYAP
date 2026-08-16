@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 0-愚者：正位回合开始敌人失去力量，逆位抽技能牌并赋予虚无与减费。
+/// 0-愚者：正位抽牌并赋予虚无与减费，逆位敌人失去力量与敏捷。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon35 : FeiyapTarotCardBase

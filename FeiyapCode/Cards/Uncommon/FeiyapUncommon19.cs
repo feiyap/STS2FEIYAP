@@ -1,63 +1,75 @@
-using Feiyap.Characters;
+﻿using Feiyap.Characters;
 using Feiyap.Mechanics;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 天五月：保留；获得居合；本回合居合对所有敌人造成伤害；获得居合时耗能减 1（打出后重置）。
+/// 叶隐：保留；完美居合后可打出；获得耗能并抽牌。消耗。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon19 : FeiyapCardTemplate
 {
+    private bool _witnessedPerfectIaido;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
         CardKeyword.Retain,
-        FeiyapKeywords.Iaido
+        CardKeyword.Exhaust
+    ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        EnergyHoverTip,
+        HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(10m, ValueProp.Move)
+        new EnergyVar(3),
+        new CardsVar(3)
     ];
 
+    [SavedProperty]
+    public bool WitnessedPerfectIaido
+    {
+        get => _witnessedPerfectIaido;
+        set
+        {
+            AssertMutable();
+            _witnessedPerfectIaido = value;
+        }
+    }
+
+    protected override bool IsPlayable =>
+        Pile?.Type != PileType.Hand || WitnessedPerfectIaido;
+
+    protected override bool ShouldGlowGoldInternal =>
+        Pile?.Type == PileType.Hand && WitnessedPerfectIaido;
+
     public FeiyapUncommon19()
-        : base(5, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
-    public void OnIaidoGained() => EnergyCost.AddUntilPlayed(-1);
+    public void MarkPerfectIaidoWitnessed() => WitnessedPerfectIaido = true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await FeiyapIaidoCmd.Gain(
-            choiceContext,
-            Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue,
-            ValueProp.Move,
-            this,
-            cardPlay);
-
-        await PowerCmd.Apply(
-            choiceContext,
-            ModelDb.Power<FeiyapHeavenMayPower>().ToMutable(),
-            Owner.Creature,
-            1m,
-            Owner.Creature,
-            this);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(4m);
+        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

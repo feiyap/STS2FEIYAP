@@ -1,11 +1,11 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
-using Feiyap.Powers;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -14,16 +14,18 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 幾星霜：获得居合；每次抽到本场战斗居合获得量增加。
+/// 幾星霜：获得居合；每次抽到时，仅增加本张牌本场战斗的居合获得量。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare10 : FeiyapCardTemplate
 {
+    private decimal _combatDrawBonus;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(8m, ValueProp.Move),
+        new StarFrostIaidoVar(this, 4m, ValueProp.Move),
         new DynamicVar("DrawBonus", 4m)
     ];
 
@@ -34,12 +36,25 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
 
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (card != this || Owner == null)
+        if (card != this)
         {
             return Task.CompletedTask;
         }
 
-        FeiyapCombatTracker.Get(Owner).IaidoGainCombatBonus += DynamicVars["DrawBonus"].BaseValue;
+        AssertMutable();
+        _combatDrawBonus += DynamicVars["DrawBonus"].BaseValue;
+        return Task.CompletedTask;
+    }
+
+    public override Task BeforeCombatStart()
+    {
+        _combatDrawBonus = 0m;
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        _combatDrawBonus = 0m;
         return Task.CompletedTask;
     }
 
@@ -48,7 +63,7 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue,
+            DynamicVars[IaidoVar.DefaultName].BaseValue + _combatDrawBonus,
             ValueProp.Move,
             this,
             cardPlay);
@@ -56,7 +71,41 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(2m);
         DynamicVars["DrawBonus"].UpgradeValueBy(2m);
+    }
+
+    /// <summary>预览时把本场抽牌累计加成算进居合基础值。</summary>
+    private sealed class StarFrostIaidoVar : DynamicVar
+    {
+        private readonly FeiyapRare10 _card;
+
+        public ValueProp Props { get; }
+
+        public StarFrostIaidoVar(FeiyapRare10 card, decimal iaido, ValueProp props)
+            : base(IaidoVar.DefaultName, iaido)
+        {
+            _card = card;
+            Props = props;
+        }
+
+        public override void UpdateCardPreview(
+            CardModel card,
+            CardPreviewMode previewMode,
+            Creature? target,
+            bool runGlobalHooks)
+        {
+            var amount = BaseValue + _card._combatDrawBonus;
+
+            if (runGlobalHooks && card.Owner?.Creature is { } creature)
+            {
+                amount = FeiyapIaidoCmd.PreviewGain(
+                    creature,
+                    BaseValue + _card._combatDrawBonus,
+                    Props,
+                    card);
+            }
+
+            PreviewValue = amount;
+        }
     }
 }

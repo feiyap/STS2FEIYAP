@@ -6,14 +6,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
-using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Quest;
 
-// 任务牌共用占位卡图，避免回退到不存在的 card_atlas 条目。
-
 /// <summary>
 /// 绯夜氏转职任务牌基类。
+/// 卡图按子类名解析（如 <c>FaWei.png</c> / <c>KuXiu.png</c> / <c>MiWang.png</c>）。
 /// </summary>
 public abstract class FeiyapQuestCardBase : FeiyapCardTemplate
 {
@@ -57,8 +55,6 @@ public abstract class FeiyapQuestCardBase : FeiyapCardTemplate
         new IntVar("Progress", 0),
         new IntVar("Goal", QuestGoal)
     ];
-
-    public override CardAssetProfile AssetProfile => FeiyapCardAssets.For("FeiyapQuest");
 
     protected FeiyapQuestCardBase()
         : base(0, CardType.Quest, CardRarity.Quest, TargetType.Self, showInCardLibrary: false)
@@ -153,8 +149,8 @@ public abstract class FeiyapQuestCardBase : FeiyapCardTemplate
         ApplyPlayabilityState();
     }
 
-    protected override (PileType, CardPilePosition) GetResultPileTypeAndPositionForCardPlay() =>
-        (PileType.None, CardPilePosition.Bottom);
+    protected override CardLocation GetResultLocationForCardPlay() =>
+        new(Owner, PileType.None, CardPilePosition.Bottom);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

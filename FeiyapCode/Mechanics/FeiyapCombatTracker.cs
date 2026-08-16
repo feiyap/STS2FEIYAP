@@ -13,10 +13,10 @@ public sealed class FeiyapCombatTracker
 
     public CardType? LastPlayedType { get; set; }
 
-  /// <summary>交替使用攻击/技能后的加成是否激活。</summary>
+    /// <summary>交替使用攻击/技能后的加成是否激活。</summary>
     public bool AlternateBonusActive { get; set; }
 
-  /// <summary>本回合是否已触发完美居合。</summary>
+    /// <summary>本回合是否已触发完美居合。</summary>
     public bool PerfectIaidoActive { get; set; }
 
     /// <summary>本回合是否已打出过星座牌。</summary>
@@ -28,14 +28,24 @@ public sealed class FeiyapCombatTracker
     /// <summary>本回合造成的伤害总量。</summary>
     public int TurnDamageDealt { get; set; }
 
-    /// <summary>本场战斗每次获得居合时的额外加算（如幾星霜）。</summary>
-    public decimal IaidoGainCombatBonus { get; set; }
+    /// <summary>本回合已打出的攻击牌数量（不含当前正在结算的牌）。</summary>
+    public int AttacksPlayedThisTurn { get; set; }
+
+    /// <summary>本回合是否已通过绯神乐解锁神座屠。</summary>
+    public bool ShinzatoUnlockedThisTurn { get; set; }
+
+    /// <summary>剩余可同时触发正逆位的塔罗出牌次数（莲生双面）。</summary>
+    public int DualTarotPlaysRemaining { get; set; }
 
     /// <summary>活杀自在：累计未兑换活力的居合余数。</summary>
     public decimal KassaiJizaiIaidoRemainder { get; set; }
 
-    public void OnTurnStart(Player player) =>
+    public void OnTurnStart(Player player)
+    {
         TurnDamageDealt = 0;
+        AttacksPlayedThisTurn = 0;
+        ShinzatoUnlockedThisTurn = false;
+    }
 
     public void RecordDamageDealt(int amount)
     {
@@ -45,10 +55,13 @@ public sealed class FeiyapCombatTracker
         }
     }
 
-    public static FeiyapCombatTracker Get(Player player)
+    public void RecordAttackPlayed()
     {
-        return Trackers.GetOrAdd(player.NetId, _ => new FeiyapCombatTracker());
+        AttacksPlayedThisTurn++;
     }
+
+    public static FeiyapCombatTracker Get(Player player) =>
+        Trackers.GetOrAdd(player.NetId, _ => new FeiyapCombatTracker());
 
     public static void ClearCombatState(Player player)
     {
@@ -59,7 +72,9 @@ public sealed class FeiyapCombatTracker
         tracker.ConstellationPlayedThisTurn = false;
         tracker.RetainIaidoNextTurn = false;
         tracker.TurnDamageDealt = 0;
-        tracker.IaidoGainCombatBonus = 0m;
+        tracker.AttacksPlayedThisTurn = 0;
+        tracker.ShinzatoUnlockedThisTurn = false;
+        tracker.DualTarotPlaysRemaining = 0;
         tracker.KassaiJizaiIaidoRemainder = 0m;
     }
 

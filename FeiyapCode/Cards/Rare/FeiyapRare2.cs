@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 无想斩：保留；居合抵消伤害时本场战斗伤害永久增加。
+/// 无想斩：保留；居合抵消伤害时伤害增加，下次打出后重置。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare2 : FeiyapCardTemplate
@@ -23,7 +23,7 @@ public sealed class FeiyapRare2 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10, ValueProp.Move),
+        new DamageVar(8, ValueProp.Move),
         new DynamicVar("BonusDamage", 0m)
     ];
 
@@ -55,10 +55,12 @@ public sealed class FeiyapRare2 : FeiyapCardTemplate
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
+
+        BonusDamage = 0;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(5m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }

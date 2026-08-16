@@ -39,7 +39,13 @@ public static class FeiyapIaidoCmd
         ValueProp props,
         CardModel? cardSource)
     {
-        var (_, _, total) = ComputeGainAmount(creature, amount, props, cardSource);
+        var (_, _, total) = ComputeGainAmount(
+            creature,
+            amount,
+            props,
+            cardSource,
+            cardPlay: null,
+            isPreview: true);
         return total;
     }
 
@@ -61,7 +67,13 @@ public static class FeiyapIaidoCmd
             return 0m;
         }
 
-        var (scaledAmount, additives, modified) = ComputeGainAmount(creature, amount, props, cardSource);
+        var (scaledAmount, additives, modified) = ComputeGainAmount(
+            creature,
+            amount,
+            props,
+            cardSource,
+            cardPlay,
+            isPreview: false);
         if (modified <= 0m)
         {
             return 0m;
@@ -75,7 +87,8 @@ public static class FeiyapIaidoCmd
             ScaledAmount = scaledAmount,
             Props = props,
             CardSource = cardSource,
-            CardPlay = cardPlay
+            CardPlay = cardPlay,
+            IsPreview = false
         };
 
         SfxCmd.Play("event:/sfx/block_gain");
@@ -125,6 +138,17 @@ public static class FeiyapIaidoCmd
             damage *= 2m;
         }
 
+        if (creature.FindPower<FeiyapGuilianMoonPower>() != null)
+        {
+            damage *= 1.5m;
+        }
+
+        var menkyo = creature.GetPowerAmount<FeiyapMenkyoKaidenPower>();
+        if (menkyo > 0)
+        {
+            damage *= 1m + menkyo / 100m;
+        }
+
         var forcedPerfect = creature.FindPower<FeiyapIaidoSurgePower>() != null;
         if (creature.Player is { } player && (forcedPerfect || isPerfect))
         {
@@ -156,7 +180,9 @@ public static class FeiyapIaidoCmd
         Creature creature,
         decimal amount,
         ValueProp props,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay,
+        bool isPreview)
     {
         if (amount <= 0m)
         {
@@ -178,16 +204,12 @@ public static class FeiyapIaidoCmd
             ScaledAmount = modified,
             Props = props,
             CardSource = cardSource,
-            CardPlay = null
+            CardPlay = cardPlay,
+            IsPreview = isPreview
         };
 
         modified = ApplyMultiplicativeModifiers(creature.Player, context, modified);
         modified = Math.Max(0m, modified);
-
-        if (creature.Player != null)
-        {
-            modified += FeiyapCombatTracker.Get(creature.Player).IaidoGainCombatBonus;
-        }
 
         var scaledAmount = modified;
         context = context with { ScaledAmount = scaledAmount };

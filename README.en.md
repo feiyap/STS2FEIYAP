@@ -183,7 +183,7 @@ Feiyap/
 | Type | `FeiyapCharacter` |
 | Expected ID | `FEIYAP_CHARACTER_FEIYAP_CHARACTER` |
 | Starter deck | 4 × `FeiyapStrike`, 4 × `FeiyapDefend`, 1 × `JianQiaoDaJi`, 1 × `JuHeShu` |
-| Starter relic | `YuQu` (`YuQuYuDuo` is the Touch of Orobas upgrade) |
+| Starter relic | `ShuiLian` (`LianXinShouYue` is the Touch of Orobas upgrade) |
 | Assets | Configured via `CharacterAssetProfile`. The template only specifies static placeholder assets; unspecified audio, trail, transition, etc. fall back through `PlaceholderCharacterId` |
 
 ### Sample cards and relic
@@ -192,14 +192,14 @@ Feiyap/
 |---|---|---|
 | `FeiyapStrike` (attack) | character card pool | `FEIYAP_CARD_FEIYAP_STRIKE` |
 | `FeiyapDefend` (skill) | character card pool | `FEIYAP_CARD_FEIYAP_DEFEND` |
-| `YuQu` | `FeiyapRelicPool` | `FEIYAP_RELIC_YU_QU` |
+| `ShuiLian` | `FeiyapRelicPool` | `FEIYAP_RELIC_SHUI_LIAN` |
 
 ### Static placeholder assets
 
 **Images** (`res://Feiyap/images/...`):
 
 - `cards/FeiyapStrike.png`, `cards/FeiyapDefend.png`: sample card art.
-- `relics/YuQu.png`, `relics/YuQuYuDuo.png`: starter relic icons.
+- `relics/ShuiLian.png`, `relics/LianXinShouYue.png`: starter relic icons.
 - `characters/Feiyap_character_*.png`: character icons, select art, map marker, and energy icons.
 
 **Scenes** (`res://Feiyap/scenes/characters/...`):

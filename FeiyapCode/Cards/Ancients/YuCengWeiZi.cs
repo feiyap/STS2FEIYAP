@@ -18,6 +18,7 @@ namespace Feiyap.Cards.Ancients;
 /// 先古卡：雨曾为紫（原版先古遗物「尘封魔典」提供）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
+[RegisterDustyTomeCard(typeof(FeiyapCharacter))]
 public sealed class YuCengWeiZi : FeiyapCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

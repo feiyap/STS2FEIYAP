@@ -1,4 +1,5 @@
 using Feiyap.Cards;
+using Feiyap.Cards.Tarot;
 using System.Linq;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -26,18 +27,32 @@ public static class FeiyapCombatTrackingService
         {
             FeiyapCombatTracker.Get(owner).ConstellationPlayedThisTurn = true;
         }
+
+        if (cardPlay.Card.Type == CardType.Attack)
+        {
+            FeiyapCombatTracker.Get(owner).RecordAttackPlayed();
+        }
+
+        // 出牌后正/逆位可触发状态可能变化，立即刷新手牌塔罗卡图。
+        FeiyapTarotCardBase.RefreshHandPortraits(owner);
     }
 
     public static void OnAfterDamageGiven(Creature? dealer, DamageResult result)
     {
         if (dealer?.Player is not { } player
-            || result.TotalDamage <= 0
             || !PlayerHasFeiyapCards(player))
         {
             return;
         }
 
-        FeiyapCombatTracker.Get(player).RecordDamageDealt((int)result.TotalDamage);
+        // 计入格挡吸收与溢出，与攻击实际结算量一致。
+        var dealt = result.TotalDamage + result.OverkillDamage;
+        if (dealt <= 0)
+        {
+            return;
+        }
+
+        FeiyapCombatTracker.Get(player).RecordDamageDealt(dealt);
     }
 
     public static void OnBeforeSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants)

@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 晚樱：保留，造成 8 / 11 点伤害。
+/// 晚樱：保留，造成 11 / 14 点伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon1 : FeiyapCardTemplate

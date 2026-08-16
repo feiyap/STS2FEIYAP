@@ -1,16 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
-using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -32,47 +30,16 @@ public sealed class LaplaceDemon : ModRelicTemplate, IFeiyapHiddenFromRelicCompe
     public override async Task AfterObtained()
     {
         await FeiyapQuestRewards.GainAncientCard<WorldShards>(Owner);
-        await RelicCmd.Obtain<ArchaicTooth>(Owner);
-        await RelicCmd.Obtain<TouchOfOrobas>(Owner);
-    }
 
-    public override bool TryModifyCardRewardOptionsLate(
-        Player player,
-        List<CardCreationResult> cardRewards,
-        CardCreationOptions options)
-    {
-        if (player != Owner)
+        // 已持有时不再发放，避免古老牙齿二次 AfterObtained 时 StarterCard/AncientCard 为空导致 NRE
+        if (!Owner.Relics.Any(static r => r is ArchaicTooth))
         {
-            return false;
+            await RelicCmd.Obtain<ArchaicTooth>(Owner);
         }
 
-        if (options.Flags.HasFlag(CardCreationFlags.NoHookUpgrades))
+        if (!Owner.Relics.Any(static r => r is TouchOfOrobas))
         {
-            return false;
-        }
-
-        if (!options.Flags.HasFlag(CardCreationFlags.IsCardReward))
-        {
-            return false;
-        }
-
-        UpgradeAllValidCards(cardRewards);
-        return true;
-    }
-
-    private void UpgradeAllValidCards(List<CardCreationResult> cardRewards)
-    {
-        foreach (var cardReward in cardRewards)
-        {
-            var card = cardReward.Card;
-            if (!card.IsUpgradable)
-            {
-                continue;
-            }
-
-            var upgraded = Owner.RunState.CloneCard(card);
-            CardCmd.Upgrade(upgraded);
-            cardReward.ModifyCard(upgraded, this);
+            await RelicCmd.Obtain<TouchOfOrobas>(Owner);
         }
     }
 }

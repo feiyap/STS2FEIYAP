@@ -17,12 +17,18 @@ namespace Feiyap.Cards.Ancients;
 
 /// <summary>
 /// 先古卡：渴血症。
+/// 握牌时每受到一次伤害积攒段数；传统格挡与居合全额抵消均计入。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class KeXueZheng : FeiyapCardTemplate
 {
     private int _bonusHitCount;
     private bool _autoPlayPending;
+
+    /// <summary>
+    /// 本段伤害在减伤/Cap（含居合）之前已为正；用于 TotalDamage==0 的居合全挡仍计数。
+    /// </summary>
+    private bool _pendingHitToCount;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
@@ -63,6 +69,26 @@ public sealed class KeXueZheng : FeiyapCardTemplate
         return hitCount + BonusHitCount;
     }
 
+    public override decimal ModifyDamageAdditive(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay)
+    {
+        // 居合在 Cap 阶段把伤害压到 0，须在加算阶段先记下「受到过一次伤害」。
+        if (target == Owner.Creature
+            && amount > 0m
+            && Pile?.Type == PileType.Hand
+            && !FeiyapIaidoIntentPreviewScope.IsActive)
+        {
+            _pendingHitToCount = true;
+        }
+
+        return 0m;
+    }
+
     public override async Task AfterDamageReceived(
         PlayerChoiceContext choiceContext,
         Creature target,
@@ -71,7 +97,23 @@ public sealed class KeXueZheng : FeiyapCardTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target != Owner.Creature || Pile?.Type != PileType.Hand || result.TotalDamage <= 0)
+        // 居合反击在 BeforeDamageReceived 中嵌套对敌人造成伤害；
+        // 若在此处对「任意目标」清标记，会在自身 AfterDamageReceived 前被反击清掉，导致居合全挡不计次。
+        if (target != Owner.Creature)
+        {
+            return;
+        }
+
+        var pendingHit = _pendingHitToCount;
+        _pendingHitToCount = false;
+
+        if (Pile?.Type != PileType.Hand)
+        {
+            return;
+        }
+
+        // TotalDamage>0：掉血或传统格挡；pendingHit：含居合全额抵消（此时 TotalDamage 为 0）。
+        if (result.TotalDamage <= 0 && !pendingHit)
         {
             return;
         }

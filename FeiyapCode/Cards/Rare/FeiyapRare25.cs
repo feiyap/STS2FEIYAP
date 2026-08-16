@@ -1,26 +1,32 @@
-using Feiyap.Mechanics;
 using Feiyap.Characters;
 using Feiyap.Cards.Tarot;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// VII-战车：正位回合结束打出弃牌堆技能，逆位打出弃牌堆攻击。
+/// V-教皇：正位获得再生，逆位获得覆甲。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare25 : FeiyapTarotCardBase
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<RegenPower>(),
+        HoverTipFactory.FromPower<PlatingPower>()
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapChariotPower>(1m)
+        new PowerVar<RegenPower>(3m),
+        new PowerVar<PlatingPower>(3m)
     ];
 
     public FeiyapRare25()
@@ -34,26 +40,31 @@ public sealed class FeiyapRare25 : FeiyapTarotCardBase
         EnsureOrientationInitialized();
         await CreatureCmd.TriggerAnim(Owner.Creature, "PowerUp", Owner.Character.PowerUpAnimDelay);
 
-        var power = (FeiyapChariotPower)ModelDb.Power<FeiyapChariotPower>().ToMutable();
-        if (FeiyapTarotCmd.HasDualEffect(Owner))
-        {
-            power.SetDualEffect(true);
-        }
-        else
-        {
-            power.SetReversed(await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this));
-        }
-        await PowerCmd.Apply(
+        await RunTarotBranches(
             choiceContext,
-            power,
-            Owner.Creature,
-            DynamicVars["FeiyapChariotPower"].BaseValue,
-            Owner.Creature,
-            this);
+            async () =>
+            {
+                await PowerCmd.Apply<RegenPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["RegenPower"].BaseValue,
+                    Owner.Creature,
+                    this);
+            },
+            async () =>
+            {
+                await PowerCmd.Apply<PlatingPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["PlatingPower"].BaseValue,
+                    Owner.Creature,
+                    this);
+            });
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapChariotPower"].UpgradeValueBy(1m);
+        DynamicVars["RegenPower"].UpgradeValueBy(2m);
+        DynamicVars["PlatingPower"].UpgradeValueBy(2m);
     }
 }

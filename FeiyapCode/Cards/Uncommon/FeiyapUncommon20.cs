@@ -1,45 +1,63 @@
-using Feiyap.Characters;
-using Feiyap.Cards.Tarot;
+﻿using Feiyap.Characters;
+using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// I-魔术师：正位抽牌，逆位获得耗能。
+/// 天五月：保留；获得居合；本回合居合对所有敌人造成伤害；获得居合时耗能减 1（打出后重置）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
-public sealed class FeiyapUncommon20 : FeiyapTarotCardBase
+public sealed class FeiyapUncommon20 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Retain,
+        FeiyapKeywords.Iaido
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CardsVar(3),
-        new EnergyVar(3)
+        new IaidoVar(8m, ValueProp.Move)
     ];
 
     public FeiyapUncommon20()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        : base(5, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        RegisterTarotFactory(player => player.RunState.CreateCard<FeiyapUncommon20>(player));
     }
+
+    public void OnIaidoGained() => EnergyCost.AddUntilPlayed(-1);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        EnsureOrientationInitialized();
-
-        await RunTarotBranches(
+        await FeiyapIaidoCmd.Gain(
             choiceContext,
-            () => CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner),
-            () => PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner));
+            Owner.Creature,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
+            ValueProp.Move,
+            this,
+            cardPlay);
+
+        await PowerCmd.Apply(
+            choiceContext,
+            ModelDb.Power<FeiyapHeavenMayPower>().ToMutable(),
+            Owner.Creature,
+            1m,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(4m);
     }
 }

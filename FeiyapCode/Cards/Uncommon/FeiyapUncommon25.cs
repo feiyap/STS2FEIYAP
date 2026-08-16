@@ -1,22 +1,35 @@
-using Feiyap.Mechanics;
 using Feiyap.Characters;
 using Feiyap.Cards.Tarot;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// IX-隐者：正位返还下次消耗的活力，逆位返还下次消耗的残心。
+/// III-皇后：正位获得居合 2 次，逆位获得格挡 2 次。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon25 : FeiyapTarotCardBase
 {
+    public override bool GainsBlock => true;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new IaidoVar(4m, ValueProp.Move),
+        new BlockVar(4m, ValueProp.Move),
+        new RepeatVar(2)
+    ];
+
     public FeiyapUncommon25()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
@@ -26,40 +39,35 @@ public sealed class FeiyapUncommon25 : FeiyapTarotCardBase
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         EnsureOrientationInitialized();
+        var repeats = DynamicVars.Repeat.IntValue;
 
-        if (FeiyapTarotCmd.HasDualEffect(Owner))
-        {
-            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
-            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
-            return;
-        }
-
-        var reversed = await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this);
-        if (reversed)
-        {
-            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
-        }
-        else
-        {
-            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
-        }
-    }
-
-    private async Task ApplyHermitPower<TPower>(PlayerChoiceContext choiceContext)
-        where TPower : ModPowerTemplate
-    {
-        var power = ModelDb.Power<TPower>().ToMutable();
-        await PowerCmd.Apply(
+        await RunTarotBranches(
             choiceContext,
-            power,
-            Owner.Creature,
-            1m,
-            Owner.Creature,
-            this);
+            async () =>
+            {
+                for (var i = 0; i < repeats; i++)
+                {
+                    await FeiyapIaidoCmd.Gain(
+                        choiceContext,
+                        Owner.Creature,
+                        DynamicVars[IaidoVar.DefaultName].BaseValue,
+                        ValueProp.Move,
+                        this,
+                        cardPlay);
+                }
+            },
+            async () =>
+            {
+                for (var i = 0; i < repeats; i++)
+                {
+                    await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+                }
+            });
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(2m);
     }
 }

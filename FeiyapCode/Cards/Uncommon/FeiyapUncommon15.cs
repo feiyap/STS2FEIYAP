@@ -1,34 +1,24 @@
+using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
-using Feiyap.Powers;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 生死流转：消耗所有居合并获得等量活力。消耗（升级后移除消耗）。
+/// 横格：消耗 1 张攻击牌，获得其伤害量的格挡。消耗（升级后移除消耗）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon15 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-    [
-        CardKeyword.Exhaust,
-        FeiyapKeywords.Iaido
-    ];
+    public override bool GainsBlock => true;
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-    [
-        HoverTipFactory.FromPower<VigorPower>()
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public FeiyapUncommon15()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -37,17 +27,24 @@ public sealed class FeiyapUncommon15 : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var iaido = Owner.Creature.GetPowerAmount<FeiyapIaidoPower>();
-        await FeiyapIaidoCmd.ClearAll(choiceContext, Owner.Creature);
+        var selected = (await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, 1),
+            filter: c => c.Type == CardType.Attack && c.DynamicVars.ContainsKey("Damage"),
+            source: this)).FirstOrDefault();
 
-        if (iaido > 0)
+        if (selected == null)
         {
-            await PowerCmd.Apply<VigorPower>(
-                choiceContext,
-                Owner.Creature,
-                iaido,
-                Owner.Creature,
-                this);
+            return;
+        }
+
+        var block = selected.DynamicVars.Damage.BaseValue;
+        await CardCmd.Exhaust(choiceContext, selected);
+
+        if (block > 0m)
+        {
+            await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Move, cardPlay);
         }
     }
 

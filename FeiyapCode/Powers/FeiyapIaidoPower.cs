@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Feiyap.Mechanics;
 using Feiyap.Patches;
-using Feiyap.Powers;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -12,7 +9,6 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -21,13 +17,14 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// ??????????????????????????????
+/// 居合：受到攻击时消耗等量居合格挡并反击。
+/// 减伤在伤害乘算（如易伤）之后的 Cap 阶段结算，使抵消/反击量与最终受伤一致。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapIaidoPower : ModPowerTemplate
 {
+    private bool _pendingBlock;
     private int _pendingConsume;
-    private bool _pendingInfinite;
     private decimal _pendingIncomingDamage;
     private CardPlay? _pendingCardPlay;
 
@@ -37,7 +34,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapIaidoPower));
 
-    /// <summary>???????? UI ???????????</summary>
+    /// <summary>居合数值由血条 UI 显示，能力栏隐藏。</summary>
     protected override bool IsVisibleInternal => false;
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
@@ -50,38 +47,74 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         CardModel? cardSource,
         CardPlay? cardPlay)
     {
+        // 非自身受伤：不触碰 pending，避免荆棘等嵌套伤害清空待结算状态。
+        if (target != Owner)
+        {
+            return 0m;
+        }
+
+        // 意图预览会走 ModifyDamage，但不得清空真实受击的待结算。
+        // 荆棘在 BeforeDamageReceived 嵌套掉血后，可能在 await 间隙刷新意图，
+        // 若此处 ClearPending，后续居合反击会被吞掉。
         if (FeiyapIaidoIntentPreviewScope.IsActive)
         {
-            ClearPendingConsume();
+            return 0m;
+        }
+
+        // 无限居合由 FeiyapInfiniteIaidoPower 独占处理，避免双重减伤。
+        if (FeiyapIaidoCmd.IsInfinite(Owner))
+        {
+            ClearPending();
             return 0m;
         }
 
         if (!ShouldConsumeIaido(target, dealer, amount, props))
         {
-            ClearPendingConsume();
+            ClearPending();
             return 0m;
         }
 
-        if (FeiyapIaidoCmd.IsInfinite(Owner))
+        _pendingBlock = true;
+        _pendingIncomingDamage = amount;
+        _pendingCardPlay = cardPlay;
+        // 加算阶段不减伤，留到乘算（易伤等）之后的 Cap 阶段再抵消。
+        return 0m;
+    }
+
+    public override decimal ModifyDamageCap(
+        Creature? target,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay)
+    {
+        // 预览阶段即使仍有真实受击 pending，也不得用居合压低意图伤害数字。
+        if (FeiyapIaidoIntentPreviewScope.IsActive
+            || !_pendingBlock
+            || target != Owner
+            || Amount <= 0)
         {
-            _pendingInfinite = true;
-            _pendingConsume = (int)Math.Min(int.MaxValue, Math.Ceiling(amount));
-            _pendingIncomingDamage = amount;
-            _pendingCardPlay = cardPlay;
-            return -amount;
+            return decimal.MaxValue;
         }
 
-        var consume = (int)Math.Min(Amount, amount);
+        var fullDamage = FeiyapIaidoCombat.ComputeDamageWithoutPower(
+            this,
+            Owner,
+            _pendingIncomingDamage,
+            props,
+            dealer,
+            cardSource,
+            _pendingCardPlay ?? cardPlay);
+
+        var consume = (int)Math.Min(Amount, Math.Round(fullDamage));
         if (consume <= 0)
         {
-            ClearPendingConsume();
-            return 0m;
+            ClearPending();
+            return decimal.MaxValue;
         }
 
         _pendingConsume = consume;
-        _pendingIncomingDamage = amount;
-        _pendingCardPlay = cardPlay;
-        return -consume;
+        return Math.Max(0m, fullDamage - consume);
     }
 
     public override async Task BeforeDamageReceived(
@@ -92,116 +125,57 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target != Owner || _pendingConsume <= 0)
+        // 其他单位受伤（如荆棘反伤）不得清空自身待结算的居合。
+        if (target != Owner)
         {
-            ClearPendingConsume();
+            return;
+        }
+
+        if (!_pendingBlock || _pendingConsume <= 0)
+        {
+            ClearPending();
             return;
         }
 
         var consume = _pendingConsume;
-        var infinite = _pendingInfinite;
         var preIaidoRunningTotal = _pendingIncomingDamage;
         var pendingCardPlay = _pendingCardPlay;
-        ClearPendingConsume();
-        var shouldCounter = ShouldIaidoCounter(dealer, props);
+        ClearPending();
 
-        var damageWithoutIaido = ComputeDamageWithoutIaidoConsumption(
+        var damageWithoutIaido = FeiyapIaidoCombat.ComputeDamageWithoutPower(
+            this,
+            Owner,
             preIaidoRunningTotal,
             props,
             dealer,
             cardSource,
             pendingCardPlay);
-        var blockedDamage = infinite
-            ? Math.Max(0m, damageWithoutIaido - amount)
-            : Math.Max(0m, Math.Min(consume, damageWithoutIaido - amount));
+        var blockedDamage = Math.Max(0m, Math.Min(consume, damageWithoutIaido - amount));
         var actualConsume = (int)Math.Round(blockedDamage);
         if (actualConsume <= 0)
         {
             return;
         }
 
-        var forcedPerfect = shouldCounter && Owner.FindPower<FeiyapIaidoSurgePower>() != null;
-        var isPerfect = shouldCounter && (forcedPerfect || (!infinite && Amount == damageWithoutIaido));
-        var counterDamage = shouldCounter
-            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(Owner, blockedDamage, isPerfect)
-            : 0m;
+        var forcedPerfect = Owner.FindPower<FeiyapIaidoSurgePower>() != null;
+        var isPerfect = FeiyapIaidoCombat.ShouldCounter(Owner, dealer, props)
+                        && (forcedPerfect || Amount == damageWithoutIaido);
 
-        Flash();
+        await PowerCmd.Apply(choiceContext, this, Owner, -actualConsume, Owner, null);
 
-        if (!infinite)
-        {
-            await PowerCmd.Apply(choiceContext, this, Owner, -actualConsume, Owner, null);
-        }
-
-        IaidoHealthBarOverlay.RefreshForCreature(Owner);
-
-        if (Owner.Player != null)
-        {
-            FeiyapMusouCmd.OnIaidoBlocked(Owner.Player, (int)Math.Round(blockedDamage));
-        }
-
-        if (!shouldCounter)
-        {
-            return;
-        }
-
-        if (isPerfect)
-        {
-            await FeiyapPerfectIaidoCmd.Trigger(choiceContext, Owner, blockedDamage);
-        }
-
-        await FeiyapSwordSaintHeartPower.OnIaidoTriggered(choiceContext, Owner, perfect: isPerfect);
-
-        var heavenMay = Owner.FindPower<FeiyapHeavenMayPower>();
-        if (heavenMay != null)
-        {
-            var enemies = Owner.CombatState?.GetOpponentsOf(Owner).Where(e => e.IsAlive).ToList() ?? [];
-            await FeiyapSlashCmd.PlayIaidoCounterSlashAll(enemies, async () =>
-            {
-                foreach (var enemy in enemies)
-                {
-                    await CreatureCmd.Damage(
-                        choiceContext,
-                        enemy,
-                        counterDamage,
-                        ValueProp.Unpowered | ValueProp.SkipHurtAnim,
-                        Owner,
-                        null,
-                        null);
-                }
-
-                if (Owner.Player != null && enemies.Count > 0)
-                {
-                    FeiyapQuestProgress.RecordIaidoDamage(
-                        Owner.Player,
-                        (int)Math.Round(counterDamage * enemies.Count));
-                }
-            }, isPerfect);
-        }
-        else if (dealer != null && dealer.Side != Owner.Side && dealer.IsAlive)
-        {
-            await FeiyapSlashCmd.PlayIaidoCounterSlash(dealer, async () =>
-            {
-                await CreatureCmd.Damage(
-                    choiceContext,
-                    dealer,
-                    counterDamage,
-                    ValueProp.Unpowered | ValueProp.SkipHurtAnim,
-                    Owner,
-                    null,
-                    null);
-
-                if (Owner.Player != null)
-                {
-                    FeiyapQuestProgress.RecordIaidoDamage(Owner.Player, (int)Math.Round(counterDamage));
-                }
-            }, isPerfect);
-        }
+        await FeiyapIaidoCombat.ResolveBlocked(
+            choiceContext,
+            Owner,
+            this,
+            blockedDamage,
+            props,
+            dealer,
+            isPerfect);
     }
 
     public override Task AfterModifyingDamageAmount(CardModel? cardSource)
     {
-        if (_pendingConsume > 0)
+        if (_pendingBlock)
         {
             Flash();
             IaidoHealthBarOverlay.RefreshForCreature(Owner);
@@ -212,7 +186,19 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner?.Creature != Owner || cardPlay.Card.Type != CardType.Attack)
+        if (cardPlay.Card.Owner?.Creature != Owner)
+        {
+            return Task.CompletedTask;
+        }
+
+        // 绯神乐：下一张攻击或技能不消耗居合，并在打出后移除。
+        if (cardPlay.Card.Type is CardType.Attack or CardType.Skill
+            && Owner.FindPower<FeiyapScarletKaguraPower>() is { } scarlet)
+        {
+            return PowerCmd.Remove(scarlet);
+        }
+
+        if (cardPlay.Card.Type != CardType.Attack)
         {
             return Task.CompletedTask;
         }
@@ -224,9 +210,7 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        var hyakuhanhei = Owner.FindPower<FeiyapHyakuhanheiPower>();
-        var reduce = hyakuhanhei != null ? FeiyapHyakuhanheiPower.GetAttackIaidoConsume() : 2;
-        reduce = Math.Min(Amount, reduce);
+        var reduce = Math.Min(Amount, 2);
         return PowerCmd.Apply(choiceContext, this, Owner, -reduce, Owner, null);
     }
 
@@ -238,11 +222,6 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
         }
 
         FeiyapCombatTracker.Get(player).OnTurnStart(player);
-
-        if (player.Creature != Owner)
-        {
-            return Task.CompletedTask;
-        }
 
         var tracker = FeiyapCombatTracker.Get(player);
         if (tracker.RetainIaidoNextTurn)
@@ -257,105 +236,14 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
     private bool ShouldConsumeIaido(Creature? target, Creature? dealer, decimal amount, ValueProp props) =>
         target == Owner
         && amount > 0m
-        && (FeiyapIaidoCmd.IsInfinite(Owner) || Amount > 0)
-        && IsIaidoBlockableDamage(dealer, props);
+        && Amount > 0
+        && FeiyapIaidoCombat.IsBlockableDamage(Owner, dealer, props);
 
-    /// <summary>
-    /// ???????????????????????? powered attack ??????
-    /// </summary>
-    private bool IsIaidoBlockableDamage(Creature? dealer, ValueProp props)
+    private void ClearPending()
     {
-        if (props.HasFlag(ValueProp.Unblockable))
-        {
-            return false;
-        }
-
-        if (props.IsPoweredAttack())
-        {
-            return dealer != null && dealer.Side != Owner.Side;
-        }
-
-        return true;
-    }
-
-    private bool ShouldIaidoCounter(Creature? dealer, ValueProp props) =>
-        dealer != null
-        && dealer.Side != Owner.Side
-        && props.IsPoweredAttack();
-
-    private void ClearPendingConsume()
-    {
+        _pendingBlock = false;
         _pendingConsume = 0;
-        _pendingInfinite = false;
         _pendingIncomingDamage = 0m;
         _pendingCardPlay = null;
-    }
-
-    /// <summary>
-    /// 模拟居合未参与减伤时的最终攻击伤害（含居合之后的力量等加算修正）。
-    /// </summary>
-    private decimal ComputeDamageWithoutIaidoConsumption(
-        decimal preIaidoRunningTotal,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
-    {
-        var combatState = Owner.CombatState;
-        var runState = combatState?.RunState;
-        if (runState == null)
-        {
-            return Math.Max(0m, preIaidoRunningTotal);
-        }
-
-        var num = preIaidoRunningTotal;
-        var passedSelf = false;
-
-        foreach (var item in runState.IterateHookListeners(combatState))
-        {
-            if (ReferenceEquals(item, this))
-            {
-                passedSelf = true;
-                continue;
-            }
-
-            if (!passedSelf)
-            {
-                continue;
-            }
-
-            num += item.ModifyDamageAdditive(Owner, num, props, dealer, cardSource, cardPlay);
-        }
-
-        foreach (var item in runState.IterateHookListeners(combatState))
-        {
-            if (ReferenceEquals(item, this))
-            {
-                continue;
-            }
-
-            num *= item.ModifyDamageMultiplicative(Owner, num, props, dealer, cardSource, cardPlay);
-        }
-
-        var cap = decimal.MaxValue;
-        foreach (var item in runState.IterateHookListeners(combatState))
-        {
-            if (ReferenceEquals(item, this))
-            {
-                continue;
-            }
-
-            var damageCap = item.ModifyDamageCap(Owner, props, dealer, cardSource, cardPlay);
-            if (damageCap < cap)
-            {
-                cap = damageCap;
-                if (num > cap)
-                {
-                    num = cap;
-                }
-            }
-        }
-
-        return Math.Max(0m, num);
     }
 }
