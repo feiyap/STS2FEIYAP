@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -23,14 +20,15 @@ public sealed class LaplaceDemon : ModRelicTemplate, IFeiyapHiddenFromRelicCompe
     public override RelicRarity Rarity => RelicRarity.Event;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromCard(ModelDb.Card<WorldShards>())];
+    [
+        ..HoverTipFactory.FromRelic<ArchaicTooth>(),
+        ..HoverTipFactory.FromRelic<TouchOfOrobas>()
+    ];
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(LaplaceDemon));
 
     public override async Task AfterObtained()
     {
-        await FeiyapQuestRewards.GainAncientCard<WorldShards>(Owner);
-
         // 已持有时不再发放，避免古老牙齿二次 AfterObtained 时 StarterCard/AncientCard 为空导致 NRE
         if (!Owner.Relics.Any(static r => r is ArchaicTooth))
         {
