@@ -13,8 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// VIII-正义：造成 13 / 18 点伤害；正位额外伤害，逆位耗能变为 0。
-/// 正位额外伤害为 Unpowered，不受力量/活力影响。
+/// VIII-正义：造成 13 / 18 点伤害；正位伤害并入主伤害；逆位耗能变为 0。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon8 : FeiyapTarotCardBase
@@ -22,7 +21,7 @@ public sealed class FeiyapCommon8 : FeiyapTarotCardBase
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(13, ValueProp.Move),
-        new DamageVar("BonusDamage", 7, ValueProp.Unpowered | ValueProp.Move)
+        new DamageVar("BonusDamage", 7, ValueProp.Move)
     ];
 
     public FeiyapCommon8()
@@ -31,7 +30,7 @@ public sealed class FeiyapCommon8 : FeiyapTarotCardBase
         RegisterTarotFactory(player => player.RunState.CreateCard<FeiyapCommon8>(player));
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(
+    public override bool TryModifyEnergyCostInCombat(
         CardModel card,
         decimal originalCost,
         out decimal modifiedCost)
@@ -66,30 +65,16 @@ public sealed class FeiyapCommon8 : FeiyapTarotCardBase
             },
             () => Task.CompletedTask);
 
-        if (FeiyapTarotCmd.HasDualEffect(Owner))
+        var damage = DynamicVars.Damage.BaseValue;
+        if (applyUprightBonus)
         {
-            applyUprightBonus = true;
+            damage += DynamicVars["BonusDamage"].BaseValue;
         }
 
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(damage)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
-
-        if (!applyUprightBonus || cardPlay.Target is not { IsAlive: true })
-        {
-            return;
-        }
-
-        // 额外伤害单独结算且 Unpowered，不吃力量/活力。
-        await CreatureCmd.Damage(
-            choiceContext,
-            cardPlay.Target,
-            DynamicVars["BonusDamage"].BaseValue,
-            ValueProp.Unpowered | ValueProp.Move,
-            Owner.Creature,
-            this,
-            cardPlay);
     }
 
     protected override void OnUpgrade()

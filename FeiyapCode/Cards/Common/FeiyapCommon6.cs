@@ -1,9 +1,10 @@
 using Feiyap.Characters;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -11,14 +12,18 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 牙突：造成 7 / 11 点伤害，给予 1 层易伤。
+/// 牙突：造成 7 / 11 点伤害，给予 1 层破绽。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon6 : FeiyapCardTemplate
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+        [HoverTipFactory.FromPower<FeiyapPozhanPower>()];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(7, ValueProp.Move)
+        new DamageVar(7, ValueProp.Move),
+        new PowerVar<FeiyapPozhanPower>(1m)
     ];
 
     public FeiyapCommon6()
@@ -35,10 +40,15 @@ public sealed class FeiyapCommon6 : FeiyapCardTemplate
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<VulnerablePower>(
+        if (cardPlay.Target is not { IsAlive: true })
+        {
+            return;
+        }
+
+        await PowerCmd.Apply<FeiyapPozhanPower>(
             choiceContext,
             cardPlay.Target,
-            1m,
+            DynamicVars["FeiyapPozhanPower"].BaseValue,
             Owner.Creature,
             this);
     }

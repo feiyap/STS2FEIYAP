@@ -20,7 +20,7 @@
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.title": "World",
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_FREE_CHOICE_POWER.description": "All [gold]Tarot[/gold] cards can freely choose to trigger their upright or reversed effect.",
   "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.title": "World",
-  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "All [gold]Tarot[/gold] cards trigger both their upright and reversed effects.",
+  "FEIYAP_POWER_FEIYAP_TAROT_WORLD_DUAL_EFFECT_POWER.description": "All [gold]Tarot[/gold] cards cost 1 more and trigger both their upright and reversed effects.",
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.title": "Reverse Kesagiri",
   "FEIYAP_POWER_FEIYAP_REVERSE_GESA_POWER.description": "Double [gold]Block[/gold] and [gold]Iaido[/gold] gained from your next card.",
   "FEIYAP_POWER_FEIYAP_BLOOD_SPLASH_VIGOR_POWER.title": "Five Steps of Blood",
@@ -38,9 +38,11 @@
   "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.title": "0 - The Fool (Reversed)",
   "FEIYAP_POWER_FEIYAP_FOOL_REVERSED_POWER.description": "At the start of your turn, ALL enemies lose 1 [gold]Strength[/gold] and [gold]Dexterity[/gold].",
   "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.title": "The Lovers (Upright)",
-  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.description": "The next time you take damage, deal that much damage to [gold]{Target}[/gold].",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.description": "The next time you take damage, deal that much damage to the chosen enemy.",
+  "FEIYAP_POWER_FEIYAP_LOVERS_UPRIGHT_POWER.smartDescription": "The next time you take damage, deal that much damage to [gold]{Target}[/gold].",
   "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.title": "The Lovers (Reversed)",
-  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.description": "The next time [gold]{Target}[/gold] takes damage, you deal that much damage to [gold]{Target}[/gold].",
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.description": "The next time this enemy takes damage, you deal that much damage to it.",
+  "FEIYAP_POWER_FEIYAP_LOVERS_REVERSED_POWER.smartDescription": "The next time [gold]{OwnerName}[/gold] takes damage, you deal that much damage to it.",
   "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.title": "The Hermit (Upright)",
   "FEIYAP_POWER_FEIYAP_HERMIT_UPRIGHT_POWER.description": "The next time you consume [gold]Vigor[/gold], gain equal [gold]Vigor[/gold].",
   "FEIYAP_POWER_FEIYAP_HERMIT_REVERSED_POWER.title": "The Hermit (Reversed)",
@@ -88,5 +90,5 @@
   "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.title": "XX - Judgement (Reversed)",
   "FEIYAP_POWER_FEIYAP_JUDGEMENT_REVERSED_POWER.description": "At the start of your turn, lose 2 [gold]Dexterity[/gold].",
   "FEIYAP_POWER_FEIYAP_POZHAN_POWER.title": "Opening",
-  "FEIYAP_POWER_FEIYAP_POZHAN_POWER.description": "Take [blue]10%[/blue] more damage from Attacks per stack. At the end of the turn, lose half your stacks."
+  "FEIYAP_POWER_FEIYAP_POZHAN_POWER.description": "Take [blue]10%[/blue] more damage per stack. When taking attack damage, gain 1 additional stack. After reaching [blue]5[/blue] stacks, lose all stacks at the end of the turn."
 }

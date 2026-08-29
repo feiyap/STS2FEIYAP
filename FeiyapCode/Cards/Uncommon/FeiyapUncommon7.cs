@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 无明：造成 6 / 9 点伤害；获得等量于所造成伤害的居合；本次攻击不消耗居合。
+/// 无明：造成 4 / 6 点伤害；获得等量于所造成伤害的居合；本次攻击不消耗居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon7 : FeiyapCardTemplate
@@ -28,7 +28,7 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6, ValueProp.Move)
+        new DamageVar(4, ValueProp.Move)
     ];
 
     public FeiyapUncommon7()
@@ -63,6 +63,6 @@ public sealed class FeiyapUncommon7 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

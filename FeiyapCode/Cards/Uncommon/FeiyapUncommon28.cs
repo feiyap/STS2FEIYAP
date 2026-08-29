@@ -4,11 +4,13 @@ using Feiyap.Cards.Tarot;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -21,6 +23,12 @@ namespace Feiyap.Cards.Uncommon;
 public sealed class FeiyapUncommon28 : FeiyapTarotCardBase
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Exhaust,
+        ..base.CanonicalKeywords
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -86,6 +94,10 @@ public sealed class FeiyapUncommon28 : FeiyapTarotCardBase
                 break;
             }
 
+            // 手牌 UI 不监听 CardPile.CardRemoved。必须先拆掉本地视觉节点，
+            // 再换主人；否则队友客户端会留下幽灵卡面。
+            DetachLocalHandVisual(card);
+
             // Owner 不可直接从 A 改到 B，须先清空再登记到 CombatState
             card.RemoveFromCurrentPile();
             if (state.ContainsCard(card))
@@ -117,5 +129,24 @@ public sealed class FeiyapUncommon28 : FeiyapTarotCardBase
             var copy = state.CreateCard<FeiyapUncommon28>(teammate.Player);
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, teammate.Player);
         }
+    }
+
+    /// <summary>
+    /// 从本机手牌 UI 拆掉卡面，避免换主人后旧节点残留。
+    /// </summary>
+    private static void DetachLocalHandVisual(CardModel card)
+    {
+        if (!LocalContext.IsMe(card.Owner))
+        {
+            return;
+        }
+
+        var hand = NCombatRoom.Instance?.Ui?.Hand;
+        if (hand?.GetCardHolder(card) == null)
+        {
+            return;
+        }
+
+        hand.Remove(card);
     }
 }

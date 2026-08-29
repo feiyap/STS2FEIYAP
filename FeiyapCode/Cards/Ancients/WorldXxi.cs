@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Feiyap.Mechanics;
 using Feiyap.Characters;
@@ -6,6 +7,7 @@ using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -14,13 +16,19 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Ancients;
 
 /// <summary>
-/// 先古卡：XXI-世界。
+/// 先古卡：XXI-世界。正位自选正逆位；逆位耗能+1 并双效。升级获得保留。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class WorldXxi : FeiyapTarotCardBase
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<FeiyapTarotWorldFreeChoicePower>(),
+        HoverTipFactory.FromPower<FeiyapTarotWorldDualEffectPower>()
+    ];
+
     public WorldXxi()
-        : base(2, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
+        : base(1, CardType.Power, CardRarity.Ancient, TargetType.Self, showInCardLibrary: true)
     {
     }
 
@@ -44,7 +52,7 @@ public sealed class WorldXxi : FeiyapTarotCardBase
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Retain);
     }
 
     private async Task ApplyWorldPowerOnce<TPower>(PlayerChoiceContext choiceContext)

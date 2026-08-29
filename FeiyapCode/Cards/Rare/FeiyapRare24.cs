@@ -34,6 +34,6 @@ public sealed class FeiyapRare24 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        AddKeyword(CardKeyword.Retain);
     }
 }

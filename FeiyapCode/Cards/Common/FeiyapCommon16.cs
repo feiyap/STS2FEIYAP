@@ -13,7 +13,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 回雪：获得 4 / 5 点格挡，获得 4 / 5 点居合。
+/// 回雪：获得 3 / 4 点格挡，获得 3 / 4 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon16 : FeiyapCardTemplate
@@ -28,8 +28,8 @@ public sealed class FeiyapCommon16 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(4m, ValueProp.Move),
-        new IaidoVar(4m, ValueProp.Move)
+        new BlockVar(3m, ValueProp.Move),
+        new IaidoVar(3m, ValueProp.Move)
     ];
 
     public FeiyapCommon16()

@@ -21,6 +21,7 @@ public sealed class FeiyapLoversUprightPower : ModPowerTemplate
     private const string TargetVarName = "Target";
 
     private Creature? _markedTarget;
+    private bool _resolving;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -49,7 +50,8 @@ public sealed class FeiyapLoversUprightPower : ModPowerTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (amount <= 0m
+        if (_resolving
+            || amount <= 0m
             || _markedTarget == null
             || target != Owner
             || dealer == null
@@ -59,8 +61,9 @@ public sealed class FeiyapLoversUprightPower : ModPowerTemplate
             return;
         }
 
+        _resolving = true;
         Flash();
-        await FeiyapLoversPowerUtil.DealMirrorDamage(choiceContext, _markedTarget, amount, Owner);
         await PowerCmd.Remove(this);
+        await FeiyapLoversPowerUtil.DealMirrorDamage(choiceContext, _markedTarget, amount, Owner);
     }
 }

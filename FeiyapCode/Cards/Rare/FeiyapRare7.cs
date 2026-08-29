@@ -16,10 +16,12 @@ namespace Feiyap.Cards.Rare;
 
 /// <summary>
 /// XIII-死神：X 费攻击；可无限升级，每次随机提升伤害、段数或重放次数之一。
+/// 升级随机数必须由本卡种子重放，不能消耗 RunState.Rng.Niche，否则升级预览会让联机 RNG 分叉。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare7 : FeiyapTarotCardBase
 {
+    private int _upgradeSeed;
     private int _dmgBonus;
     private int _hitBonus;
     private int _replayBonus;
@@ -41,7 +43,18 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
         new DynamicVar("ReplayBonus", 0m)
     ];
 
+    /// <summary>进牌组时固定，之后每次升级用种子+等级重放，读档与预览都不会再掷共享 RNG。</summary>
     [SavedProperty]
+    public int UpgradeSeed
+    {
+        get => _upgradeSeed;
+        set
+        {
+            AssertMutable();
+            _upgradeSeed = value;
+        }
+    }
+
     public int DmgBonus
     {
         get => _dmgBonus;
@@ -53,7 +66,6 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
         }
     }
 
-    [SavedProperty]
     public int HitBonus
     {
         get => _hitBonus;
@@ -65,7 +77,6 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
         }
     }
 
-    [SavedProperty]
     public int ReplayBonus
     {
         get => _replayBonus;
@@ -81,6 +92,12 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
         : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
         RegisterTarotFactory(player => player.RunState.CreateCard<FeiyapRare7>(player));
+    }
+
+    public override void AfterCreated()
+    {
+        base.AfterCreated();
+        EnsureUpgradeSeed();
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -126,7 +143,8 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
 
     protected override void OnUpgrade()
     {
-        var rng = Owner?.RunState.Rng.Niche ?? new Rng(0);
+        EnsureUpgradeSeed();
+        var rng = new Rng((uint)UpgradeSeed, $"FeiyapRare7:{CurrentUpgradeLevel}");
         switch (rng.NextInt(3))
         {
             case 0:
@@ -139,5 +157,25 @@ public sealed class FeiyapRare7 : FeiyapTarotCardBase
                 ReplayBonus++;
                 break;
         }
+    }
+
+    protected override void AfterDowngraded()
+    {
+        _dmgBonus = 0;
+        _hitBonus = 0;
+        _replayBonus = 0;
+    }
+
+    private void EnsureUpgradeSeed()
+    {
+        if (_upgradeSeed != 0)
+        {
+            return;
+        }
+
+        AssertMutable();
+        _upgradeSeed = Owner?.RunState != null
+            ? Owner.RunState.Rng.Niche.NextInt(1, int.MaxValue)
+            : 1;
     }
 }

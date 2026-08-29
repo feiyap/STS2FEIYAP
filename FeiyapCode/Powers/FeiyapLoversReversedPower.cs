@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -18,7 +16,7 @@ namespace Feiyap.Powers;
 [RegisterPower]
 public sealed class FeiyapLoversReversedPower : ModPowerTemplate
 {
-    private const string TargetVarName = "Target";
+    private bool _resolving;
 
     public override PowerType Type => PowerType.Debuff;
 
@@ -29,15 +27,6 @@ public sealed class FeiyapLoversReversedPower : ModPowerTemplate
     public override PowerAssetProfile AssetProfile =>
         FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapLoversReversedPower), "FeiyapLoversPower");
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new StringVar(TargetVarName)];
-
-    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
-    {
-        ((StringVar)DynamicVars[TargetVarName]).StringValue = Owner.Name;
-        return Task.CompletedTask;
-    }
-
     public override async Task BeforeDamageReceived(
         PlayerChoiceContext choiceContext,
         Creature target,
@@ -46,15 +35,18 @@ public sealed class FeiyapLoversReversedPower : ModPowerTemplate
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (amount <= 0m
+        if (_resolving
+            || amount <= 0m
             || target != Owner
             || Applier == null)
         {
             return;
         }
 
+        // 必须先移除再造成镜像伤害，否则会对同一目标再次进入本回调并栈溢出。
+        _resolving = true;
         Flash();
-        await FeiyapLoversPowerUtil.DealMirrorDamage(choiceContext, Owner, amount, Applier);
         await PowerCmd.Remove(this);
+        await FeiyapLoversPowerUtil.DealMirrorDamage(choiceContext, Owner, amount, Applier);
     }
 }

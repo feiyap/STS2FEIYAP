@@ -1,7 +1,6 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -25,7 +24,7 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new StarFrostIaidoVar(this, 4m, ValueProp.Move),
+        new IaidoVar(4m, ValueProp.Move),
         new DynamicVar("DrawBonus", 4m)
     ];
 
@@ -42,19 +41,21 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
         }
 
         AssertMutable();
-        _combatDrawBonus += DynamicVars["DrawBonus"].BaseValue;
+        var bonus = DynamicVars["DrawBonus"].BaseValue;
+        DynamicVars[IaidoVar.DefaultName].BaseValue += bonus;
+        _combatDrawBonus += bonus;
         return Task.CompletedTask;
     }
 
     public override Task BeforeCombatStart()
     {
-        _combatDrawBonus = 0m;
+        ResetCombatDrawBonus();
         return Task.CompletedTask;
     }
 
     public override Task AfterCombatEnd(CombatRoom room)
     {
-        _combatDrawBonus = 0m;
+        ResetCombatDrawBonus();
         return Task.CompletedTask;
     }
 
@@ -63,7 +64,7 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
         await FeiyapIaidoCmd.Gain(
             choiceContext,
             Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue + _combatDrawBonus,
+            DynamicVars[IaidoVar.DefaultName].BaseValue,
             ValueProp.Move,
             this,
             cardPlay);
@@ -74,38 +75,24 @@ public sealed class FeiyapRare10 : FeiyapCardTemplate
         DynamicVars["DrawBonus"].UpgradeValueBy(2m);
     }
 
-    /// <summary>预览时把本场抽牌累计加成算进居合基础值。</summary>
-    private sealed class StarFrostIaidoVar : DynamicVar
+    protected override void AfterDowngraded()
     {
-        private readonly FeiyapRare10 _card;
+        base.AfterDowngraded();
+        DynamicVars[IaidoVar.DefaultName].BaseValue += _combatDrawBonus;
+    }
 
-        public ValueProp Props { get; }
-
-        public StarFrostIaidoVar(FeiyapRare10 card, decimal iaido, ValueProp props)
-            : base(IaidoVar.DefaultName, iaido)
+    private void ResetCombatDrawBonus()
+    {
+        if (_combatDrawBonus == 0m)
         {
-            _card = card;
-            Props = props;
+            return;
         }
 
-        public override void UpdateCardPreview(
-            CardModel card,
-            CardPreviewMode previewMode,
-            Creature? target,
-            bool runGlobalHooks)
+        if (IsMutable)
         {
-            var amount = BaseValue + _card._combatDrawBonus;
-
-            if (runGlobalHooks && card.Owner?.Creature is { } creature)
-            {
-                amount = FeiyapIaidoCmd.PreviewGain(
-                    creature,
-                    BaseValue + _card._combatDrawBonus,
-                    Props,
-                    card);
-            }
-
-            PreviewValue = amount;
+            DynamicVars[IaidoVar.DefaultName].BaseValue -= _combatDrawBonus;
         }
+
+        _combatDrawBonus = 0m;
     }
 }

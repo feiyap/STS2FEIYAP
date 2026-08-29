@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +15,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 破绽：每层使从攻击中受到的伤害增加 10%；回合结束时层数减半。
+/// 破绽：每层使受到的伤害提升 10%；受到攻击伤害时叠加 1 层；达到 5 层后于回合结束时移除。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapPozhanPower : ModPowerTemplate
 {
     private const decimal DamageBonusPerStack = 0.10m;
+    private const decimal ClearThreshold = 5m;
 
     public override PowerType Type => PowerType.Debuff;
 
@@ -46,24 +46,34 @@ public sealed class FeiyapPozhanPower : ModPowerTemplate
         return 1m + Amount * DamageBonusPerStack;
     }
 
-    public override async Task AfterSideTurnEnd(
+    public override async Task AfterDamageReceived(
         PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IEnumerable<Creature> participants)
+        Creature target,
+        DamageResult result,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource)
     {
-        if (!participants.Contains(Owner) || Amount <= 0m)
+        if (target != Owner || Amount <= 0m || !props.IsPoweredAttack())
         {
             return;
         }
 
         Flash();
-        var halved = Math.Floor(Amount / 2m);
-        var delta = halved - Amount;
-        if (delta >= 0m)
+        await PowerCmd.ModifyAmount(choiceContext, this, 1m, dealer, cardSource);
+    }
+
+    public override async Task AfterSideTurnEnd(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IEnumerable<Creature> participants)
+    {
+        if (!participants.Contains(Owner) || Amount < ClearThreshold)
         {
             return;
         }
 
-        await PowerCmd.ModifyAmount(choiceContext, this, delta, null, null);
+        Flash();
+        await PowerCmd.Remove(this);
     }
 }

@@ -16,13 +16,13 @@
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "Investigator",
 
-  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [green]{RegenPower}[/green] [gold]Regen[/gold].",
+  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of your turn, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to a random enemy.",
 
   "FEIYAP_RELIC_INVESTIGATOR.flavor": "\"We will meet again, because you are...\" — Investigator, Feiyap Clan.",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "Fei Sheng Yi Wen Zi",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng. At the start of each combat, gain [green]{RegenPower}[/green] [gold]Regen[/gold].",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of your turn, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to 2 random enemies.",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "\"The wound is shallow — lie still.\" — Investigator, Feiyap Clan.",
 

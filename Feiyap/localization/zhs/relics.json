@@ -16,13 +16,13 @@
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "调查员",
 
-  "FEIYAP_RELIC_INVESTIGATOR.description": "获得先古卡「渴血症」。战斗开始时，获得[green]{RegenPower}[/green]层[gold]再生[/gold]。",
+  "FEIYAP_RELIC_INVESTIGATOR.description": "获得先古卡「渴血症」。\n回合开始时，给予随机 1 个敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
 
   "FEIYAP_RELIC_INVESTIGATOR.flavor": "「我们一定会再见面的，因为你是……」——调查员·绯夜氏。",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "绯生一文字",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "获得先古卡「渴血症」。战斗开始时，获得[green]{RegenPower}[/green]层[gold]再生[/gold]。",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "获得先古卡「渴血症」。\n回合开始时，给予随机 2 个敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "「伤口很浅，莫要起身了。」——调查员·绯夜氏。",
 
