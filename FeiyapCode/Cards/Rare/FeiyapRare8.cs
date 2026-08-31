@@ -1,11 +1,11 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -56,29 +56,12 @@ public sealed class FeiyapRare8 : FeiyapCardTemplate
             .TargetingAllOpponents(CombatState)
             .Execute(choiceContext);
 
-        var shouldUpgrade = IsUpgraded;
-        TaskHelper.RunSafely(TransformToMoonAsync(shouldUpgrade));
+        TaskHelper.RunSafely(FeiyapCardTransformCmd.TransformPreserving<FeiyapRare16>(this));
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(6m);
         DynamicVars["TriggerDamage"].UpgradeValueBy(3m);
-    }
-
-    private async Task TransformToMoonAsync(bool shouldUpgrade)
-    {
-        if (Pile?.Type != PileType.Hand || CombatState == null)
-        {
-            return;
-        }
-
-        var moon = CombatState.CreateCard<FeiyapRare16>(Owner);
-        if (shouldUpgrade)
-        {
-            CardCmd.Upgrade(moon);
-        }
-
-        await CardCmd.Transform(this, moon, CardPreviewStyle.None);
     }
 }

@@ -1,6 +1,4 @@
-using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Cards.Rare;
 using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 鬼镰月：获得居合；本回合居合伤害提升；从抽牌/弃牌堆取神座屠到手。
+/// 鬼镰月：获得居合；本回合每次触发居合，下回合开始时额外抽 1 张牌。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon22 : FeiyapCardTemplate
@@ -31,7 +29,7 @@ public sealed class FeiyapUncommon22 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(6m, ValueProp.Move)
+        new IaidoVar(7m, ValueProp.Move)
     ];
 
     public FeiyapUncommon22()
@@ -56,26 +54,10 @@ public sealed class FeiyapUncommon22 : FeiyapCardTemplate
             1m,
             Owner.Creature,
             this);
-
-        await FetchCardToHand<FeiyapRare5>();
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(3m);
-    }
-
-    private async Task FetchCardToHand<T>() where T : CardModel
-    {
-        var candidates = Owner.PlayerCombatState?.AllCards
-            .Where(c => c is T)
-            .Where(c => c.Pile?.Type is PileType.Draw or PileType.Discard)
-            .ToList();
-
-        var card = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates ?? []);
-        if (card != null)
-        {
-            await CardPileCmd.Add(card, PileType.Hand);
-        }
     }
 }

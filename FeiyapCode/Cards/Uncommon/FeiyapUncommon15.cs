@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 横格：丢弃 1 张手牌。若为攻击牌，获得其伤害量的格挡；否则获得 8 / 11 点格挡。
+/// 横格：丢弃 1 张手牌。若为攻击牌，获得其伤害量的格挡；否则获得 8 点格挡。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon15 : FeiyapCardTemplate
@@ -64,6 +64,6 @@ public sealed class FeiyapUncommon15 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

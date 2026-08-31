@@ -16,13 +16,13 @@
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "调查员",
 
-  "FEIYAP_RELIC_INVESTIGATOR.description": "获得先古卡「渴血症」。\n回合开始时，给予随机 1 个敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
+  "FEIYAP_RELIC_INVESTIGATOR.description": "获得先古卡「渴血症」。\n在每场战斗开始时，给予随机 1 个敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
 
   "FEIYAP_RELIC_INVESTIGATOR.flavor": "「我们一定会再见面的，因为你是……」——调查员·绯夜氏。",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "绯生一文字",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "获得先古卡「渴血症」。\n回合开始时，给予随机 2 个敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "获得先古卡「渴血症」。\n在每场战斗开始时，给予所有敌人 {FeiyapPozhanPower:diff()} 层[gold]破绽[/gold]。",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "「伤口很浅，莫要起身了。」——调查员·绯夜氏。",
 
@@ -40,13 +40,13 @@
 
   "FEIYAP_RELIC_MERRY_WITCH.title": "嬉笑魔女",
 
-  "FEIYAP_RELIC_MERRY_WITCH.description": "获得先古卡「XXI-世界」。交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，造成的伤害值/获得的[gold]格挡[/gold]值、[gold]居合[/gold]值提升 [blue]15%[/blue]。",
+  "FEIYAP_RELIC_MERRY_WITCH.description": "获得先古卡「XXI-世界」。\n打出[gold]攻击牌[/gold]时，获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n打出[gold]技能牌[/gold]时，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
 
   "FEIYAP_RELIC_MERRY_WITCH.flavor": "「这个世界会比上一个更有趣些吗？」——嬉笑魔女·绯夜氏。",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.title": "狂笑魔女",
 
-  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "获得先古卡「XXI-世界」。交替使用[gold]攻击牌[/gold]和[gold]技能牌[/gold]时，造成的伤害值/获得的[gold]格挡[/gold]值、[gold]居合[/gold]值提升 [blue]30%[/blue]。",
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "获得先古卡「XXI-世界」。\n打出[gold]攻击牌[/gold]时，获得 {FeiyapZanxinPower:diff()} 点[gold]残心[/gold]。\n打出[gold]技能牌[/gold]时，获得 {VigorPower:diff()} 点[gold]活力[/gold]。",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.flavor": "「跳吧！唱吧！竭尽所能地取悦我吧！直至生命的尽头！」——狂笑魔女·绯夜氏。",
 

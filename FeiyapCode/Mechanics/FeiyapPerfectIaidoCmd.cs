@@ -1,4 +1,3 @@
-using Feiyap.Cards.Rare;
 using Feiyap.Cards.Uncommon;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -22,50 +21,7 @@ public static class FeiyapPerfectIaidoCmd
             return Task.CompletedTask;
         }
 
-        var tracker = FeiyapCombatTracker.Get(player);
-        tracker.PerfectIaidoActive = true;
-
-        var allCards = player.PlayerCombatState?.AllCards;
-        if (allCards != null)
-        {
-            foreach (var card in allCards)
-            {
-                if (card is FeiyapUncommon8 secretSword)
-                {
-                    secretSword.OnPerfectIaidoTriggered();
-                }
-            }
-        }
-
-        var hand = player.PlayerCombatState?.Hand;
-        if (hand == null)
-        {
-            return Task.CompletedTask;
-        }
-
-        foreach (var card in hand.Cards)
-        {
-            if (card is FeiyapRare5 shinzato)
-            {
-                shinzato.MarkPerfectIaidoWitnessed();
-            }
-        }
-
-        if (FeiyapCombatTracker.Get(player).ShinzatoUnlockedThisTurn)
-        {
-            var allCardsUnlocked = player.PlayerCombatState?.AllCards;
-            if (allCardsUnlocked != null)
-            {
-                foreach (var card in allCardsUnlocked)
-                {
-                    if (card is FeiyapRare5 shinzato)
-                    {
-                        shinzato.MarkPerfectIaidoWitnessed();
-                    }
-                }
-            }
-        }
-
+        FeiyapCombatTracker.Get(player).PerfectIaidoActive = true;
         return Task.CompletedTask;
     }
 

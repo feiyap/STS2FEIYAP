@@ -1,5 +1,6 @@
 using System.Linq;
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -7,7 +8,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -57,8 +57,7 @@ public sealed class FeiyapRare16 : FeiyapCardTemplate
             DynamicVars["TriggerBlock"].BaseValue,
             cardPlay: null);
 
-        var shouldUpgrade = IsUpgraded;
-        TaskHelper.RunSafely(TransformToSunAsync(shouldUpgrade));
+        TaskHelper.RunSafely(FeiyapCardTransformCmd.TransformPreserving<FeiyapRare8>(this));
     }
 
     protected override void OnUpgrade()
@@ -101,20 +100,4 @@ public sealed class FeiyapRare16 : FeiyapCardTemplate
 
     private IEnumerable<Creature> GetLivingPlayerCreatures() =>
         CombatState!.PlayerCreatures.Where(c => c.IsAlive && c.IsPlayer);
-
-    private async Task TransformToSunAsync(bool shouldUpgrade)
-    {
-        if (Pile?.Type != PileType.Hand || CombatState == null)
-        {
-            return;
-        }
-
-        var sun = CombatState.CreateCard<FeiyapRare8>(Owner);
-        if (shouldUpgrade)
-        {
-            CardCmd.Upgrade(sun);
-        }
-
-        await CardCmd.Transform(this, sun, CardPreviewStyle.None);
-    }
 }

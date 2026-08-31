@@ -38,10 +38,12 @@ public static class FeiyapTarotCmd
         var upright = (FeiyapTarotCardBase)player.RunState.CloneCard(source);
         upright.IsReversed = false;
         upright.OrientationInitialized = true;
+        upright.IsFreeChoiceOrientationPreview = true;
 
         var reversed = (FeiyapTarotCardBase)player.RunState.CloneCard(source);
         reversed.IsReversed = true;
         reversed.OrientationInitialized = true;
+        reversed.IsFreeChoiceOrientationPreview = true;
 
         var selected = await CardSelectCmd.FromChooseACardScreen(
             choiceContext,

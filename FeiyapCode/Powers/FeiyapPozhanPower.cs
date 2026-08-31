@@ -15,13 +15,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 破绽：每层使受到的伤害提升 10%；受到攻击伤害时叠加 1 层；达到 5 层后于回合结束时移除。
+/// 破绽：每层使受到的伤害提升 10%；受到攻击伤害时叠加 1 层；达到 10 层后于回合结束时移除。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapPozhanPower : ModPowerTemplate
 {
     private const decimal DamageBonusPerStack = 0.10m;
-    private const decimal ClearThreshold = 5m;
+    private const decimal ClearThreshold = 10m;
 
     public override PowerType Type => PowerType.Debuff;
 

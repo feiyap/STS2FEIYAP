@@ -1,10 +1,10 @@
 using Feiyap.Characters;
-using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,55 +12,65 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 无想斩：保留；居合抵消伤害时伤害增加，下次打出后重置。
+/// 无想斩：造成 8 点伤害；目标破绽层数提升 100% / 200%。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare2 : FeiyapCardTemplate
 {
-    private int _bonusDamage;
-
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<FeiyapPozhanPower>()
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8, ValueProp.Move),
-        new DynamicVar("BonusDamage", 0m)
+        new DynamicVar("PozhanIncrease", 100m)
     ];
 
-    [SavedProperty]
-    public int BonusDamage
-    {
-        get => _bonusDamage;
-        set
-        {
-            AssertMutable();
-            _bonusDamage = Math.Max(0, value);
-            DynamicVars["BonusDamage"].BaseValue = _bonusDamage;
-        }
-    }
-
     public FeiyapRare2()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
-
-    public void AddBlockedDamage(int amount) => BonusDamage += amount;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
-        var totalDamage = DynamicVars.Damage.BaseValue + BonusDamage;
-        await DamageCmd.Attack(totalDamage)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        BonusDamage = 0;
+        if (!cardPlay.Target.IsAlive)
+        {
+            return;
+        }
+
+        var stacks = cardPlay.Target.GetPowerAmount<FeiyapPozhanPower>();
+        if (stacks <= 0)
+        {
+            return;
+        }
+
+        var extra = stacks * (DynamicVars["PozhanIncrease"].BaseValue / 100m);
+        if (extra <= 0m)
+        {
+            return;
+        }
+
+        await PowerCmd.Apply<FeiyapPozhanPower>(
+            choiceContext,
+            cardPlay.Target,
+            extra,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars["PozhanIncrease"].UpgradeValueBy(100m);
     }
 }

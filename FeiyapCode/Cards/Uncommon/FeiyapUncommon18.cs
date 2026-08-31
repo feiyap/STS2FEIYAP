@@ -3,20 +3,30 @@ using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 侘寂：本回合获得 99 层人工制品。消耗。
+/// 侘寂：获得侘寂层数；状态牌加入手牌/抽牌堆/弃牌堆时消耗之。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon18 : FeiyapCardTemplate
 {
-    private const decimal ArtifactAmount = 99m;
-
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<FeiyapTemporaryArtifactPower>()
+    ];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<FeiyapTemporaryArtifactPower>(3m)
+    ];
 
     public FeiyapUncommon18()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -28,13 +38,13 @@ public sealed class FeiyapUncommon18 : FeiyapCardTemplate
         await PowerCmd.Apply<FeiyapTemporaryArtifactPower>(
             choiceContext,
             Owner.Creature,
-            ArtifactAmount,
+            DynamicVars["FeiyapTemporaryArtifactPower"].BaseValue,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["FeiyapTemporaryArtifactPower"].UpgradeValueBy(3m);
     }
 }

@@ -28,6 +28,20 @@ public abstract class FeiyapTarotCardBase(
     private bool _isReversed;
     private bool _orientationInitialized;
     private bool? _portraitOrientationOverride;
+    private bool _isFreeChoiceOrientationPreview;
+
+    /// <summary>
+    /// 「世界」正位自选界面中的朝向预览牌：描述按本牌 <see cref="IsReversed"/> 置灰未生效行。
+    /// </summary>
+    public bool IsFreeChoiceOrientationPreview
+    {
+        get => _isFreeChoiceOrientationPreview;
+        set
+        {
+            AssertMutable();
+            _isFreeChoiceOrientationPreview = value;
+        }
+    }
 
     /// <summary>
     /// 检查预览等场景下强制指定卡图朝向；不影响牌面 <see cref="IsReversed"/> 与战斗逻辑。
@@ -182,6 +196,52 @@ public abstract class FeiyapTarotCardBase(
         }
 
         return IsUprightTriggered(player) || IsReversedTriggered(player);
+    }
+
+    /// <summary>
+    /// 当前打出时正位效果是否会生效：双效/自选为是；否则看触发条件；都未触发时回退到牌面朝向。
+    /// </summary>
+    public bool WillUprightEffectApply(Player? player)
+    {
+        if (player == null || FeiyapTarotCmd.HasDualEffect(player) || FeiyapTarotCmd.HasFreeChoice(player))
+        {
+            return true;
+        }
+
+        if (IsUprightTriggered(player))
+        {
+            return true;
+        }
+
+        if (IsReversedTriggered(player))
+        {
+            return false;
+        }
+
+        return !IsReversed;
+    }
+
+    /// <summary>
+    /// 当前打出时逆位效果是否会生效：双效/自选为是；否则看触发条件；都未触发时回退到牌面朝向。
+    /// </summary>
+    public bool WillReversedEffectApply(Player? player)
+    {
+        if (player == null || FeiyapTarotCmd.HasDualEffect(player) || FeiyapTarotCmd.HasFreeChoice(player))
+        {
+            return true;
+        }
+
+        if (IsReversedTriggered(player))
+        {
+            return true;
+        }
+
+        if (IsUprightTriggered(player))
+        {
+            return false;
+        }
+
+        return IsReversed;
     }
 
     /// <summary>按 XXI-世界 等效果执行塔罗正逆位分支。</summary>

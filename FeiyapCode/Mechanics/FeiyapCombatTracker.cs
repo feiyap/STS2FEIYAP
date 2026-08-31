@@ -31,10 +31,10 @@ public sealed class FeiyapCombatTracker
     /// <summary>本回合已打出的攻击牌数量（不含当前正在结算的牌）。</summary>
     public int AttacksPlayedThisTurn { get; set; }
 
-    /// <summary>本回合是否已通过绯神乐解锁神座屠。</summary>
-    public bool ShinzatoUnlockedThisTurn { get; set; }
+    /// <summary>本场战斗中攻击/技能交替次数（神座屠减费）。</summary>
+    public int AlternateCountThisCombat { get; set; }
 
-    /// <summary>剩余可同时触发正逆位的塔罗出牌次数（莲生双面）。</summary>
+    /// <summary>剩余可同时触发正逆位的塔罗出牌次数（世界逆位等）。</summary>
     public int DualTarotPlaysRemaining { get; set; }
 
     /// <summary>活杀自在：累计未兑换活力的居合余数。</summary>
@@ -44,7 +44,6 @@ public sealed class FeiyapCombatTracker
     {
         TurnDamageDealt = 0;
         AttacksPlayedThisTurn = 0;
-        ShinzatoUnlockedThisTurn = false;
     }
 
     public void RecordDamageDealt(int amount)
@@ -73,7 +72,7 @@ public sealed class FeiyapCombatTracker
         tracker.RetainIaidoNextTurn = false;
         tracker.TurnDamageDealt = 0;
         tracker.AttacksPlayedThisTurn = 0;
-        tracker.ShinzatoUnlockedThisTurn = false;
+        tracker.AlternateCountThisCombat = 0;
         tracker.DualTarotPlaysRemaining = 0;
         tracker.KassaiJizaiIaidoRemainder = 0m;
     }
@@ -88,6 +87,7 @@ public sealed class FeiyapCombatTracker
         if (LastPlayedType is CardType.Attack or CardType.Skill && LastPlayedType != type)
         {
             AlternateBonusActive = true;
+            AlternateCountThisCombat++;
         }
         else
         {

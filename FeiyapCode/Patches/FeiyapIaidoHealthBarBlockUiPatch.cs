@@ -1,8 +1,6 @@
-using Feiyap.Powers;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using STS2RitsuLib.Patching.Models;
-using STS2RitsuLib.Scaffolding.Characters;
 
 namespace Feiyap.Patches;
 
@@ -31,7 +29,7 @@ public sealed class FeiyapIaidoHealthBarBlockUiPatch : IPatchMethod
         }
 
         var block = Math.Max(0, creature.Block);
-        var iaido = creature.FindPower<FeiyapIaidoPower>()?.Amount ?? 0;
-        return block > 0 || iaido <= 0;
+        // 无限居合同样占用格挡槽；若放行原版 RefreshBlockUi，会因 Block==0 反复播放碎裂 VFX。
+        return block > 0 || !FeiyapIaidoCmd.HasIaido(creature);
     }
 }

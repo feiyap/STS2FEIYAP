@@ -158,6 +158,5 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
         }
 
         await PowerCmd.Apply(choiceContext, this, Owner, -consume, Owner, null);
-        await FeiyapHermitReversedPower.TryRefundZanxin(choiceContext, Owner, consume);
     }
 }

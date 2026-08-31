@@ -138,11 +138,6 @@ public static class FeiyapIaidoCmd
             damage *= 2m;
         }
 
-        if (creature.FindPower<FeiyapGuilianMoonPower>() != null)
-        {
-            damage *= 1.5m;
-        }
-
         var menkyo = creature.GetPowerAmount<FeiyapMenkyoKaidenPower>();
         if (menkyo > 0)
         {

@@ -1,5 +1,4 @@
 using Feiyap.Characters;
-using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -15,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 枯山水：移除目标防御并禁止其再获得特定防御效果，然后造成伤害。
+/// 枯山水：移除所有敌人的防御增益并禁止再获得，然后对所有敌人造成伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare4 : FeiyapCardTemplate
@@ -24,7 +23,11 @@ public sealed class FeiyapRare4 : FeiyapCardTemplate
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromPower<FeiyapKaresansuiPower>()
+        HoverTipFactory.FromPower<FeiyapKaresansuiPower>(),
+        HoverTipFactory.FromPower<SlipperyPower>(),
+        HoverTipFactory.FromPower<BufferPower>(),
+        HoverTipFactory.FromPower<HardToKillPower>(),
+        HoverTipFactory.FromPower<HardenedShellPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -33,36 +36,41 @@ public sealed class FeiyapRare4 : FeiyapCardTemplate
     ];
 
     public FeiyapRare4()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-
-        if (cardPlay.Target.Block > 0m)
+        if (CombatState == null)
         {
-            await CreatureCmd.LoseBlock(
-                choiceContext,
-                cardPlay.Target,
-                cardPlay.Target.Block,
-                Owner.Creature);
+            return;
         }
 
-        await FeiyapKaresansuiPower.StripForbiddenPowers(cardPlay.Target);
+        foreach (var enemy in CombatState.HittableEnemies)
+        {
+            if (enemy.Block > 0m)
+            {
+                await CreatureCmd.LoseBlock(
+                    choiceContext,
+                    enemy,
+                    enemy.Block,
+                    Owner.Creature);
+            }
 
-        await PowerCmd.Apply(
-            choiceContext,
-            ModelDb.Power<FeiyapKaresansuiPower>().ToMutable(),
-            cardPlay.Target,
-            1m,
-            Owner.Creature,
-            this);
+            await FeiyapKaresansuiPower.StripForbiddenPowers(enemy);
+            await PowerCmd.Apply(
+                choiceContext,
+                ModelDb.Power<FeiyapKaresansuiPower>().ToMutable(),
+                enemy,
+                1m,
+                Owner.Creature,
+                this);
+        }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
+            .TargetingAllOpponents(CombatState)
             .Execute(choiceContext);
     }
 

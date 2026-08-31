@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 担刀势：移除其他架势；每次命中敌人时给予破绽。
+/// 担刀势：移除其他架势；每回合首次命中敌人时给予破绽。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon29 : FeiyapCardTemplate

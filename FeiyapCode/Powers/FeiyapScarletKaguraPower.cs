@@ -1,15 +1,17 @@
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Feiyap.Mechanics;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 绯神乐：下一张攻击或技能不消耗居合，且攻击额外造成当前居合数值的伤害。
+/// 绯神乐：本回合居合反击的基础伤害改为当前居合值。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapScarletKaguraPower : ModPowerTemplate
@@ -21,22 +23,15 @@ public sealed class FeiyapScarletKaguraPower : ModPowerTemplate
     public override PowerAssetProfile AssetProfile =>
         FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapScarletKaguraPower), "FeiyapSwordSaintHeartPower");
 
-    public override decimal ModifyDamageAdditive(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
+    protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (dealer != Owner
-            || cardSource?.Owner?.Creature != Owner
-            || cardSource.Type != CardType.Attack
-            || !props.IsPoweredAttack())
+        if (player.Creature != Owner)
         {
-            return 0m;
+            return;
         }
 
-        return Owner.GetPowerAmount<FeiyapIaidoPower>();
+        await PowerCmd.Remove(this);
     }
 }

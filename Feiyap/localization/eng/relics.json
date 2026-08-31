@@ -16,13 +16,13 @@
 
   "FEIYAP_RELIC_INVESTIGATOR.title": "Investigator",
 
-  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of your turn, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to a random enemy.",
+  "FEIYAP_RELIC_INVESTIGATOR.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of combat, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to a random enemy.",
 
   "FEIYAP_RELIC_INVESTIGATOR.flavor": "\"We will meet again, because you are...\" — Investigator, Feiyap Clan.",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.title": "Fei Sheng Yi Wen Zi",
 
-  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of your turn, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to 2 random enemies.",
+  "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.description": "Gain the Ancient card Ke Xue Zheng.\nAt the start of combat, apply {FeiyapPozhanPower:diff()} [gold]Opening[/gold] to ALL enemies.",
 
   "FEIYAP_RELIC_FEI_SHENG_YI_WEN_ZI.flavor": "\"The wound is shallow — lie still.\" — Investigator, Feiyap Clan.",
 
@@ -40,13 +40,13 @@
 
   "FEIYAP_RELIC_MERRY_WITCH.title": "Merry Witch",
 
-  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]15%[/blue].",
+  "FEIYAP_RELIC_MERRY_WITCH.description": "Gain the Ancient card World XXI.\nWhenever you play an [gold]Attack[/gold], gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].\nWhenever you play a [gold]Skill[/gold], gain {VigorPower:diff()} [gold]Vigor[/gold].",
 
   "FEIYAP_RELIC_MERRY_WITCH.flavor": "\"Will this world be more interesting than the last?\" — Merry Witch, Feiyap Clan.",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.title": "Kuang Xiao Mo Nv",
 
-  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "Gain the Ancient card World XXI. When alternating [gold]Attacks[/gold] and [gold]Skills[/gold], damage, [gold]Block[/gold], and [gold]Iaido[/gold] value are increased by [blue]30%[/blue].",
+  "FEIYAP_RELIC_KUANG_XIAO_MO_NV.description": "Gain the Ancient card World XXI.\nWhenever you play an [gold]Attack[/gold], gain {FeiyapZanxinPower:diff()} [gold]Zanxin[/gold].\nWhenever you play a [gold]Skill[/gold], gain {VigorPower:diff()} [gold]Vigor[/gold].",
 
   "FEIYAP_RELIC_KUANG_XIAO_MO_NV.flavor": "\"Dance! Sing! Entertain me with all you have — until the end of your life!\" — Merry Witch, Feiyap Clan.",
 

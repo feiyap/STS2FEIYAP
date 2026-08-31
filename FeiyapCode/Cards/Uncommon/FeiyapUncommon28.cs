@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -63,6 +64,19 @@ public sealed class FeiyapUncommon28 : FeiyapTarotCardBase
             return;
         }
 
+        PauseOtherPlayers();
+        try
+        {
+            await TakeFromTeammateHandsCore(choiceContext, state);
+        }
+        finally
+        {
+            ResumeOtherPlayers();
+        }
+    }
+
+    private async Task TakeFromTeammateHandsCore(PlayerChoiceContext choiceContext, CombatState state)
+    {
         var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, 1)
         {
             Cancelable = true,
@@ -129,6 +143,29 @@ public sealed class FeiyapUncommon28 : FeiyapTarotCardBase
             var copy = state.CreateCard<FeiyapUncommon28>(teammate.Player);
             await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Hand, teammate.Player);
         }
+    }
+
+    /// <summary>
+    /// 正位选牌期间暂停其他玩家出牌，避免手牌在选取过程中被打出。
+    /// </summary>
+    private static void PauseOtherPlayers()
+    {
+        if (!CombatManager.Instance.IsInProgress)
+        {
+            return;
+        }
+
+        RunManager.Instance.ActionQueueSet.PauseAllPlayerQueues();
+    }
+
+    private static void ResumeOtherPlayers()
+    {
+        if (!CombatManager.Instance.IsInProgress)
+        {
+            return;
+        }
+
+        RunManager.Instance.ActionQueueSet.UnpauseAllPlayerQueues();
     }
 
     /// <summary>

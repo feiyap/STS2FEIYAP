@@ -1,11 +1,12 @@
 using Feiyap.Characters;
-using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -13,53 +14,48 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 秘剑：保留；触发完美居合后直到下次打出前耗能变为 0；造成 33 / 44 点伤害。
+/// 秘剑：造成 8 / 11 点伤害；目标每有 1 层破绽，伤害提升 1.1 倍。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon8 : FeiyapCardTemplate
 {
-    private bool _perfectIaidoCostReady;
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    private const double OpeningMultiplier = 1.1;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
     [
-        HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)
+        HoverTipFactory.FromPower<FeiyapPozhanPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(33, ValueProp.Move)
+        new DamageVar(8, ValueProp.Move)
     ];
 
-    [SavedProperty]
-    public bool PerfectIaidoCostReady
-    {
-        get => _perfectIaidoCostReady;
-        set
-        {
-            AssertMutable();
-            _perfectIaidoCostReady = value;
-        }
-    }
-
-    protected override bool ShouldGlowGoldInternal => PerfectIaidoCostReady;
-
     public FeiyapUncommon8()
-        : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
-    public void OnPerfectIaidoTriggered()
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
-        PerfectIaidoCostReady = true;
-        EnergyCost.SetUntilPlayed(0);
+        if (cardSource != this || target is not { IsMonster: true })
+        {
+            return 1m;
+        }
+
+        var stacks = target.GetPowerAmount<FeiyapPozhanPower>();
+        return stacks <= 0 ? 1m : (decimal)Math.Pow(OpeningMultiplier, stacks);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        PerfectIaidoCostReady = false;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
@@ -69,6 +65,6 @@ public sealed class FeiyapUncommon8 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(11m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

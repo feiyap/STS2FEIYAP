@@ -3,9 +3,8 @@ using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -13,49 +12,42 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 神座屠：完美居合后可打出；对所有敌人造成多段伤害。
+/// 神座屠：本场每次攻/技交替减 1 耗能；对所有敌人多段伤害。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare5 : FeiyapCardTemplate
 {
-    private bool _witnessedPerfectIaido;
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromKeyword(FeiyapKeywords.PerfectIaido)];
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(7, ValueProp.Move),
         new RepeatVar(3)
     ];
 
-    [SavedProperty]
-    public bool WitnessedPerfectIaido
-    {
-        get => _witnessedPerfectIaido;
-        set
-        {
-            AssertMutable();
-            _witnessedPerfectIaido = value;
-        }
-    }
-
-    protected override bool IsPlayable =>
-        Pile?.Type != PileType.Hand
-        || WitnessedPerfectIaido
-        || (Owner != null && FeiyapCombatTracker.Get(Owner).ShinzatoUnlockedThisTurn);
-
-    protected override bool ShouldGlowGoldInternal =>
-        Pile?.Type == PileType.Hand
-        && (WitnessedPerfectIaido
-            || (Owner != null && FeiyapCombatTracker.Get(Owner).ShinzatoUnlockedThisTurn));
-
     public FeiyapRare5()
-        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+        : base(15, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
 
-    public void MarkPerfectIaidoWitnessed() => WitnessedPerfectIaido = true;
+    public override bool TryModifyEnergyCostInCombatLate(
+        CardModel card,
+        decimal originalCost,
+        out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || Owner == null)
+        {
+            return false;
+        }
+
+        var reduction = FeiyapCombatTracker.Get(Owner).AlternateCountThisCombat;
+        if (reduction <= 0)
+        {
+            return false;
+        }
+
+        modifiedCost = Math.Max(0m, originalCost - reduction);
+        return true;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

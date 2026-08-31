@@ -3,140 +3,93 @@ using System.Threading.Tasks;
 using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
+using Feiyap.Powers;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Relics;
 
-public abstract class MerryWitchBase : ModRelicTemplate, IFeiyapIaidoGainMultiplier
+public abstract class MerryWitchBase : ModRelicTemplate
 {
-    protected abstract decimal AlternateBonusMultiplier { get; }
+    protected abstract decimal ResourceAmount { get; }
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
-    /// <summary>
-    /// 遗物加成仅对持有者本人的角色实体生效（联机下不误作用于队友）。
-    /// </summary>
-    private bool IsRelicOwnerCreature(Creature? creature) =>
-        creature != null && creature == Owner.Creature;
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<FeiyapZanxinPower>(ResourceAmount),
+        new PowerVar<VigorPower>(ResourceAmount)
+    ];
 
-    /// <summary>
-    /// 出牌结算时根据上一张攻击/技能牌判断是否处于交替出牌。
-    /// 不能用 AlternateBonusActive：它在 AfterCardPlayed 才更新，且同类型连打时会短暂残留 true。
-    /// </summary>
-    private bool ShouldApplyAlternateBonus(CardModel? cardSource, CardPlay? cardPlay = null)
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromCard(ModelDb.Card<WorldXxi>()),
+        HoverTipFactory.FromPower<FeiyapZanxinPower>(),
+        HoverTipFactory.FromPower<VigorPower>()
+    ];
+
+    public override async Task AfterObtained()
     {
-        if (cardSource?.Owner != Owner)
+        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
         {
-            return false;
+            return;
         }
 
-        if (cardPlay != null && cardPlay.Card.Owner != Owner)
-        {
-            return false;
-        }
-
-        var type = cardSource.Type;
-        if (type is not (CardType.Attack or CardType.Skill))
-        {
-            return false;
-        }
-
-        var lastPlayedType = FeiyapCombatTracker.Get(Owner).LastPlayedType;
-        return lastPlayedType is CardType.Attack or CardType.Skill && lastPlayedType != type;
+        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner, this is KuangXiaoMoNv);
     }
 
-    public decimal ModifyIaidoGainMultiplicative(in FeiyapIaidoGainContext context, decimal amount)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!IsRelicOwnerCreature(context.Creature)
-            || !ShouldApplyAlternateBonus(context.CardSource, context.CardPlay))
+        if (!CombatManager.Instance.IsInProgress || cardPlay.Card.Owner != Owner)
         {
-            return amount;
+            return;
         }
 
-        return amount * AlternateBonusMultiplier;
-    }
-
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
-    {
-        if (!IsRelicOwnerCreature(dealer)
-            || !ShouldApplyAlternateBonus(cardSource, cardPlay))
+        if (cardPlay.Card.Type == CardType.Attack)
         {
-            return 1m;
+            Flash();
+            await FeiyapZanxinCmd.Gain(
+                choiceContext,
+                Owner.Creature,
+                ResourceAmount,
+                null);
+            return;
         }
 
-        return AlternateBonusMultiplier;
-    }
-
-    public override decimal ModifyBlockMultiplicative(
-        Creature target,
-        decimal block,
-        ValueProp props,
-        CardModel? cardSource,
-        CardPlay? cardPlay)
-    {
-        if (!IsRelicOwnerCreature(target)
-            || !ShouldApplyAlternateBonus(cardSource, cardPlay))
+        if (cardPlay.Card.Type == CardType.Skill)
         {
-            return 1m;
+            Flash();
+            await PowerCmd.Apply<VigorPower>(
+                choiceContext,
+                Owner.Creature,
+                ResourceAmount,
+                Owner.Creature,
+                null);
         }
-
-        return AlternateBonusMultiplier;
     }
 }
 
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class MerryWitch : MerryWitchBase
 {
-    protected override decimal AlternateBonusMultiplier => 1.15m;
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromCard(ModelDb.Card<WorldXxi>())];
+    protected override decimal ResourceAmount => 1m;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(MerryWitch));
-
-    public override async Task AfterObtained()
-    {
-        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
-        {
-            return;
-        }
-
-        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner, upgraded: false);
-    }
 }
 
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class KuangXiaoMoNv : MerryWitchBase
 {
-    protected override decimal AlternateBonusMultiplier => 1.3m;
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromCard(ModelDb.Card<WorldXxi>())];
+    protected override decimal ResourceAmount => 2m;
 
     public override RelicAssetProfile AssetProfile => FeiyapRelicAssets.For(nameof(KuangXiaoMoNv));
-
-    public override async Task AfterObtained()
-    {
-        if (FeiyapQuestRewards.SuppressQuestRelicObtainEffects)
-        {
-            return;
-        }
-
-        await FeiyapQuestRewards.GainAncientCard<WorldXxi>(Owner, upgraded: true);
-    }
 }

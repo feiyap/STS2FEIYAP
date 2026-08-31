@@ -1,5 +1,6 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,8 +25,8 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromPower<FrailPower>(),
-        HoverTipFactory.FromPower<PoisonPower>(),
-        HoverTipFactory.FromPower<CalamityPower>()
+        HoverTipFactory.FromPower<FeiyapPozhanPower>(),
+        HoverTipFactory.FromPower<PoisonPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -35,8 +36,8 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
         new PowerVar<WeakPower>(2m),
         new PowerVar<VulnerablePower>(2m),
         new PowerVar<FrailPower>(2m),
-        new PowerVar<PoisonPower>(2m),
-        new PowerVar<CalamityPower>(2m)
+        new PowerVar<FeiyapPozhanPower>(2m),
+        new PowerVar<PoisonPower>(2m)
     ];
 
     public FeiyapRare3()
@@ -75,12 +76,22 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
+        if (!cardPlay.Target.IsAlive)
+        {
+            return;
+        }
+
         var debuffAmount = DynamicVars["WeakPower"].BaseValue;
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
         await PowerCmd.Apply<FrailPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
+        await PowerCmd.Apply<FeiyapPozhanPower>(
+            choiceContext,
+            cardPlay.Target,
+            DynamicVars["FeiyapPozhanPower"].BaseValue,
+            Owner.Creature,
+            this);
         await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
-        await PowerCmd.Apply<CalamityPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
@@ -88,7 +99,7 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
         DynamicVars["WeakPower"].UpgradeValueBy(1m);
         DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
         DynamicVars["FrailPower"].UpgradeValueBy(1m);
+        DynamicVars["FeiyapPozhanPower"].UpgradeValueBy(1m);
         DynamicVars["PoisonPower"].UpgradeValueBy(1m);
-        DynamicVars["CalamityPower"].UpgradeValueBy(1m);
     }
 }

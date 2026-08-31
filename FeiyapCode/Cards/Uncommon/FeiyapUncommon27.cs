@@ -1,22 +1,36 @@
-using Feiyap.Mechanics;
-using Feiyap.Characters;
 using Feiyap.Cards.Tarot;
+using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// IX-隐者：正位返还下次消耗的活力，逆位返还下次消耗的残心。
+/// IX-隐者：正位获得活力，逆位获得残心。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon27 : FeiyapTarotCardBase
 {
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<VigorPower>(),
+        HoverTipFactory.FromPower<FeiyapZanxinPower>()
+    ];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new PowerVar<VigorPower>(7m),
+        new PowerVar<FeiyapZanxinPower>(7m)
+    ];
+
     public FeiyapUncommon27()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
@@ -27,39 +41,30 @@ public sealed class FeiyapUncommon27 : FeiyapTarotCardBase
     {
         EnsureOrientationInitialized();
 
-        if (FeiyapTarotCmd.HasDualEffect(Owner))
-        {
-            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
-            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
-            return;
-        }
-
-        var reversed = await FeiyapTarotCmd.ResolveEffectiveReversed(choiceContext, this);
-        if (reversed)
-        {
-            await ApplyHermitPower<FeiyapHermitReversedPower>(choiceContext);
-        }
-        else
-        {
-            await ApplyHermitPower<FeiyapHermitUprightPower>(choiceContext);
-        }
-    }
-
-    private async Task ApplyHermitPower<TPower>(PlayerChoiceContext choiceContext)
-        where TPower : ModPowerTemplate
-    {
-        var power = ModelDb.Power<TPower>().ToMutable();
-        await PowerCmd.Apply(
+        await RunTarotBranches(
             choiceContext,
-            power,
-            Owner.Creature,
-            1m,
-            Owner.Creature,
-            this);
+            async () =>
+            {
+                await PowerCmd.Apply<VigorPower>(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["VigorPower"].BaseValue,
+                    Owner.Creature,
+                    this);
+            },
+            async () =>
+            {
+                await FeiyapZanxinCmd.Gain(
+                    choiceContext,
+                    Owner.Creature,
+                    DynamicVars["FeiyapZanxinPower"].BaseValue,
+                    this);
+            });
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["VigorPower"].UpgradeValueBy(3m);
+        DynamicVars["FeiyapZanxinPower"].UpgradeValueBy(3m);
     }
 }

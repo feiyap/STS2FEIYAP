@@ -11,11 +11,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 鬼镰月：本回合居合反击伤害提升 50%。下回合开始时移除，以便敌人回合触发居合反击时仍生效。
+/// 鬼镰月：记录本回合居合触发次数，下回合开始时按次数抽牌后移除。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapGuilianMoonPower : ModPowerTemplate
 {
+    private int _triggers;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
@@ -25,11 +27,23 @@ public sealed class FeiyapGuilianMoonPower : ModPowerTemplate
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
 
+    public void RecordTrigger()
+    {
+        _triggers++;
+        Flash();
+    }
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player.Creature != Owner)
         {
             return;
+        }
+
+        if (_triggers > 0)
+        {
+            Flash();
+            await CardPileCmd.Draw(choiceContext, _triggers, player);
         }
 
         await PowerCmd.Remove(this);

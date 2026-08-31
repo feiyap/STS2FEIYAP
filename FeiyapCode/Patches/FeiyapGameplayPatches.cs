@@ -11,13 +11,13 @@ public sealed class FeiyapGameplayPatches : IModPatches
     public static void AddTo(ModPatcher patcher)
     {
         patcher.RegisterPatch<FeiyapPreserveVigorPatch>();
-        patcher.RegisterPatch<FeiyapHermitVigorPatch>();
         patcher.RegisterPatch<FeiyapKeywordDescriptionPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterCardPlayedPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterDamageGivenPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingBeforeSideTurnStartPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterCombatEndPatch>();
         patcher.RegisterPatch<FeiyapTarotPortraitRefreshPatch>();
+        patcher.RegisterPatch<FeiyapTarotInactiveDescriptionPatch>();
         patcher.RegisterPatch<FeiyapInspectTarotOrientationReadyPatch>();
         patcher.RegisterPatch<FeiyapInspectTarotOrientationOpenPatch>();
         patcher.RegisterPatch<FeiyapInspectTarotOrientationClosePatch>();

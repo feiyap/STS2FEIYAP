@@ -125,17 +125,22 @@ internal static class FeiyapIaidoCombat
             isPerfect = false;
         }
 
+        var counterBase = blockedDamage;
+        if (shouldCounter
+            && owner.FindPower<FeiyapScarletKaguraPower>() != null
+            && !FeiyapIaidoCmd.IsInfinite(owner))
+        {
+            // 消耗居合后 Amount 已减少，补回本次消耗以使用触发前的居合值。
+            counterBase = FeiyapIaidoCmd.GetNumericAmount(owner) + blockedDamage;
+        }
+
         var counterDamage = shouldCounter
-            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(owner, blockedDamage, isPerfect)
+            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(owner, counterBase, isPerfect)
             : 0m;
 
         flashSource.Flash();
         IaidoHealthBarOverlay.RefreshForCreature(owner);
-
-        if (owner.Player != null)
-        {
-            FeiyapMusouCmd.OnIaidoBlocked(owner.Player, (int)Math.Round(blockedDamage));
-        }
+        owner.FindPower<FeiyapGuilianMoonPower>()?.RecordTrigger();
 
         if (!shouldCounter)
         {

@@ -191,13 +191,6 @@ public sealed class FeiyapIaidoPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        // 绯神乐：下一张攻击或技能不消耗居合，并在打出后移除。
-        if (cardPlay.Card.Type is CardType.Attack or CardType.Skill
-            && Owner.FindPower<FeiyapScarletKaguraPower>() is { } scarlet)
-        {
-            return PowerCmd.Remove(scarlet);
-        }
-
         if (cardPlay.Card.Type != CardType.Attack)
         {
             return Task.CompletedTask;

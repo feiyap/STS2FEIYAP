@@ -1,24 +1,21 @@
 ﻿using System.Linq;
 using Feiyap.Characters;
-using Feiyap.Mechanics;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 叶隐：消耗任意数量手牌；状态牌失血获残心，非状态牌失血抽牌。
+/// 叶隐：消耗任意数量手牌，获得等量能量。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon19 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Zanxin];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public FeiyapUncommon19()
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -47,25 +44,12 @@ public sealed class FeiyapUncommon19 : FeiyapCardTemplate
 
         foreach (var card in selected)
         {
-            var isStatus = card.Type == CardType.Status;
             await CardCmd.Exhaust(choiceContext, card);
-            await CreatureCmd.Damage(
-                choiceContext,
-                Owner.Creature,
-                1,
-                ValueProp.Unblockable | ValueProp.Unpowered,
-                null,
-                this,
-                null);
+        }
 
-            if (isStatus)
-            {
-                await FeiyapZanxinCmd.Gain(choiceContext, Owner.Creature, 1m, this);
-            }
-            else
-            {
-                await CardPileCmd.Draw(choiceContext, 1, Owner);
-            }
+        if (selected.Count > 0)
+        {
+            await PlayerCmd.GainEnergy(selected.Count, Owner);
         }
     }
 

@@ -5,8 +5,9 @@ using Feiyap.Cards.Ancients;
 using Feiyap.Characters;
 using Feiyap.Mechanics;
 using Feiyap.Powers;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,7 +21,7 @@ namespace Feiyap.Relics;
 
 public abstract class InvestigatorBase : ModRelicTemplate
 {
-    protected abstract int EnemyCount { get; }
+    protected abstract bool ApplyToAllEnemies { get; }
 
     protected abstract int PozhanAmount { get; }
 
@@ -45,20 +46,23 @@ public abstract class InvestigatorBase : ModRelicTemplate
         await FeiyapQuestRewards.GainAncientCard<KeXueZheng>(Owner, this is FeiShengYiWenZi);
     }
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
     {
-        if (player != Owner)
+        if (!participants.Contains(Owner.Creature)
+            || Owner.PlayerCombatState is not { TurnNumber: <= 1 })
         {
             return;
         }
 
-        var enemies = Owner.Creature.CombatState?.HittableEnemies;
-        if (enemies == null)
-        {
-            return;
-        }
-
-        var targets = enemies.TakeRandom(EnemyCount, Owner.RunState.Rng.CombatTargets).ToList();
+        var targets = ApplyToAllEnemies
+            ? combatState.HittableEnemies.ToList()
+            : combatState.HittableEnemies
+                .TakeRandom(1, Owner.RunState.Rng.CombatTargets)
+                .ToList();
         if (targets.Count == 0)
         {
             return;
@@ -80,7 +84,7 @@ public abstract class InvestigatorBase : ModRelicTemplate
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class Investigator : InvestigatorBase
 {
-    protected override int EnemyCount => 1;
+    protected override bool ApplyToAllEnemies => false;
 
     protected override int PozhanAmount => 1;
 
@@ -92,9 +96,9 @@ public sealed class Investigator : InvestigatorBase
 [RegisterRelic(typeof(FeiyapRelicPool))]
 public sealed class FeiShengYiWenZi : InvestigatorBase
 {
-    protected override int EnemyCount => 2;
+    protected override bool ApplyToAllEnemies => true;
 
-    protected override int PozhanAmount => 2;
+    protected override int PozhanAmount => 1;
 
     public override RelicRarity Rarity => RelicRarity.Event;
 
