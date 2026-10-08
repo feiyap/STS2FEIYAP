@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 立处皆真：无负面能力时造成的伤害提升（Amount 为百分比加算，50=×1.5，100=×2.0）。
+/// 立处皆真：无负面效果时造成的伤害提升（Amount 为百分比加算，50=×1.5）。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapStandingTruthPower : ModPowerTemplate
@@ -19,8 +19,7 @@ public sealed class FeiyapStandingTruthPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapStandingTruthPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapStandingTruthPower));
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target,

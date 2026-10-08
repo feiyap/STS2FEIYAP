@@ -2,7 +2,7 @@
 
   "FEIYAP_RELIC_SHUI_LIAN.title": "睡莲",
 
-  "FEIYAP_RELIC_SHUI_LIAN.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。\n在多人模式下，每一幕结束后，你牌库中的所有转职任务牌获得 33% 进度。",
+  "FEIYAP_RELIC_SHUI_LIAN.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。",
 
   "FEIYAP_RELIC_SHUI_LIAN.flavor": "取舍之间，命运已然转动。",
 
@@ -10,7 +10,7 @@
 
   "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.title": "莲心守月",
 
-  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。\n在多人模式下，每一幕结束后，你牌库中的所有转职任务牌获得 33% 进度。\n拥有该遗物时，从转职任务牌中获取的遗物将升级。",
+  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.description": "游戏开始时，你可以从「迷惘」、「苦修」、「乏味」中选择任意数量的牌加入牌库，作为转职任务牌。\n拥有该遗物时，从转职任务牌中获取的遗物将升级。",
 
   "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.flavor": "莲心守月，皆在一念。",
 
@@ -28,13 +28,13 @@
 
   "FEIYAP_RELIC_SWORD_SAINT.title": "剑圣",
 
-  "FEIYAP_RELIC_SWORD_SAINT.description": "获得先古卡「绯樱狱华落」。\n[gold]完美居合[/gold]造成的伤害提升 [blue]200%[/blue]。",
+  "FEIYAP_RELIC_SWORD_SAINT.description": "获得先古卡「绯樱狱华落」。\n每[blue]{Turns}[/blue]个回合，获得 {FeiyapIaidoEnhancePower:diff()} 层[gold]居合强化[/gold]。",
 
   "FEIYAP_RELIC_SWORD_SAINT.flavor": "「战场啊，令人怀念的故乡……」——剑圣·绯夜氏。",
 
   "FEIYAP_RELIC_WU_MING_REN.title": "无铭刃",
 
-  "FEIYAP_RELIC_WU_MING_REN.description": "获得先古卡「绯樱狱华落」。\n[gold]完美居合[/gold]造成的伤害提升 [blue]400%[/blue]。",
+  "FEIYAP_RELIC_WU_MING_REN.description": "获得先古卡「绯樱狱华落」。\n每[blue]{Turns}[/blue]个回合，获得 {FeiyapIaidoEnhancePower:diff()} 层[gold]居合强化[/gold]。",
 
   "FEIYAP_RELIC_WU_MING_REN.flavor": "「用耳去听，用心去斩。」——剑圣·绯夜氏。",
 

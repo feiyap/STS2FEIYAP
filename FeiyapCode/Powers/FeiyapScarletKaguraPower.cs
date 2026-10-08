@@ -20,8 +20,7 @@ public sealed class FeiyapScarletKaguraPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapScarletKaguraPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapScarletKaguraPower));
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.IaidoId];
 

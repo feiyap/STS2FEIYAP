@@ -3,10 +3,8 @@ using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
@@ -14,26 +12,20 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 纳刀：不存在居合时才能发动，获得 4 / 7 点居合。
+/// 纳刀：获得 3 / 5 层居合强化。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon15 : FeiyapCardTemplate
 {
-
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        FeiyapKeywords.Iaido
+        FeiyapKeywords.IaidoEnhance
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(4m, ValueProp.Move)
+        new PowerVar<FeiyapIaidoEnhancePower>(3m)
     ];
-
-    protected override bool IsPlayable =>
-        !FeiyapIaidoCmd.HasIaido(Owner.Creature);
-
-    protected override bool ShouldGlowGoldInternal => IsPlayable;
 
     public FeiyapCommon15()
         : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
@@ -42,17 +34,16 @@ public sealed class FeiyapCommon15 : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await FeiyapIaidoCmd.Gain(
+        await PowerCmd.Apply<FeiyapIaidoEnhancePower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars[IaidoVar.DefaultName].BaseValue,
-            ValueProp.Move,
-            this,
-            cardPlay);
+            DynamicVars["FeiyapIaidoEnhancePower"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(3m);
+        DynamicVars["FeiyapIaidoEnhancePower"].UpgradeValueBy(2m);
     }
 }

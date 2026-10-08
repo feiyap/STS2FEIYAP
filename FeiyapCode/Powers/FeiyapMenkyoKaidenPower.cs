@@ -14,6 +14,5 @@ public sealed class FeiyapMenkyoKaidenPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapMenkyoKaidenPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapMenkyoKaidenPower));
 }

@@ -135,12 +135,17 @@ internal static class FeiyapIaidoCombat
         }
 
         var counterDamage = shouldCounter
-            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(owner, counterBase, isPerfect)
+            ? FeiyapIaidoCmd.ApplyCounterDamageMultiplier(owner, counterBase)
             : 0m;
 
         flashSource.Flash();
         IaidoHealthBarOverlay.RefreshForCreature(owner);
         owner.FindPower<FeiyapGuilianMoonPower>()?.RecordTrigger();
+        var enhancePower = owner.FindPower<FeiyapIaidoEnhancePower>();
+        if (shouldCounter && enhancePower is { Amount: > 0 })
+        {
+            enhancePower.Flash();
+        }
 
         if (!shouldCounter)
         {
@@ -177,7 +182,7 @@ internal static class FeiyapIaidoCombat
                         owner.Player,
                         (int)Math.Round(counterDamage * enemies.Count));
                 }
-            }, isPerfect);
+            }, isPerfect, owner);
         }
         else if (dealer != null && dealer.Side != owner.Side && dealer.IsAlive)
         {
@@ -196,7 +201,7 @@ internal static class FeiyapIaidoCombat
                 {
                     FeiyapQuestProgress.RecordIaidoDamage(owner.Player, (int)Math.Round(counterDamage));
                 }
-            }, isPerfect);
+            }, isPerfect, owner);
         }
     }
 }

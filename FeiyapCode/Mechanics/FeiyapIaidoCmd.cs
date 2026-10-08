@@ -1,7 +1,5 @@
 using Feiyap.Patches;
-using Feiyap.Relics;
 using Feiyap.Powers;
-using System.Linq;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -123,15 +121,15 @@ public static class FeiyapIaidoCmd
         return modified;
     }
 
-    /// <summary>居合反击伤害乘算（如斋时雨翻倍、完美居合遗物增幅）。</summary>
-    public static decimal ApplyCounterDamageMultiplier(Creature creature, decimal baseDamage, bool isPerfect)
+    /// <summary>居合反击伤害乘算（居合强化、斋时雨、免许皆传）。</summary>
+    public static decimal ApplyCounterDamageMultiplier(Creature creature, decimal baseDamage)
     {
         if (baseDamage <= 0m)
         {
             return 0m;
         }
 
-        var damage = baseDamage;
+        var damage = baseDamage + creature.GetPowerAmount<FeiyapIaidoEnhancePower>();
 
         if (creature.FindPower<FeiyapIaidoRainPower>() != null)
         {
@@ -142,15 +140,6 @@ public static class FeiyapIaidoCmd
         if (menkyo > 0)
         {
             damage *= 1m + menkyo / 100m;
-        }
-
-        var forcedPerfect = creature.FindPower<FeiyapIaidoSurgePower>() != null;
-        if (creature.Player is { } player && (forcedPerfect || isPerfect))
-        {
-            foreach (var relic in player.Relics.OfType<SwordSaintBase>())
-            {
-                damage *= 1m + relic.PerfectIaidoDamageBonusPercent / 100m;
-            }
         }
 
         return damage;

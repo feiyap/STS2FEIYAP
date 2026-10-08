@@ -4,9 +4,7 @@ using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -15,26 +13,21 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 胧影：获得 4 / 6 点居合，本回合获得 2 / 3 点敏捷。
+/// 胧影：获得 5 / 8 点居合，获得 2 / 3 层居合强化。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon13 : FeiyapCardTemplate
 {
-
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        FeiyapKeywords.Iaido
-    ];
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-    [
-        HoverTipFactory.FromPower<DexterityPower>()
+        FeiyapKeywords.Iaido,
+        FeiyapKeywords.IaidoEnhance
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(4m, ValueProp.Move),
-        new PowerVar<DexterityPower>(2m)
+        new IaidoVar(5m, ValueProp.Move),
+        new PowerVar<FeiyapIaidoEnhancePower>(2m)
     ];
 
     public FeiyapCommon13()
@@ -52,17 +45,17 @@ public sealed class FeiyapCommon13 : FeiyapCardTemplate
             this,
             cardPlay);
 
-        await PowerCmd.Apply<AnticipatePower>(
+        await PowerCmd.Apply<FeiyapIaidoEnhancePower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars["DexterityPower"].BaseValue,
+            DynamicVars["FeiyapIaidoEnhancePower"].BaseValue,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(2m);
-        DynamicVars["DexterityPower"].UpgradeValueBy(1m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(3m);
+        DynamicVars["FeiyapIaidoEnhancePower"].UpgradeValueBy(1m);
     }
 }

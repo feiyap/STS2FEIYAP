@@ -23,8 +23,7 @@ public sealed class FeiyapMugaMuchuPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapMugaMuchuPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapMugaMuchuPower));
 
     public Creature? MarkedTarget
     {

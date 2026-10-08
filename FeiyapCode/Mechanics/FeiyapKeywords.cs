@@ -26,6 +26,9 @@ public static class FeiyapKeywords
     /// <summary>完美居合关键词 id。</summary>
     public const string PerfectIaidoId = "FEIYAP_KEYWORD_PERFECT_IAIDO";
 
+    /// <summary>居合强化关键词 id。</summary>
+    public const string IaidoEnhanceId = "FEIYAP_KEYWORD_IAIDO_ENHANCE";
+
     /// <summary>居合关键词。</summary>
     public static CardKeyword Iaido { get; private set; }
 
@@ -44,6 +47,9 @@ public static class FeiyapKeywords
     /// <summary>完美居合关键词。</summary>
     public static CardKeyword PerfectIaido { get; private set; }
 
+    /// <summary>居合强化关键词。</summary>
+    public static CardKeyword IaidoEnhance { get; private set; }
+
     public static void Register(ModKeywordRegistry registry)
     {
         Iaido = registry.RegisterCardKeywordOwnedByLocNamespace("IAIDO").CardKeywordValue;
@@ -52,5 +58,6 @@ public static class FeiyapKeywords
         TarotUpright = registry.RegisterCardKeywordOwnedByLocNamespace("TAROT_UPRIGHT").CardKeywordValue;
         TarotReversed = registry.RegisterCardKeywordOwnedByLocNamespace("TAROT_REVERSED").CardKeywordValue;
         PerfectIaido = registry.RegisterCardKeywordOwnedByLocNamespace("PERFECT_IAIDO").CardKeywordValue;
+        IaidoEnhance = registry.RegisterCardKeywordOwnedByLocNamespace("IAIDO_ENHANCE").CardKeywordValue;
     }
 }

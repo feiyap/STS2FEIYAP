@@ -1,17 +1,37 @@
 using Feiyap.Audio;
+using Feiyap.Cards;
+using Feiyap.Cards.Basic;
+using Feiyap.Cards.Rare;
+using Feiyap.Cards.Uncommon;
+using Feiyap.Powers;
 using Feiyap.Vfx;
 using Godot;
+using MegaCrit.Sts2.Core.Audio.Debug;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using STS2RitsuLib.Scaffolding.Characters;
 
 namespace Feiyap.Mechanics;
 
 /// <summary>
-/// 多维斩击特效辅助：居合反击触发时播放剑气斩击 VFX。
+/// 多维斩击特效：攻击命中与居合反击共用。
 /// </summary>
 public static class FeiyapSlashCmd
 {
+    /// <summary>默认剑气色（无绯神乐/斋时雨时）。</summary>
+    public static readonly Color DefaultSlashColor = Color.Color8(255, 81, 49, 255);
+
+    /// <summary>绯神乐：红色。</summary>
+    public static readonly Color ScarletSlashColor = new(1f, 0.16f, 0.2f, 1f);
+
+    /// <summary>斋时雨：青色。</summary>
+    public static readonly Color CyanSlashColor = new(0.18f, 0.88f, 0.95f, 1f);
+
     private static readonly FeiyapModSound[] IaidoSlashSounds =
     [
         new($"{Entry.ResPath}/Sounds/iaido_1.mp3"),
@@ -25,6 +45,7 @@ public static class FeiyapSlashCmd
         new($"{Entry.ResPath}/Sounds/perfect_iaido_1.mp3"),
         new($"{Entry.ResPath}/Sounds/perfect_iaido_2.mp3")
     ];
+
     private enum SlashAreaMode
     {
         TargetHitbox,
@@ -36,8 +57,32 @@ public static class FeiyapSlashCmd
     public static void Initialize() =>
         NFeiyapDimensionSlashVfx.Initialize($"{Entry.ResPath}/scenes/vfx/feiyap_dimension_slash.tscn");
 
+    /// <summary>是否为应挂普通斩击命中特效的绯夜攻击牌。</summary>
+    public static bool ShouldAttachCardHitSlash(CardModel card)
+    {
+        if (card is not FeiyapCardTemplate || card.Type != CardType.Attack)
+        {
+            return false;
+        }
+
+        // 剑鞘打击、分铜锁：保持默认命中；枯山水改用全屏斩屏。
+        return card is not JianQiaoDaJi
+            and not FeiyapUncommon6
+            and not FeiyapRare4;
+    }
+
+    /// <summary>挂上原版斩击命中特效与音效。</summary>
+    public static AttackCommand AttachCardHitSlash(AttackCommand command) =>
+        command
+            .WithHitFx(VfxCmd.slashPath, null, TmpSfx.slashAttack)
+            .SpawningHitVfxOnEachCreature();
+
     /// <summary>居合单体反击：先播放斩击，再执行反击伤害。</summary>
-    public static async Task PlayIaidoCounterSlash(Creature? target, Func<Task> onCounter, bool isPerfect = false)
+    public static async Task PlayIaidoCounterSlash(
+        Creature? target,
+        Func<Task> onCounter,
+        bool isPerfect = false,
+        Creature? owner = null)
     {
         if (target == null)
         {
@@ -45,7 +90,7 @@ public static class FeiyapSlashCmd
             return;
         }
 
-        var slashVfx = CreateJianQiSlashAt(target);
+        var slashVfx = CreateJianQiSlashAt(target, ResolveSlashStyle(owner));
         PlayIaidoSlashSound(isPerfect);
         slashVfx?.DoSlash();
         await onCounter();
@@ -56,8 +101,10 @@ public static class FeiyapSlashCmd
     public static async Task PlayIaidoCounterSlashAll(
         IReadOnlyList<Creature> targets,
         Func<Task> onCounter,
-        bool isPerfect = false)
+        bool isPerfect = false,
+        Creature? owner = null)
     {
+        var style = ResolveSlashStyle(owner);
         var slashVfxList = new List<NFeiyapDimensionSlashVfx?>();
         var playedSound = false;
         foreach (var target in targets)
@@ -67,7 +114,7 @@ public static class FeiyapSlashCmd
                 continue;
             }
 
-            var slashVfx = CreateJianQiSlashAt(target);
+            var slashVfx = CreateJianQiSlashAt(target, style);
             if (!playedSound)
             {
                 PlayIaidoSlashSound(isPerfect);
@@ -86,6 +133,53 @@ public static class FeiyapSlashCmd
         }
     }
 
+    /// <summary>根据绯神乐 / 斋时雨决定斩击着色。</summary>
+    public static SlashColorStyle ResolveSlashStyle(Creature? owner)
+    {
+        if (owner == null)
+        {
+            return SlashColorStyle.Single(DefaultSlashColor);
+        }
+
+        var hasScarlet = owner.FindPower<FeiyapScarletKaguraPower>() != null;
+        var hasRain = owner.FindPower<FeiyapIaidoRainPower>() != null;
+        if (hasScarlet && hasRain)
+        {
+            return SlashColorStyle.Gradient(ScarletSlashColor, CyanSlashColor);
+        }
+
+        if (hasScarlet)
+        {
+            return SlashColorStyle.Single(ScarletSlashColor);
+        }
+
+        if (hasRain)
+        {
+            return SlashColorStyle.Single(CyanSlashColor);
+        }
+
+        return SlashColorStyle.Single(DefaultSlashColor);
+    }
+
+    public readonly record struct SlashColorStyle(Color Primary, Color? Secondary)
+    {
+        public static SlashColorStyle Single(Color color) => new(color, null);
+
+        public static SlashColorStyle Gradient(Color a, Color b) => new(a, b);
+
+        public void ApplyTo(NFeiyapDimensionSlashVfx slashVfx)
+        {
+            if (Secondary.HasValue)
+            {
+                slashVfx.SetSlashGradient(Primary, Secondary.Value);
+            }
+            else
+            {
+                slashVfx.SetSlashColor(Primary);
+            }
+        }
+    }
+
     private static void PlayIaidoSlashSound(bool isPerfect)
     {
         var sounds = isPerfect ? PerfectIaidoSlashSounds : IaidoSlashSounds;
@@ -97,7 +191,7 @@ public static class FeiyapSlashCmd
         sounds[Random.Shared.Next(sounds.Length)].Play();
     }
 
-    private static NFeiyapDimensionSlashVfx? CreateJianQiSlashAt(Creature? target, int lineCount = 1)
+    private static NFeiyapDimensionSlashVfx? CreateJianQiSlashAt(Creature? target, SlashColorStyle style, int lineCount = 1)
     {
         if (target == null || lineCount <= 0)
         {
@@ -108,6 +202,7 @@ public static class FeiyapSlashCmd
             target,
             lineCount,
             SlashAreaMode.TargetExpanded,
+            style,
             expandDuration: 0.15f,
             keepDuration: 0.3f,
             contractDuration: 0.4f,
@@ -120,7 +215,7 @@ public static class FeiyapSlashCmd
         Creature? target,
         int lineCount,
         SlashAreaMode area,
-        Color? color = null,
+        SlashColorStyle style,
         float expandDuration = 0.2f,
         float keepDuration = 0.2f,
         float contractDuration = 0.3f,
@@ -132,7 +227,7 @@ public static class FeiyapSlashCmd
             target,
             lineCount,
             area,
-            color,
+            style,
             maxLength,
             minLength,
             new NFeiyapDimensionSlashVfx.SlashOptions
@@ -152,7 +247,7 @@ public static class FeiyapSlashCmd
         Creature? target,
         int lineCount,
         SlashAreaMode area,
-        Color? color,
+        SlashColorStyle style,
         float maxLength,
         float minLength,
         NFeiyapDimensionSlashVfx.SlashOptions opts)
@@ -226,11 +321,7 @@ public static class FeiyapSlashCmd
             }
         }
 
-        if (color.HasValue)
-        {
-            slashVfx.SetSlashColor(color.Value);
-        }
-
+        style.ApplyTo(slashVfx);
         return slashVfx;
     }
 }

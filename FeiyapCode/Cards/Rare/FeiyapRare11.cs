@@ -13,16 +13,21 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 一期一会：获得居合；将居合保留至下回合。
+/// 一期一会：获得 8 / 12 点居合与 4 / 6 层居合强化，并将居合保留至下回合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare11 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        FeiyapKeywords.Iaido,
+        FeiyapKeywords.IaidoEnhance
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new IaidoVar(7m, ValueProp.Move)
+        new IaidoVar(8m, ValueProp.Move),
+        new PowerVar<FeiyapIaidoEnhancePower>(4m)
     ];
 
     public FeiyapRare11()
@@ -40,11 +45,19 @@ public sealed class FeiyapRare11 : FeiyapCardTemplate
             this,
             cardPlay);
 
+        await PowerCmd.Apply<FeiyapIaidoEnhancePower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["FeiyapIaidoEnhancePower"].BaseValue,
+            Owner.Creature,
+            this);
+
         FeiyapCombatTracker.Get(Owner).RetainIaidoNextTurn = true;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(5m);
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(4m);
+        DynamicVars["FeiyapIaidoEnhancePower"].UpgradeValueBy(2m);
     }
 }

@@ -27,8 +27,7 @@ public sealed class FeiyapPozhanPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapPozhanPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapPozhanPower));
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target,

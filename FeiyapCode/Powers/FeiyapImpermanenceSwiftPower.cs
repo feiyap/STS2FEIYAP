@@ -21,8 +21,7 @@ public sealed class FeiyapImpermanenceSwiftPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapImpermanenceSwiftPower), nameof(FeiyapImpermanencePower));
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapImpermanenceSwiftPower));
 
     public override async Task AfterDamageGiven(
         PlayerChoiceContext choiceContext,

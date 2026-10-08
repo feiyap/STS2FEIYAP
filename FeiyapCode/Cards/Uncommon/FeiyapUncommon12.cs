@@ -1,34 +1,34 @@
 ﻿using System.Linq;
 using Feiyap.Cards.Quest;
 using Feiyap.Characters;
+using Feiyap.Mechanics;
+using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 明镜止水：消耗所有玩家的状态牌、诅咒牌和任务牌；每消耗 1 张获得活力。消耗。
+/// 明镜止水：消耗所有玩家的状态牌、诅咒牌和任务牌；每消耗 1 张获得居合强化。消耗。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon12 : FeiyapCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
-        HoverTipFactory.FromPower<VigorPower>()
+        CardKeyword.Exhaust,
+        FeiyapKeywords.IaidoEnhance
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<VigorPower>(1m)
+        new PowerVar<FeiyapIaidoEnhancePower>(1m)
     ];
 
     public FeiyapUncommon12()
@@ -52,11 +52,11 @@ public sealed class FeiyapUncommon12 : FeiyapCardTemplate
 
         if (toExhaust.Count > 0)
         {
-            var vigor = DynamicVars["VigorPower"].BaseValue * toExhaust.Count;
-            await PowerCmd.Apply<VigorPower>(
+            var enhance = DynamicVars["FeiyapIaidoEnhancePower"].BaseValue * toExhaust.Count;
+            await PowerCmd.Apply<FeiyapIaidoEnhancePower>(
                 choiceContext,
                 Owner.Creature,
-                vigor,
+                enhance,
                 Owner.Creature,
                 this);
         }
@@ -64,7 +64,7 @@ public sealed class FeiyapUncommon12 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["VigorPower"].UpgradeValueBy(1m);
+        DynamicVars["FeiyapIaidoEnhancePower"].UpgradeValueBy(1m);
     }
 
     private static bool IsNegativeCard(CardModel card) =>

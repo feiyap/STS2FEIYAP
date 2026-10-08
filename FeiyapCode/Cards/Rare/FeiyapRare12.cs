@@ -55,4 +55,9 @@ public sealed class FeiyapRare12 : FeiyapCardTemplate
             Owner.Creature,
             this);
     }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars[IaidoVar.DefaultName].UpgradeValueBy(5m);
+    }
 }

@@ -20,8 +20,7 @@ public sealed class FeiyapNadaoStancePower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapNadaoStancePower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapNadaoStancePower));
 
     protected override IEnumerable<string> RegisteredKeywordIds => [FeiyapKeywords.ZanxinId];
 

@@ -2,7 +2,7 @@
 
   "FEIYAP_KEYWORD_IAIDO.title": "Iaido",
 
-  "FEIYAP_KEYWORD_IAIDO.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount as attack damage. Remove all [gold]Iaido[/gold] at turn start. When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 2. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
+  "FEIYAP_KEYWORD_IAIDO.description": "When attacked, consume [gold]Iaido[/gold] equal to the damage to negate it and counter for the same amount. Remove all [gold]Iaido[/gold] at turn start. When you play an [gold]Attack[/gold], reduce [gold]Iaido[/gold] by 2. [gold]Dexterity[/gold] amplifies [gold]Iaido[/gold] gained.",
 
   "FEIYAP_KEYWORD_CONSTELLATION.title": "Constellation",
 
@@ -22,6 +22,10 @@
 
   "FEIYAP_KEYWORD_PERFECT_IAIDO.title": "Perfect Iaido",
 
-  "FEIYAP_KEYWORD_PERFECT_IAIDO.description": "When you trigger [gold]Iaido[/gold], if your [gold]Iaido[/gold] equals the incoming attack damage, it counts as [gold]Perfect Iaido[/gold]."
+  "FEIYAP_KEYWORD_PERFECT_IAIDO.description": "When you trigger [gold]Iaido[/gold], if your [gold]Iaido[/gold] equals the incoming attack damage, it counts as [gold]Perfect Iaido[/gold].",
+
+  "FEIYAP_KEYWORD_IAIDO_ENHANCE.title": "Iaido Enhance",
+
+  "FEIYAP_KEYWORD_IAIDO_ENHANCE.description": "Each stack increases [gold]Iaido[/gold] counter damage by 1."
 
 }

@@ -13,6 +13,9 @@ namespace Feiyap.Enchantments;
 [RegisterEnchantment]
 public sealed class FeiyapRekindleEnchantment : ModEnchantmentTemplate
 {
+    public override EnchantmentAssetProfile AssetProfile => new(
+        IconPath: $"{Entry.ResPath}/images/enchantments/{nameof(FeiyapRekindleEnchantment)}.png");
+
     private bool _usedThisCombat;
 
     public override bool HasExtraCardText => true;

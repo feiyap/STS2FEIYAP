@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b2g4jrhhq8fp8"]
 
-[ext_resource type="Texture2D" uid="uid://20s6jn50a6xa" path="res://character/energy_big.png" id="1_yf5cs"]
+[ext_resource type="Texture2D" uid="uid://20s6jn50a6xa" path="res://Feiyap/images/characters/energy_big.png" id="1_yf5cs"]
 
 [node name="TemplateEnergyCounter" type="Control"]
 layout_mode = 3

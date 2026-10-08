@@ -16,8 +16,7 @@ public sealed class FeiyapImpermanencePower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapImpermanencePower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapImpermanencePower));
 
     public override bool TryModifyEnergyCostInCombatLate(
         CardModel card,

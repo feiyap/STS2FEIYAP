@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 无想斩：造成 8 点伤害；目标破绽层数提升 100% / 200%。
+/// 无想斩：造成 8 点伤害，给予 1 层破绽，目标破绽层数提升 100% / 200%。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare2 : FeiyapCardTemplate
@@ -27,6 +27,7 @@ public sealed class FeiyapRare2 : FeiyapCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8, ValueProp.Move),
+        new PowerVar<FeiyapPozhanPower>(1m),
         new DynamicVar("PozhanIncrease", 100m)
     ];
 
@@ -48,6 +49,13 @@ public sealed class FeiyapRare2 : FeiyapCardTemplate
         {
             return;
         }
+
+        await PowerCmd.Apply<FeiyapPozhanPower>(
+            choiceContext,
+            cardPlay.Target,
+            DynamicVars["FeiyapPozhanPower"].BaseValue,
+            Owner.Creature,
+            this);
 
         var stacks = cardPlay.Target.GetPowerAmount<FeiyapPozhanPower>();
         if (stacks <= 0)

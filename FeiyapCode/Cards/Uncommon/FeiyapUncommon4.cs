@@ -1,25 +1,32 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// 逆袈裟：造成 15 / 20 点伤害；下一张牌获得的格挡与居合翻倍。
+/// 逆袈裟：造成 15 / 20 点伤害；获得 3 / 5 层居合强化。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon4 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        FeiyapKeywords.IaidoEnhance
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(15, ValueProp.Move)
+        new DamageVar(15, ValueProp.Move),
+        new PowerVar<FeiyapIaidoEnhancePower>(3m)
     ];
 
     public FeiyapUncommon4()
@@ -36,11 +43,10 @@ public sealed class FeiyapUncommon4 : FeiyapCardTemplate
             .Targeting(cardPlay.Target)
             .Execute(choiceContext);
 
-        await PowerCmd.Apply(
+        await PowerCmd.Apply<FeiyapIaidoEnhancePower>(
             choiceContext,
-            ModelDb.Power<FeiyapReverseGesaPower>().ToMutable(),
             Owner.Creature,
-            1m,
+            DynamicVars["FeiyapIaidoEnhancePower"].BaseValue,
             Owner.Creature,
             this);
     }
@@ -48,5 +54,6 @@ public sealed class FeiyapUncommon4 : FeiyapCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(5m);
+        DynamicVars["FeiyapIaidoEnhancePower"].UpgradeValueBy(2m);
     }
 }

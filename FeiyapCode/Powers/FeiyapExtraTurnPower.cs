@@ -17,8 +17,7 @@ public sealed class FeiyapExtraTurnPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapExtraTurnPower), "FeiyapTarotWorldFreeChoicePower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapExtraTurnPower));
 
     public override bool ShouldTakeExtraTurn(Player player) =>
         player == Owner.Player;

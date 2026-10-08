@@ -347,11 +347,29 @@ public partial class NFeiyapDimensionSlashVfx : ColorRect
 
 	public void SetSlashColor(Color color)
 	{
-						ShaderMaterial? mat = _mat;
-		if (mat != null)
+		ShaderMaterial? mat = _mat;
+		if (mat == null)
 		{
-			mat.SetShaderParameter("glow_color", color);
+			return;
 		}
+
+		mat.SetShaderParameter("glow_color", color);
+		mat.SetShaderParameter("glow_color_b", color);
+		mat.SetShaderParameter("dual_color_mix", 0f);
+	}
+
+	/// <summary>沿斩线在两色间渐变（绯神乐红 + 斋时雨青）。</summary>
+	public void SetSlashGradient(Color colorA, Color colorB)
+	{
+		ShaderMaterial? mat = _mat;
+		if (mat == null)
+		{
+			return;
+		}
+
+		mat.SetShaderParameter("glow_color", colorA);
+		mat.SetShaderParameter("glow_color_b", colorB);
+		mat.SetShaderParameter("dual_color_mix", 1f);
 	}
 
 	public void SetSlashArea(Vector2 globalPosition, Vector2 size)

@@ -13,6 +13,9 @@ namespace Feiyap.Enchantments;
 [RegisterEnchantment]
 public sealed class FeiyapAssaultEnchantment : ModEnchantmentTemplate
 {
+    public override EnchantmentAssetProfile AssetProfile => new(
+        IconPath: $"{Entry.ResPath}/images/enchantments/{nameof(FeiyapAssaultEnchantment)}.png");
+
     public override bool HasExtraCardText => true;
 
     public override bool CanEnchantCardType(CardType cardType) => cardType == CardType.Attack;

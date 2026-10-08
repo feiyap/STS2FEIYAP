@@ -7,7 +7,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// XI-力量（逆位）：目标本回合减少力量。
+/// XI-力量（逆位）：本回合减少力量。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapStrengthDownPower : ModTemporaryAppliedPowerTemplate<FeiyapUncommon9, StrengthPower>

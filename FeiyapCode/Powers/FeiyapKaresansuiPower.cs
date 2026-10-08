@@ -22,8 +22,7 @@ public sealed class FeiyapKaresansuiPower : ModPowerTemplate
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override PowerAssetProfile AssetProfile =>
-        FeiyapPowerAssets.ForSharedIcon(nameof(FeiyapKaresansuiPower), "FeiyapSwordSaintHeartPower");
+    public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapKaresansuiPower));
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {

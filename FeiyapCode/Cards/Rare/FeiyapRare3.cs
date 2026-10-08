@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 天人五衰：多段攻击并施加多种负面；本回合每打出过一张攻击牌，耗能减少 1。
+/// 天人五衰：多段攻击并施加虚弱、易伤、破绽，使目标失去力量与敏捷；本回合每打出过一张攻击牌，耗能减少 1。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare3 : FeiyapCardTemplate
@@ -24,9 +24,9 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
     [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<FrailPower>(),
         HoverTipFactory.FromPower<FeiyapPozhanPower>(),
-        HoverTipFactory.FromPower<PoisonPower>()
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>()
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -35,9 +35,9 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
         new RepeatVar(5),
         new PowerVar<WeakPower>(2m),
         new PowerVar<VulnerablePower>(2m),
-        new PowerVar<FrailPower>(2m),
         new PowerVar<FeiyapPozhanPower>(2m),
-        new PowerVar<PoisonPower>(2m)
+        new PowerVar<StrengthPower>(2m),
+        new PowerVar<DexterityPower>(2m)
     ];
 
     public FeiyapRare3()
@@ -81,25 +81,32 @@ public sealed class FeiyapRare3 : FeiyapCardTemplate
             return;
         }
 
-        var debuffAmount = DynamicVars["WeakPower"].BaseValue;
-        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
-        await PowerCmd.Apply<FrailPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
-        await PowerCmd.Apply<FeiyapPozhanPower>(
+        var stacks = DynamicVars["WeakPower"].BaseValue;
+        var opening = DynamicVars["FeiyapPozhanPower"].BaseValue;
+        var statLoss = DynamicVars["StrengthPower"].BaseValue;
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, stacks, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(
             choiceContext,
             cardPlay.Target,
-            DynamicVars["FeiyapPozhanPower"].BaseValue,
+            DynamicVars["VulnerablePower"].BaseValue,
             Owner.Creature,
             this);
-        await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, debuffAmount, Owner.Creature, this);
+        await PowerCmd.Apply<FeiyapPozhanPower>(choiceContext, cardPlay.Target, opening, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target, -statLoss, Owner.Creature, this);
+        await PowerCmd.Apply<DexterityPower>(
+            choiceContext,
+            cardPlay.Target,
+            -DynamicVars["DexterityPower"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["WeakPower"].UpgradeValueBy(1m);
         DynamicVars["VulnerablePower"].UpgradeValueBy(1m);
-        DynamicVars["FrailPower"].UpgradeValueBy(1m);
         DynamicVars["FeiyapPozhanPower"].UpgradeValueBy(1m);
-        DynamicVars["PoisonPower"].UpgradeValueBy(1m);
+        DynamicVars["StrengthPower"].UpgradeValueBy(1m);
+        DynamicVars["DexterityPower"].UpgradeValueBy(1m);
     }
 }

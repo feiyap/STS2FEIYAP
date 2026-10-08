@@ -3,6 +3,9 @@ render_mode blend_mix;
 
 // ─── 全局控制 ─────────────────────────────────────────────────
 uniform vec4  glow_color : source_color = vec4(0.95, 0.10, 0.10, 1.0);
+// 双色渐变第二色；dual_color_mix>0 时沿斩线 t 在两色间插值
+uniform vec4  glow_color_b : source_color = vec4(0.15, 0.85, 0.95, 1.0);
+uniform float dual_color_mix : hint_range(0.0, 1.0) = 0.0;
 uniform float slash_progress : hint_range(0.0, 1.0) = 0.0;
 uniform int   slash_count = 0;
 
@@ -72,6 +75,7 @@ void fragment()
         float hit_alpha    = 0.0;
         float hit_end_fade = 1.0;
         float hit_line_len = 0.0;
+        float hit_line_t   = 0.5;
         vec2  total_disp   = vec2(0.0);
         int   upper = min(slash_count, 64);
 
@@ -95,6 +99,7 @@ void fragment()
                 hit_alpha    = w;
                 hit_end_fade = end_fade_i;
                 hit_line_len = line_len;
+                hit_line_t   = t;
             }
 
             float eff_outer = line_len * cut_outer_ratio;
@@ -147,8 +152,9 @@ void fragment()
             bg *= (1.0 - shadow_field * shadow_diffuse);
             bg *= (1.0 - edge_mask * shadow_edge);
 
-            vec3 with_glow  = bg + glow_color.rgb * glow_alpha;
-            vec3 core_rgb   = mix(glow_color.rgb, vec3(1.0), core_brightness);
+            vec3 blade = mix(glow_color.rgb, glow_color_b.rgb, hit_line_t * dual_color_mix);
+            vec3 with_glow  = bg + blade * glow_alpha;
+            vec3 core_rgb   = mix(blade, vec3(1.0), core_brightness);
             vec3 final_rgb  = mix(with_glow, core_rgb, core_alpha);
 
             COLOR = vec4(final_rgb, clamp(any_alpha, 0.0, 1.0));

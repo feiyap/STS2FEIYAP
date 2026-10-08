@@ -6,6 +6,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_slash"]
 shader = ExtResource("1_shader")
 shader_parameter/glow_color = Color(0.95, 0.1, 0.1, 1)
+shader_parameter/glow_color_b = Color(0.15, 0.85, 0.95, 1)
+shader_parameter/dual_color_mix = 0.0
 shader_parameter/slash_progress = 0.0
 shader_parameter/slash_count = 0
 shader_parameter/slash_points_a = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

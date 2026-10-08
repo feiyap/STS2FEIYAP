@@ -11,6 +11,7 @@ public sealed class FeiyapGameplayPatches : IModPatches
     public static void AddTo(ModPatcher patcher)
     {
         patcher.RegisterPatch<FeiyapPreserveVigorPatch>();
+        patcher.RegisterPatch<FeiyapAttackSlashVfxPatch>();
         patcher.RegisterPatch<FeiyapKeywordDescriptionPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterCardPlayedPatch>();
         patcher.RegisterPatch<FeiyapCombatTrackingAfterDamageGivenPatch>();

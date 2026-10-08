@@ -68,12 +68,6 @@ public abstract class ShuiLianBase : ModRelicTemplate
     {
         // EnterAct 在淡入完成后才调用 AfterActEntered，可直接弹选牌。
         // 联机时所有客户端都必须执行同一套选牌/状态更新逻辑；CardSelectCmd 会自行同步玩家选择。
-        // 幕间任务进度仅在多人模式下发放。
-        if (Owner.RunState.CurrentActIndex > 0 && Owner.RunState.Players.Count > 1)
-        {
-            FeiyapQuestProgress.GrantActEndProgress(Owner);
-        }
-
         return TrySelectStartingQuestCardAsync();
     }
 

@@ -31,7 +31,7 @@ public sealed class FeiyapUncommon13 : FeiyapCardTemplate
     ];
 
     public FeiyapUncommon13()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

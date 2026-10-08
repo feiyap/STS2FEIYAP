@@ -11,15 +11,17 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 缩地：将手牌中的一张牌放到抽牌堆底部，从抽牌堆中选择 1 张相同类型的牌放入手牌。
+/// 缩地：将手牌中的一张牌放到抽牌堆底部，从抽牌堆中选择 1 张相同类型的牌放入手牌。消耗（升级后移除消耗）。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon17 : FeiyapCardTemplate
 {
     private static readonly LocString DrawSelectionPrompt = new("cards", "FEIYAP_CARD_FEIYAP_COMMON17.drawSelectionPrompt");
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     public FeiyapCommon17()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
@@ -57,6 +59,6 @@ public sealed class FeiyapCommon17 : FeiyapCardTemplate
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

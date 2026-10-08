@@ -14,7 +14,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Uncommon;
 
 /// <summary>
-/// VI-恋人：给予破绽；正位扩散破绽，逆位按其层数获得力量。
+/// VI-恋人：给予破绽；正位扩散破绽，逆位按其层数获得力量。升级后耗能-1。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon26 : FeiyapTarotCardBase
@@ -98,6 +98,6 @@ public sealed class FeiyapUncommon26 : FeiyapTarotCardBase
 
     protected override void OnUpgrade()
     {
-        DynamicVars["FeiyapPozhanPower"].UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -22,6 +23,12 @@ public sealed class FeiyapHyakukyoushiPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => FeiyapPowerAssets.For(nameof(FeiyapHyakukyoushiPower));
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<DexterityPower>(),
+        HoverTipFactory.FromPower<StrengthPower>()
+    ];
+
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card.Owner?.Creature != Owner || Amount <= 0)
@@ -32,7 +39,7 @@ public sealed class FeiyapHyakukyoushiPower : ModPowerTemplate
         Flash();
         if (cardPlay.Card.Type == CardType.Attack)
         {
-            await PowerCmd.Apply<AnticipatePower>(
+            await PowerCmd.Apply<FeiyapHyakukyoushiDexterityPower>(
                 choiceContext,
                 Owner,
                 Amount,
@@ -43,7 +50,7 @@ public sealed class FeiyapHyakukyoushiPower : ModPowerTemplate
 
         if (cardPlay.Card.Type == CardType.Skill)
         {
-            await PowerCmd.Apply<SetupStrikePower>(
+            await PowerCmd.Apply<FeiyapHyakukyoushiStrengthPower>(
                 choiceContext,
                 Owner,
                 Amount,

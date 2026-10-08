@@ -24,7 +24,7 @@ public sealed class FeiyapRare5 : FeiyapCardTemplate
     ];
 
     public FeiyapRare5()
-        : base(15, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+        : base(8, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
 

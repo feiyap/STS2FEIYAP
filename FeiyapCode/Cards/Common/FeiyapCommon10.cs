@@ -1,24 +1,21 @@
 using Feiyap.Characters;
 using Feiyap.Mechanics;
-using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
-using STS2RitsuLib.Keywords;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace Feiyap.Cards.Common;
 
 /// <summary>
-/// 速纳术：本回合内从卡牌中获得居合时，额外获得 2 / 3 点。
+/// 速纳术：将当前所有格挡转化为居合；升级后再获得 3 点居合。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon10 : FeiyapCardTemplate
 {
-
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
     [
         FeiyapKeywords.Iaido
@@ -26,7 +23,7 @@ public sealed class FeiyapCommon10 : FeiyapCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapQuickAbsorptionPower>(2m)
+        new IaidoVar(3m, ValueProp.Move)
     ];
 
     public FeiyapCommon10()
@@ -36,17 +33,29 @@ public sealed class FeiyapCommon10 : FeiyapCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply(
-            choiceContext,
-            ModelDb.Power<FeiyapQuickAbsorptionPower>().ToMutable(),
-            Owner.Creature,
-            DynamicVars["FeiyapQuickAbsorptionPower"].BaseValue,
-            Owner.Creature,
-            this);
-    }
+        var creature = Owner.Creature;
+        var block = creature.Block;
+        if (block > 0m)
+        {
+            await CreatureCmd.LoseBlock(choiceContext, creature, block, creature);
+            await FeiyapIaidoCmd.Gain(
+                choiceContext,
+                creature,
+                block,
+                ValueProp.Unpowered,
+                cardSource: null,
+                cardPlay: null);
+        }
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars["FeiyapQuickAbsorptionPower"].UpgradeValueBy(1m);
+        if (IsUpgraded)
+        {
+            await FeiyapIaidoCmd.Gain(
+                choiceContext,
+                creature,
+                DynamicVars[IaidoVar.DefaultName].BaseValue,
+                ValueProp.Move,
+                this,
+                cardPlay);
+        }
     }
 }

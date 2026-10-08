@@ -2,7 +2,7 @@
 
   "FEIYAP_RELIC_SHUI_LIAN.title": "Water Lily",
 
-  "FEIYAP_RELIC_SHUI_LIAN.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nIn multiplayer, at the end of each Act, all quest cards in your Deck gain 33% progress.",
+  "FEIYAP_RELIC_SHUI_LIAN.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.",
 
   "FEIYAP_RELIC_SHUI_LIAN.flavor": "Between taking and leaving, fate already turns.",
 
@@ -10,7 +10,7 @@
 
   "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.title": "Lotus Heart Guarding the Moon",
 
-  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nIn multiplayer, at the end of each Act, all quest cards in your Deck gain 33% progress.\nRelics gained from quest cards are upgraded.",
+  "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.description": "At the start of the run, add any number of quest cards from Mi Wang, Ku Xiu, and Fa Wei to your Deck.\nRelics gained from quest cards are upgraded.",
 
   "FEIYAP_RELIC_LIAN_XIN_SHOU_YUE.flavor": "Lotus heart guarding the moon, all in one thought.",
 
@@ -28,13 +28,13 @@
 
   "FEIYAP_RELIC_SWORD_SAINT.title": "Sword Saint",
 
-  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]200%[/blue] more damage.",
+  "FEIYAP_RELIC_SWORD_SAINT.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\nEvery [blue]{Turns}[/blue] turns, gain {FeiyapIaidoEnhancePower:diff()} [gold]Iaido Enhance[/gold].",
 
   "FEIYAP_RELIC_SWORD_SAINT.flavor": "\"The battlefield, a homeland I miss...\" — Sword Saint, Feiyap Clan.",
 
   "FEIYAP_RELIC_WU_MING_REN.title": "Wu Ming Ren",
 
-  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\n[gold]Perfect Iaido[/gold] deals [blue]400%[/blue] more damage.",
+  "FEIYAP_RELIC_WU_MING_REN.description": "Gain the Ancient card Fei Ying Yu Hua Luo.\nEvery [blue]{Turns}[/blue] turns, gain {FeiyapIaidoEnhancePower:diff()} [gold]Iaido Enhance[/gold].",
 
   "FEIYAP_RELIC_WU_MING_REN.flavor": "\"Listen with your ears, strike with your heart.\" — Sword Saint, Feiyap Clan.",
 

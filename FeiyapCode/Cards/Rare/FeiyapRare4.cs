@@ -1,5 +1,7 @@
+using System.Linq;
 using Feiyap.Characters;
 using Feiyap.Powers;
+using Feiyap.Vfx;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -67,6 +69,9 @@ public sealed class FeiyapRare4 : FeiyapCardTemplate
                 Owner.Creature,
                 this);
         }
+
+        var severFocus = CombatState.HittableEnemies.FirstOrDefault(e => e.IsAlive);
+        await FeiyapSpaceSeverVfx.PlayForKaresansuiAsync(severFocus);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
