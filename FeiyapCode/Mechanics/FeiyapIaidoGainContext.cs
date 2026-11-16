@@ -29,4 +29,10 @@ public readonly struct FeiyapIaidoGainContext
 
     /// <summary>卡牌预览计算时为 true；此时残心可显示加成但不登记消耗。</summary>
     public bool IsPreview { get; init; }
+
+    /// <summary>
+    /// 本次获得视为打出卡牌产生，但调用方拿不到 <see cref="CardPlay"/>。
+    /// 银碗盛雪在 <c>BeforeBlockGained</c> 中把格挡转为居合时使用：残心仍要加算并登记消耗。
+    /// </summary>
+    public bool CountsAsCardPlay { get; init; }
 }

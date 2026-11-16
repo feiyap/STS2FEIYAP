@@ -21,7 +21,12 @@ public sealed class FeiyapUncommon25 : FeiyapTarotCardBase
 {
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+    // 必须带上基类的塔罗-正位 / 塔罗-逆位，否则会被整体覆盖掉
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        ..base.CanonicalKeywords,
+        FeiyapKeywords.Iaido
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

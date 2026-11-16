@@ -11,11 +11,15 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Powers;
 
 /// <summary>
-/// 活杀自在：每获得 Amount 点居合，获得 1 点活力。
+/// 活杀自在：每获得 <see cref="IaidoPerVigor"/> 点居合，获得 Amount 点活力。
+/// 叠层增加活力，不提高居合门槛。
 /// </summary>
 [RegisterPower]
 public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
 {
+    /// <summary>兑换 1 次活力所需的居合。与本地化中的固定数字一致。</summary>
+    public const int IaidoPerVigor = 2;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -39,10 +43,10 @@ public sealed class FeiyapKassaiJizaiPower : ModPowerTemplate
             return;
         }
 
-        var threshold = (decimal)power.Amount;
+        var threshold = (decimal)IaidoPerVigor;
         var tracker = FeiyapCombatTracker.Get(player);
         var total = tracker.KassaiJizaiIaidoRemainder + amountGained;
-        var vigorGain = Math.Floor(total / threshold);
+        var vigorGain = Math.Floor(total / threshold) * power.Amount;
         tracker.KassaiJizaiIaidoRemainder = total % threshold;
 
         if (vigorGain <= 0m)

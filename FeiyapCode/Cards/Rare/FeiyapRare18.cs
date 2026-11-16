@@ -1,4 +1,5 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -16,6 +17,12 @@ namespace Feiyap.Cards.Rare;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare18 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        FeiyapKeywords.Iaido,
+        FeiyapKeywords.Zanxin
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<FeiyapKachuuFuugetsuPower>(3m)

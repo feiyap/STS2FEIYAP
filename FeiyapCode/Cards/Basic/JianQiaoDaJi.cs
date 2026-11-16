@@ -21,6 +21,8 @@ namespace Feiyap.Cards.Basic;
 [RegisterCharacterStarterCard(typeof(FeiyapCharacter), 1)]
 public sealed class JianQiaoDaJi : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+
     protected override HashSet<CardTag> CanonicalTags => new()
     {
         CardTag.Strike,

@@ -36,13 +36,16 @@ public sealed class FeiyapSilverBowlSnowPower : ModPowerTemplate
         }
 
         Flash();
+        // BeforeBlockGained 收到的是 ModifyBlock 之前的基础格挡，且原版钩子不传 CardPlay。
+        // 标记为出牌获得，残心等「下一次打出的卡牌」加算才会进入转化后的居合，与牌面预览一致。
         await FeiyapIaidoCmd.Gain(
             new ThrowingPlayerChoiceContext(),
             Owner,
             amount,
             props,
             cardSource,
-            null);
+            null,
+            countsAsCardPlay: cardSource != null);
     }
 
     public override decimal ModifyBlockMultiplicative(

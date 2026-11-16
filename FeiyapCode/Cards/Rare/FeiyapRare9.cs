@@ -100,17 +100,8 @@ public sealed class FeiyapRare9 : FeiyapCardTemplate
             PreviewValue = GetTurnDamageDealt(card);
         }
 
-        protected override decimal GetBaseValueForIConvertible()
-        {
-            if (_owner is not CardModel card)
-            {
-                return BaseValue;
-            }
-
-            return GetTurnDamageDealt(card);
-        }
-
         public override string ToString() =>
-            ((int)GetBaseValueForIConvertible()).ToString(CultureInfo.InvariantCulture);
+            (_owner is CardModel card ? GetTurnDamageDealt(card) : (int)BaseValue)
+            .ToString(CultureInfo.InvariantCulture);
     }
 }

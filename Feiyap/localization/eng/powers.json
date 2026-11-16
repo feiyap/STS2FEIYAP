@@ -46,7 +46,7 @@
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.title": "Kachuu Fugetsu",
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.description": "When played and at the start of your turn, gain {Amount} [gold]Block[/gold], [gold]Iaido[/gold], [gold]Vigor[/gold], and [gold]Zanxin[/gold].",
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "Kassai Jizai",
-  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain {Amount} [gold]Iaido[/gold], gain 1 [gold]Vigor[/gold].",
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "Whenever you gain 2 [gold]Iaido[/gold], gain {Amount} [gold]Vigor[/gold].",
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "Silver Bowl Snow",
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.description": "All [gold]Block[/gold] you gain is converted into [gold]Iaido[/gold].",
   "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.title": "The Chariot",

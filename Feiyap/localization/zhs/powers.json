@@ -46,7 +46,7 @@
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.title": "花鸟风月",
   "FEIYAP_POWER_FEIYAP_KACHUU_FUUGETSU_POWER.description": "打出时以及回合开始时，获得 {Amount} 点[gold]格挡[/gold]、[gold]居合[/gold]、[gold]活力[/gold]与[gold]残心[/gold]。",
   "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.title": "活杀自在",
-  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "每获得 {Amount} 点[gold]居合[/gold]，获得 1 点[gold]活力[/gold]。",
+  "FEIYAP_POWER_FEIYAP_KASSAI_JIZAI_POWER.description": "每获得 2 点[gold]居合[/gold]，获得 {Amount} 点[gold]活力[/gold]。",
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.title": "银碗盛雪",
   "FEIYAP_POWER_FEIYAP_SILVER_BOWL_SNOW_POWER.description": "你获得的所有[gold]格挡[/gold]转化为[gold]居合[/gold]。",
   "FEIYAP_POWER_FEIYAP_CHARIOT_POWER.title": "VII-战车",

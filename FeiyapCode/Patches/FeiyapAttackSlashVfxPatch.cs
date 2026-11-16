@@ -7,13 +7,13 @@ using STS2RitsuLib.Patching.Models;
 namespace Feiyap.Patches;
 
 /// <summary>
-/// 绯夜攻击牌命中时自动挂上原版斩击特效与音效（排除剑鞘打击、分铜锁、枯山水）。
+/// 绯夜攻击牌命中时按卡牌主题挂上对应特效与音效。
 /// </summary>
 public sealed class FeiyapAttackSlashVfxPatch : IPatchMethod
 {
     public static string PatchId => "feiyap_attack_slash_vfx";
 
-    public static string Description => "绯夜攻击牌命中斩击特效";
+    public static string Description => "绯夜攻击牌按主题配置命中特效";
 
     public static bool IsCritical => false;
 
@@ -26,12 +26,11 @@ public sealed class FeiyapAttackSlashVfxPatch : IPatchMethod
 
     public static void Prefix(AttackCommand __instance)
     {
-        if (__instance.ModelSource is not CardModel card
-            || !FeiyapSlashCmd.ShouldAttachCardHitSlash(card))
+        if (__instance.ModelSource is not CardModel card)
         {
             return;
         }
 
-        FeiyapSlashCmd.AttachCardHitSlash(__instance);
+        FeiyapAttackHitVfx.TryAttach(__instance, card);
     }
 }

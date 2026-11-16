@@ -1,4 +1,5 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,6 +18,8 @@ namespace Feiyap.Cards.Rare;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare21 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<FeiyapMenkyoKaidenPower>()];
 

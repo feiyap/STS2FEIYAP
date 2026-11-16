@@ -41,23 +41,24 @@ public sealed class FeiyapZanxinPower : ModPowerTemplate, IFeiyapIaidoGainAdditi
             return 0m;
         }
 
-        // 预览：显示残心加成；实际获得：仅出牌（有 CardPlay）时加算并登记消耗。
-        if (context.IsPreview)
-        {
-            return Amount;
-        }
-
-        if (context.CardPlay == null)
+        // 预览只显示加成。实际获得要求本次来自打出的卡牌；
+        // 银碗盛雪转化格挡时没有 CardPlay，靠 CountsAsCardPlay 走同一路径。
+        if (!context.IsPreview && context.CardPlay == null && !context.CountsAsCardPlay)
         {
             return 0m;
         }
 
-        EnsureDeferredConsumption(context.CardSource!, Amount);
+        if (!context.IsPreview)
+        {
+            EnsureDeferredConsumption(context.CardSource!, Amount);
+        }
+
         return Amount;
     }
 
     public ValueTask OnIaidoGainApplied(FeiyapIaidoGainContext context, decimal appliedBonus)
     {
+        // 银碗盛雪转化时没有 CardPlay，闪光由随后的格挡修正钩子负责，避免闪两次。
         if (appliedBonus <= 0m || context.CardPlay == null || !IsOwnCardSource(context.CardSource))
         {
             return ValueTask.CompletedTask;

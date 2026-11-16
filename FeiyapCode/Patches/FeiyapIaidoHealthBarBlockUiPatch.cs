@@ -23,13 +23,13 @@ public sealed class FeiyapIaidoHealthBarBlockUiPatch : IPatchMethod
     public static bool Prefix(NHealthBar __instance)
     {
         var creature = IaidoHealthBarOverlay.GetCreature(__instance);
-        if (creature == null || !IaidoHealthBarOverlay.IsFeiyapPlayer(creature))
+        if (creature == null || !FeiyapIaidoCmd.HasIaido(creature))
         {
             return true;
         }
 
         var block = Math.Max(0, creature.Block);
         // 无限居合同样占用格挡槽；若放行原版 RefreshBlockUi，会因 Block==0 反复播放碎裂 VFX。
-        return block > 0 || !FeiyapIaidoCmd.HasIaido(creature);
+        return block > 0;
     }
 }

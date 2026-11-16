@@ -17,6 +17,12 @@ namespace Feiyap.Cards.Quest;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class KuXiu : FeiyapQuestCardBase
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        ..base.CanonicalKeywords,
+        FeiyapKeywords.Iaido
+    ];
+
     protected override FeiyapQuestKind QuestKind => FeiyapQuestKind.KuXiu;
 
     protected override int QuestGoal => 100;

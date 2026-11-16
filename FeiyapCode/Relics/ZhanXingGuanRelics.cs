@@ -338,7 +338,7 @@ public sealed class FenHuangZuoA : ZhanXingGuanRelicBase
             new ThrowingPlayerChoiceContext(),
             Owner.Creature,
             maxHpLoss,
-            isFromCard: false);
+            cardSource: null);
     }
 }
 

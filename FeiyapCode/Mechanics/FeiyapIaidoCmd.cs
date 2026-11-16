@@ -53,7 +53,8 @@ public static class FeiyapIaidoCmd
         decimal amount,
         ValueProp props,
         CardModel? cardSource,
-        CardPlay? cardPlay)
+        CardPlay? cardPlay,
+        bool countsAsCardPlay = false)
     {
         if (creature == null || amount <= 0m || CombatManager.Instance.IsOverOrEnding)
         {
@@ -71,7 +72,8 @@ public static class FeiyapIaidoCmd
             props,
             cardSource,
             cardPlay,
-            isPreview: false);
+            isPreview: false,
+            countsAsCardPlay);
         if (modified <= 0m)
         {
             return 0m;
@@ -86,7 +88,8 @@ public static class FeiyapIaidoCmd
             Props = props,
             CardSource = cardSource,
             CardPlay = cardPlay,
-            IsPreview = false
+            IsPreview = false,
+            CountsAsCardPlay = countsAsCardPlay
         };
 
         SfxCmd.Play("event:/sfx/block_gain");
@@ -166,7 +169,8 @@ public static class FeiyapIaidoCmd
         ValueProp props,
         CardModel? cardSource,
         CardPlay? cardPlay,
-        bool isPreview)
+        bool isPreview,
+        bool countsAsCardPlay = false)
     {
         if (amount <= 0m)
         {
@@ -189,7 +193,8 @@ public static class FeiyapIaidoCmd
             Props = props,
             CardSource = cardSource,
             CardPlay = cardPlay,
-            IsPreview = isPreview
+            IsPreview = isPreview,
+            CountsAsCardPlay = countsAsCardPlay
         };
 
         modified = ApplyMultiplicativeModifiers(creature.Player, context, modified);

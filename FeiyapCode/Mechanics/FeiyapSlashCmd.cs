@@ -1,17 +1,9 @@
 using Feiyap.Audio;
-using Feiyap.Cards;
-using Feiyap.Cards.Basic;
-using Feiyap.Cards.Rare;
-using Feiyap.Cards.Uncommon;
 using Feiyap.Powers;
 using Feiyap.Vfx;
 using Godot;
-using MegaCrit.Sts2.Core.Audio.Debug;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using STS2RitsuLib.Scaffolding.Characters;
@@ -57,25 +49,28 @@ public static class FeiyapSlashCmd
     public static void Initialize() =>
         NFeiyapDimensionSlashVfx.Initialize($"{Entry.ResPath}/scenes/vfx/feiyap_dimension_slash.tscn");
 
-    /// <summary>是否为应挂普通斩击命中特效的绯夜攻击牌。</summary>
-    public static bool ShouldAttachCardHitSlash(CardModel card)
+    /// <summary>
+    /// 攻击牌命中用的自定义多维斩击（挂到战斗房间，返回 null 避免再挂到敌人 VFX 容器）。
+    /// </summary>
+    public static Node2D? CreateCardDimensionHitNode(
+        Creature target,
+        Color color,
+        Color? colorB,
+        int lines,
+        string? tmpSfx)
     {
-        if (card is not FeiyapCardTemplate || card.Type != CardType.Attack)
+        if (!string.IsNullOrEmpty(tmpSfx))
         {
-            return false;
+            SfxCmd.Play(tmpSfx);
         }
 
-        // 剑鞘打击、分铜锁：保持默认命中；枯山水改用全屏斩屏。
-        return card is not JianQiaoDaJi
-            and not FeiyapUncommon6
-            and not FeiyapRare4;
+        var style = colorB.HasValue
+            ? SlashColorStyle.Gradient(color, colorB.Value)
+            : SlashColorStyle.Single(color);
+        var slashVfx = CreateJianQiSlashAt(target, style, Math.Max(1, lines));
+        slashVfx?.DoSlash(Math.Max(1, lines));
+        return null;
     }
-
-    /// <summary>挂上原版斩击命中特效与音效。</summary>
-    public static AttackCommand AttachCardHitSlash(AttackCommand command) =>
-        command
-            .WithHitFx(VfxCmd.slashPath, null, TmpSfx.slashAttack)
-            .SpawningHitVfxOnEachCreature();
 
     /// <summary>居合单体反击：先播放斩击，再执行反击伤害。</summary>
     public static async Task PlayIaidoCounterSlash(

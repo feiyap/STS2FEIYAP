@@ -19,6 +19,12 @@ namespace Feiyap.Cards.Uncommon;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapUncommon9 : FeiyapTarotCardBase
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        ..base.CanonicalKeywords,
+        FeiyapKeywords.Zanxin
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(8, ValueProp.Move),

@@ -1,4 +1,5 @@
 using Feiyap.Characters;
+using Feiyap.Mechanics;
 using Feiyap.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -11,14 +12,16 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace Feiyap.Cards.Rare;
 
 /// <summary>
-/// 活杀自在：每获得 2 点居合，获得 1 点活力（Amount 为所需居合数）。
+/// 活杀自在：每获得 2 点居合，获得 1 点活力。再次打出时叠加活力，不提高居合门槛。
 /// </summary>
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapRare23 : FeiyapCardTemplate
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [FeiyapKeywords.Iaido];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new PowerVar<FeiyapKassaiJizaiPower>(2m)
+        new PowerVar<FeiyapKassaiJizaiPower>(1m)
     ];
 
     public FeiyapRare23()

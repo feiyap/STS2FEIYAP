@@ -20,6 +20,11 @@ namespace Feiyap.Cards.Common;
 [RegisterCard(typeof(FeiyapCardPool))]
 public sealed class FeiyapCommon19 : FeiyapTarotCardBase
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+    [
+        ..base.CanonicalKeywords,
+        FeiyapKeywords.Zanxin
+    ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [

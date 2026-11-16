@@ -15,6 +15,7 @@ namespace Feiyap.Patches;
 
 /// <summary>
 /// 将居合数值显示在格挡 UI 槽位。
+/// 任何持有居合的生物都会显示；居合归零后把被改过的血条还原成原版。
 /// </summary>
 internal static class IaidoHealthBarOverlay
 {
@@ -33,6 +34,7 @@ internal static class IaidoHealthBarOverlay
         public bool CycleRunning;
         public bool PreferIaido = true;
         public DisplayMode LastMode = DisplayMode.None;
+        public bool NeedsVanillaRestore;
         public bool IsFading;
         public int FadeSerial;
         public bool HasOriginalBlockLabelPosition;
@@ -84,9 +86,22 @@ internal static class IaidoHealthBarOverlay
     public static bool IsFeiyapPlayer(Creature creature) =>
         creature.Player?.Character is FeiyapCharacter;
 
+    /// <summary>
+    /// 绯夜氏保持原有刷新。其他生物仅在持有居合，或血条仍残留居合外观时处理。
+    /// </summary>
+    private static bool ShouldManage(NHealthBar healthBar, Creature creature)
+    {
+        if (IsFeiyapPlayer(creature) || FeiyapIaidoCmd.HasIaido(creature))
+        {
+            return true;
+        }
+
+        return States.TryGetValue(healthBar, out var state) && state.NeedsVanillaRestore;
+    }
+
     public static void RefreshForCreature(Creature? creature)
     {
-        if (creature == null || !IsFeiyapPlayer(creature))
+        if (creature == null)
         {
             return;
         }
@@ -124,7 +139,7 @@ internal static class IaidoHealthBarOverlay
     public static void Apply(NHealthBar healthBar)
     {
         var creature = GetCreature(healthBar);
-        if (creature == null || !IsFeiyapPlayer(creature))
+        if (creature == null || !ShouldManage(healthBar, creature))
         {
             return;
         }
@@ -137,6 +152,10 @@ internal static class IaidoHealthBarOverlay
         state.LastIaido = iaido;
         state.LastIaidoInfinite = iaidoInfinite;
         state.LastBlock = block;
+        if (hasIaido)
+        {
+            state.NeedsVanillaRestore = true;
+        }
 
         if (block > 0 && hasIaido)
         {
@@ -163,6 +182,7 @@ internal static class IaidoHealthBarOverlay
             else
             {
                 ApplyMode(healthBar, block > 0 ? DisplayMode.Block : DisplayMode.None, block, iaido, iaidoInfinite, state);
+                state.NeedsVanillaRestore = false;
             }
         }
     }
